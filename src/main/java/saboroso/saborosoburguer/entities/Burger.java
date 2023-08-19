@@ -19,6 +19,8 @@ public class Burger {
     private String title;
     @Column
     private BigDecimal price;
+    @Column (length = 2000)
+    private String pic;
     @Column
     private Boolean inStock;
     @ManyToMany
