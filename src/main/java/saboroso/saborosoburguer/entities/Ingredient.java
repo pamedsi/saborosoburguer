@@ -5,6 +5,7 @@ import lombok.*;
 import saboroso.saborosoburguer.DTOs.inputIngredientDTO;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -15,7 +16,6 @@ public class Ingredient {
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     private Long id;
-    @GeneratedValue (strategy = GenerationType.UUID)
     @Setter(AccessLevel.NONE)
     private String identifier;
     @Column (nullable = false)
@@ -31,6 +31,7 @@ public class Ingredient {
     private Boolean deleted;
 
     public Ingredient(inputIngredientDTO ingredientDTO) {
+        identifier = UUID.randomUUID().toString();
         title = ingredientDTO.title();
         if (ingredientDTO.grams() != null) grams = ingredientDTO.grams();
         if (ingredientDTO.inStock() != null) inStock = ingredientDTO.inStock();
