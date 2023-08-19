@@ -9,4 +9,5 @@ import saboroso.saborosoburguer.entities.Ingredient;
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     Ingredient findByIdentifier(String identifier);
+    Boolean existsByTitleAndGrams (String title, Integer grams);
 }
