@@ -34,4 +34,22 @@ public class BurgerController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Ingrediente já adicionado!"));
     }
+    @PutMapping
+    @RequestMapping (value = "/add-photo/{burgerIdentifier}")
+    public ResponseEntity<?> addPhoto(@PathVariable("burgerIdentifier") String burgerIdentifier, @RequestBody InputBurgerDTO ingredientIdentifierDTO) {
+        if (burgerService.addPhotoToBurger(burgerIdentifier, ingredientIdentifierDTO.pic())) {
+            return ResponseEntity.ok(new Message("Foto adicionada!"));
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Não foi possível adicionar a foto!"));
+    }
+    @DeleteMapping
+    @RequestMapping (value = "/remove-ingredient/{burgerIdentifier}")
+    public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier, @RequestBody IngredientIdentifierDTO ingredientIdentifierDTO) {
+        if (burgerService.removeIngredient(burgerIdentifier, ingredientIdentifierDTO.ingredientIdentifier())) {
+            return ResponseEntity.ok(new Message("Ingrediente removido!"));
+        }
+        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(new Message("Ingrediente já removido!"));
+    }
+
+
 }

@@ -5,7 +5,9 @@ import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerMapper;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 import saboroso.saborosoburguer.entities.Burger;
+import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 
@@ -39,6 +41,22 @@ public class BurgerService {
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
         if (burgerRepository.hasIngredient(burger, ingredientIdentifier)) return false;
         burger.getIngredients().add(ingredientRepository.findByIdentifier(ingredientIdentifier));
+        burgerRepository.save(burger);
+        return true;
+    }
+    public Boolean removeIngredient(String burgerIdentifier, String ingredientIdentifier) {
+        Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
+        if (!burgerRepository.hasIngredient(burger, ingredientIdentifier)) return false;
+        burger.getIngredients().remove(ingredientRepository.findByIdentifier(ingredientIdentifier));
+        burgerRepository.save(burger);
+        return true;
+    }
+
+    public Boolean addPhotoToBurger(String burgerIdentifier, String pic) {
+        Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
+        if (pic.isBlank()) return false;
+        else if (burger.getPic() != null && burger.getPic().equals(pic)) return false;
+        burger.setPic(pic);
         burgerRepository.save(burger);
         return true;
     }
