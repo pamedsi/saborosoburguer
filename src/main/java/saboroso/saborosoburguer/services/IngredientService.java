@@ -1,20 +1,22 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.IngredientForMenu;
-import saboroso.saborosoburguer.DTOs.inputIngredientDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuManagementDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
+import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 
 import java.util.List;
 
-import static saboroso.saborosoburguer.DTOs.IngredientMapper.ingredientForMenuMapper;
-
 @Service
 public class IngredientService {
     private final IngredientRepository ingredientRepository;
-    public IngredientService(IngredientRepository ingredientRepository) {
+    private final IngredientMapper ingredientMapper;
+    public IngredientService(IngredientRepository ingredientRepository, IngredientMapper ingredientMapper) {
         this.ingredientRepository = ingredientRepository;
+        this.ingredientMapper = ingredientMapper;
     }
     public Boolean insertIngredient (inputIngredientDTO ingredientDTO) {
         if (ingredientRepository.existsByTitleAndGrams(ingredientDTO.title(), ingredientDTO.grams())) return false;
@@ -22,8 +24,9 @@ public class IngredientService {
         ingredientRepository.save(newIngredient);
         return true;
     }
-    public List<Ingredient> getIngredients () {
-        return ingredientRepository.findAll();
+    public List<IngredientForMenuManagementDTO> getIngredientsForMenuManagement() {
+        List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalse();
+        return ingredientMapper.ingredientForMenuManagementMapper(persistenceData);
     }
     public Boolean editIngredient(inputIngredientDTO changes, String identifier) {
         if (ingredientRepository.existsByTitleAndGrams(changes.title(), changes.grams())) return false;
@@ -46,8 +49,8 @@ public class IngredientService {
         deletedIngredient.setDeleted(false);
         return true;
     }
-    public List<IngredientForMenu> getIngredientsForMenu () {
+    public List<IngredientForMenuDTO> getIngredientsForMenu () {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalseAndInStockTrue();
-        return ingredientForMenuMapper(persistenceData);
+        return ingredientMapper.ingredientForMenuMapper(persistenceData);
     }
 }

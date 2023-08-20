@@ -2,7 +2,7 @@ package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import saboroso.saborosoburguer.DTOs.inputIngredientDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

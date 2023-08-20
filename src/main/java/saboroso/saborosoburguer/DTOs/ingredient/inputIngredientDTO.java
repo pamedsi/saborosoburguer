@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.DTOs;
+package saboroso.saborosoburguer.DTOs.ingredient;
 
 import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.BooleanFlag;
