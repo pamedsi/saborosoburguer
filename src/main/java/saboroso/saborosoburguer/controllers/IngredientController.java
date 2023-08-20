@@ -35,4 +35,10 @@ public class IngredientController {
         if (ingredientService.editIngredient(changes, identifier)) return ResponseEntity.ok(new Message(changes.title() + " atualizado!"));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(changes.title() + " já tem esses dados."));
     }
+
+    @GetMapping
+    @RequestMapping (value = "/menu-ingredients")
+    public ResponseEntity<?> getMenuIngredients() {
+        return ResponseEntity.ok(ingredientService.getIngredientsForMenu());
+    }
 }

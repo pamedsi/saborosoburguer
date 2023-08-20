@@ -1,11 +1,14 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
+import saboroso.saborosoburguer.DTOs.IngredientForMenu;
 import saboroso.saborosoburguer.DTOs.inputIngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 
 import java.util.List;
+
+import static saboroso.saborosoburguer.DTOs.IngredientMapper.ingredientForMenuMapper;
 
 @Service
 public class IngredientService {
@@ -42,5 +45,9 @@ public class IngredientService {
         if (!deletedIngredient.getDeleted()) return false;
         deletedIngredient.setDeleted(false);
         return true;
+    }
+    public List<IngredientForMenu> getIngredientsForMenu () {
+        List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalseAndInStockTrue();
+        return ingredientForMenuMapper(persistenceData);
     }
 }
