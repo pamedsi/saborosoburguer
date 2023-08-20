@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.entities.Ingredient;
 
+import java.util.List;
+
 @Repository
 public interface BurgerRepository extends JpaRepository <Burger, Long> {
     Boolean existsBurgerByTitle(String title);
@@ -14,4 +16,5 @@ public interface BurgerRepository extends JpaRepository <Burger, Long> {
         return burger.getIngredients().stream()
                 .anyMatch(ingredient -> ingredient.getIdentifier().equals(ingredientIdentifier));
     }
+    List<Burger> findBurgerByDeletedFalseAndInStockTrue();
 }

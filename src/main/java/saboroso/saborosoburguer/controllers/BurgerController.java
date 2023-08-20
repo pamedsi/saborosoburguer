@@ -22,9 +22,9 @@ public class BurgerController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Hambúrguer já cadastrado!"));
     }
     @GetMapping
-    @RequestMapping (value = "get-burgers")
-    public ResponseEntity<?> seeAllBurgers () {
-        return ResponseEntity.ok(burgerService.getAllBurgers());
+    @RequestMapping (value = "get-menu-burgers")
+    public ResponseEntity<?> seeBurgersForMenu () {
+        return ResponseEntity.ok(burgerService.getMenuBurgers());
     }
     @PutMapping
     @RequestMapping (value = "/add-ingredient/{burgerIdentifier}")

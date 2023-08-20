@@ -48,7 +48,7 @@ public class Burger {
         pic = inputBurger.pic();
         if (inputBurger.inStock() != null) inStock = inputBurger.inStock();
         else inStock = true;
-        if (inputBurger.deleted() != null) inStock = inputBurger.inStock();
+        if (inputBurger.deleted() != null) deleted = inputBurger.deleted();
         else deleted = false;
     }
 }
