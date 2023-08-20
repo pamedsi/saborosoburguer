@@ -33,6 +33,8 @@ public class Burger {
     private String pic;
     @Column
     private Boolean inStock;
+    @Column
+    private Boolean deleted;
     @ManyToMany
     @JoinTable(name = "burger_ingredient",
             joinColumns = @JoinColumn(name = "burger_id"),
@@ -46,5 +48,7 @@ public class Burger {
         pic = inputBurger.pic();
         if (inputBurger.inStock() != null) inStock = inputBurger.inStock();
         else inStock = true;
+        if (inputBurger.deleted() != null) inStock = inputBurger.inStock();
+        else deleted = false;
     }
 }

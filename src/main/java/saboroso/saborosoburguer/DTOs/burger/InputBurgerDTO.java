@@ -14,6 +14,8 @@ public record InputBurgerDTO(
         BigDecimal price,
         String pic,
         @BooleanFlag
-        Boolean inStock
+        Boolean inStock,
+        @BooleanFlag
+        Boolean deleted
 )
 {}

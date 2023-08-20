@@ -1,6 +1,7 @@
 package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
 
@@ -8,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
 @Data
 public class Ingredient {
     @Id
@@ -23,11 +23,13 @@ public class Ingredient {
     @Column (nullable = true)
     private Integer grams;
     @Column
+    @Setter(AccessLevel.NONE)
     private Boolean inStock;
     @Column
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
     @Column
+    @Setter(AccessLevel.NONE)
     private Boolean deleted;
 
     public Ingredient(inputIngredientDTO ingredientDTO) {
@@ -38,5 +40,17 @@ public class Ingredient {
         else inStock = true;
         createdAt = LocalDateTime.now();
         deleted = false;
+    }
+    public Ingredient() {
+        identifier = UUID.randomUUID().toString();
+        createdAt = LocalDateTime.now();
+    }
+    public void setDeleted(Boolean deleted) {
+        if (deleted == null) this.deleted = false;
+        else this.deleted = deleted;
+    }
+    public void setInStock(Boolean inStock) {
+        if (inStock == null) this.inStock = false;
+        else this.inStock = deleted;
     }
 }

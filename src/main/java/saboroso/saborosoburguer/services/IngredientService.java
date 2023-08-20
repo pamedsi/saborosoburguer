@@ -3,10 +3,10 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuManagementDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ import java.util.List;
 public class IngredientService {
     private final IngredientRepository ingredientRepository;
     private final IngredientMapper ingredientMapper;
+
     public IngredientService(IngredientRepository ingredientRepository, IngredientMapper ingredientMapper) {
         this.ingredientRepository = ingredientRepository;
         this.ingredientMapper = ingredientMapper;
@@ -26,7 +27,7 @@ public class IngredientService {
     }
     public List<IngredientForMenuManagementDTO> getIngredientsForMenuManagement() {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalse();
-        return ingredientMapper.ingredientForMenuManagementMapper(persistenceData);
+        return ingredientMapper.ingredientsForMenuManagementMapper(persistenceData);
     }
     public Boolean editIngredient(inputIngredientDTO changes, String identifier) {
         if (ingredientRepository.existsByTitleAndGrams(changes.title(), changes.grams())) return false;
@@ -51,6 +52,6 @@ public class IngredientService {
     }
     public List<IngredientForMenuDTO> getIngredientsForMenu () {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalseAndInStockTrue();
-        return ingredientMapper.ingredientForMenuMapper(persistenceData);
+        return ingredientMapper.ingredientsForMenuMapper(persistenceData);
     }
 }

@@ -26,7 +26,6 @@ public class BurgerController {
     public ResponseEntity<?> seeAllBurgers () {
         return ResponseEntity.ok(burgerService.getAllBurgers());
     }
-
     @PutMapping
     @RequestMapping (value = "/add-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> addIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier, @RequestBody IngredientIdentifierDTO ingredientIdentifierDTO) {
