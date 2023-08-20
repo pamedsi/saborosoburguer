@@ -16,7 +16,6 @@ public class IngredientController {
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
-
     @PostMapping
     @RequestMapping (value = "/insert-ingredient")
     public ResponseEntity<?> addIngredient(@Valid @RequestBody inputIngredientDTO ingredientDTO) {

@@ -3,6 +3,7 @@ package saboroso.saborosoburguer.entities;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
 import saboroso.saborosoburguer.model.BurgerCategory;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Burger {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
