@@ -18,7 +18,6 @@ public class BurgerService {
     private final BurgerRepository burgerRepository;
     private final IngredientRepository ingredientRepository;
     private final BurgerMapper burgerMapper;
-
     private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper){
         this.burgerRepository = burgerRepository;
         this.ingredientRepository = ingredientRepository;
@@ -30,9 +29,6 @@ public class BurgerService {
         burgerRepository.save(newBurger);
         return true;
     }
-//    public List<Burger> getAllBurgers () {
-//        return burgerRepository.findAll();
-//    }
     public List<BurgerForMenuDTO> getMenuBurgers () {
         List<Burger> burgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
         return burgerMapper.burgersForMenuMapper(burgers);
@@ -51,7 +47,6 @@ public class BurgerService {
         burgerRepository.save(burger);
         return true;
     }
-
     public Boolean addPhotoToBurger(String burgerIdentifier, String pic) {
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
         if (pic.isBlank()) return false;
