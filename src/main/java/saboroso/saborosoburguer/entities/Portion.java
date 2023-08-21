@@ -2,6 +2,7 @@ package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import saboroso.saborosoburguer.DTOs.portion.InputPortionDTO;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@Table
 public class Portion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter (AccessLevel.NONE)
@@ -16,15 +18,25 @@ public class Portion {
     private Long id;
     @Column
     @Setter(AccessLevel.NONE)
-    String identifier = UUID.randomUUID().toString();
+    private String identifier = UUID.randomUUID().toString();
+    @Column (unique = true)
+    private String title;
     @Column
-    String title = null;
+    private BigDecimal price;
     @Column
-    BigDecimal price = null;
+    private Boolean inStock;
     @Column
-    Boolean inStock = true;
-    @Column
-    Boolean deleted = false;
-    @Column
+    private Boolean deleted;
+    @Column (unique = true)
     private String description;
+
+    public Portion (InputPortionDTO portionDTO) {
+        title = portionDTO.title();
+        price = portionDTO.price();
+        if (portionDTO.inStock() != null) inStock = portionDTO.inStock();
+        else inStock = true;
+        if (portionDTO.delete() != null) deleted = portionDTO.delete();
+        else deleted = false;
+        description = portionDTO.description();
+    }
 }
