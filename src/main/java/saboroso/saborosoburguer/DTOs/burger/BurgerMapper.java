@@ -1,11 +1,9 @@
 package saboroso.saborosoburguer.DTOs.burger;
 
 import org.springframework.stereotype.Component;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
+
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 import saboroso.saborosoburguer.entities.Burger;
-import saboroso.saborosoburguer.entities.Ingredient;
-import saboroso.saborosoburguer.repositories.IngredientRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,13 +1,13 @@
 package saboroso.saborosoburguer.model;
 
-import saboroso.saborosoburguer.entities.Burger;
-import saboroso.saborosoburguer.entities.Drink;
-import saboroso.saborosoburguer.entities.Portion;
+import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
+import saboroso.saborosoburguer.DTOs.drink.DrinkForMenuDTO;
+import saboroso.saborosoburguer.DTOs.portion.PortionForMenuDTO;
 
 import java.util.List;
 
 public record Menu(
-        List<Burger> burgers,
-        List<Portion> portions,
-        List<Drink> drinks
+        List<BurgerForMenuDTO> burgers,
+        List<PortionForMenuDTO> portions,
+        List<DrinkForMenuDTO> drinks
 ) {}
