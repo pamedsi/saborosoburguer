@@ -33,6 +33,9 @@ public class BurgerService {
         List<Burger> burgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
         return burgerMapper.burgersForMenuMapper(burgers);
     }
+    public List<BurgerForMenuDTO> getHighLightBurgers() {
+        return null;
+    }
     public Boolean addIngredientToBurger (String burgerIdentifier, String ingredientIdentifier) {
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
         if (burgerRepository.hasIngredient(burger, ingredientIdentifier)) return false;

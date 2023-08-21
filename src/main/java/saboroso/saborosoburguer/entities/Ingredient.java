@@ -1,7 +1,6 @@
 package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Null;
 import lombok.*;
 import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
 

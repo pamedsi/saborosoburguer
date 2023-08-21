@@ -10,31 +10,24 @@ import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.BurgerService;
 
 @RestController
-@CrossOrigin(origins = {
-        "http://localhost:4200",
-        "https://saboroso-burguer-ng.vercel.app/"
-})
 public class BurgerController {
     private final BurgerService burgerService;
 
     private BurgerController(BurgerService burgerService) {
         this.burgerService = burgerService;
     }
-
     @PostMapping
-    @RequestMapping(value = "save-burger")
+    @RequestMapping(value = "/save-burger")
     public ResponseEntity<?> insertBurger(@RequestBody @Valid InputBurgerDTO burgerDTO) {
         if (burgerService.createBurger(burgerDTO))
             return ResponseEntity.ok(new Message("Hambúrguer cadastrado!"));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Hambúrguer já cadastrado!"));
     }
-
     @GetMapping
-    @RequestMapping(value = "get-menu-burgers")
-    public ResponseEntity<?> seeBurgersForMenu() {
-        return ResponseEntity.ok(burgerService.getMenuBurgers());
+    @RequestMapping(value = "/high-lights-burger")
+    public ResponseEntity<?> seeHighLightBurgers() {
+        return ResponseEntity.ok(burgerService.getHighLightBurgers());
     }
-
     @PutMapping
     @RequestMapping(value = "/add-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> addIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier,
@@ -44,7 +37,6 @@ public class BurgerController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Ingrediente já adicionado!"));
     }
-
     @PutMapping
     @RequestMapping(value = "/add-photo/{burgerIdentifier}")
     public ResponseEntity<?> addPhoto(@PathVariable("burgerIdentifier") String burgerIdentifier,
@@ -54,7 +46,6 @@ public class BurgerController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Não foi possível adicionar a foto!"));
     }
-
     @DeleteMapping
     @RequestMapping(value = "/remove-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier,
