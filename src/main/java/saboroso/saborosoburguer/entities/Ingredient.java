@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table
 public class Ingredient {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

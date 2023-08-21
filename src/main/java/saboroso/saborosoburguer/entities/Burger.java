@@ -13,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@Table
 public class Burger{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter (AccessLevel.NONE)
