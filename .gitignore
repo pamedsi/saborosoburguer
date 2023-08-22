@@ -1,6 +1,7 @@
 HELP.md
 target/
 notas.txt
+test.ts
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
