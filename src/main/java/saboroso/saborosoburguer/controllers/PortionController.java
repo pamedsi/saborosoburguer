@@ -2,15 +2,13 @@ package saboroso.saborosoburguer.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import saboroso.saborosoburguer.DTOs.portion.InputPortionDTO;
 import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.PortionService;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class PortionController {
     private final PortionService portionService;
     public PortionController(PortionService portionService) {

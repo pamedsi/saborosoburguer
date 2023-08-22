@@ -10,6 +10,7 @@ import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.BurgerService;
 
 @RestController
+@CrossOrigin (origins = "*")
 public class BurgerController {
     private final BurgerService burgerService;
 

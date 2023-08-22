@@ -7,6 +7,7 @@ import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.OrderService;
 
 @RestController
+@CrossOrigin (origins = "*")
 public class OrderController {
     private final OrderService orderService;
     public OrderController(OrderService orderService) {

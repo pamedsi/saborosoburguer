@@ -11,6 +11,7 @@ import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.IngredientService;
 
 @RestController
+@CrossOrigin (origins = "*")
 public class IngredientController {
     private final IngredientService ingredientService;
 
