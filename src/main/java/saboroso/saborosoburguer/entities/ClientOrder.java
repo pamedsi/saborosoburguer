@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Data
 @Table
 @NoArgsConstructor
+@Data
 public class ClientOrder {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

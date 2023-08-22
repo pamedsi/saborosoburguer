@@ -34,8 +34,6 @@ public class UserEntity {
     private String address;
     @Column
     private LocalDateTime userSince = LocalDateTime.now();
-    @OneToMany(mappedBy = "clientWhoOrdered")
-    private List<ClientOrder> orders;
 
     public UserEntity(InputUserDTO userDTO) {
         name = userDTO.name();
