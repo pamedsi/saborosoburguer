@@ -14,15 +14,18 @@ public class BurgerMapper {
     public BurgerMapper(IngredientMapper ingredientMapper) {
         this.ingredientMapper = ingredientMapper;
     }
+    public BurgerForMenuDTO singleBurgerForMenuDTO (Burger persistenceBurger) {
+        return new BurgerForMenuDTO(
+                persistenceBurger.getIdentifier(),
+                persistenceBurger.getCategory(),
+                persistenceBurger.getTitle(),
+                persistenceBurger.getPrice(),
+                persistenceBurger.getPic(),
+                ingredientMapper.ingredientsForMenuMapper(persistenceBurger.getIngredients()));
+    }
     public List<BurgerForMenuDTO> burgersForMenuMapper (List<Burger> burgers) {
         return burgers.stream()
-                .map(burger -> new BurgerForMenuDTO(
-                        burger.getIdentifier(),
-                        burger.getCategory(),
-                        burger.getTitle(),
-                        burger.getPrice(),
-                        burger.getPic(),
-                        ingredientMapper.ingredientsForMenuMapper(burger.getIngredients())))
+                .map(this::singleBurgerForMenuDTO)
                 .collect(Collectors.toList());
     }
 }

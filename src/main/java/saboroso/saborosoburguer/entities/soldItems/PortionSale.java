@@ -24,8 +24,8 @@ public class PortionSale {
     @JoinColumn(name = "portion_id")
     private Portion soltPortion;
     @Column
-    private Integer amount;
-    public PortionSale(ClientOrder orderThatSold, Portion soltPortion, Integer amount) {
+    private Long amount;
+    public PortionSale(ClientOrder orderThatSold, Portion soltPortion, Long amount) {
         this.orderThatSold = orderThatSold;
         this.soltPortion = soltPortion;
         this.amount = amount;

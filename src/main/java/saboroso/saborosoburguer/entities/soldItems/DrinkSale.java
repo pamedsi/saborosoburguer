@@ -28,8 +28,8 @@ public class DrinkSale {
     @JoinColumn(name = "drink_id")
     private Drink soldDrink;
     @Column
-    private Integer amount;
-    public DrinkSale(ClientOrder orderThatSold, Drink soldDrink, Integer amount) {
+    private Long amount;
+    public DrinkSale(ClientOrder orderThatSold, Drink soldDrink, Long amount) {
         this.orderThatSold = orderThatSold;
         this.soldDrink = soldDrink;
         this.amount = amount;

@@ -26,8 +26,8 @@ public class BurgerSale {
     @JoinColumn(name = "burger_id")
     private Burger soldburger;
     @Column
-    private Integer amount;
-    public BurgerSale(ClientOrder orderThatSold, Burger soldburger, Integer amount) {
+    private Long amount;
+    public BurgerSale(ClientOrder orderThatSold, Burger soldburger, Long amount) {
         this.orderThatSold = orderThatSold;
         this.soldburger = soldburger;
         this.amount = amount;
