@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,13 +22,13 @@ public class Burger{
     @Setter(AccessLevel.NONE)
     private String identifier = UUID.randomUUID().toString();
     @Column
-    private String title = null;
+    private String title;
     @Column
-    private BigDecimal price = null;
+    private BigDecimal price;
     @Column
-    private Boolean inStock = true;
+    private Boolean inStock;
     @Column
-    private Boolean deleted = false;
+    private Boolean deleted;
     @Column
     private BurgerCategory category;
     @Column (length = 2000)
