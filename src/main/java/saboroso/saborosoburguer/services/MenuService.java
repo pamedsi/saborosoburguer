@@ -41,7 +41,6 @@ public class MenuService {
         List<BurgerForMenuDTO> burgers = burgerMapper.burgersForMenuMapper(burgersPersistence);
         List<PortionForMenuDTO> portions = portionMapper.portionForMenuDTOMapper(portionsPersistence);
         List<DrinkForMenuDTO> drinks = drinkMapper.drinkForMenuMapper(drinksPersistence);
-
         return new Menu(burgers, portions, drinks);
     }
 }

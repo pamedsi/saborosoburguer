@@ -24,7 +24,7 @@ public class BurgerController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Hambúrguer já cadastrado!"));
     }
     @GetMapping
-    @RequestMapping(value = "/high-lights-burger")
+    @RequestMapping(value = "/high-light-burgers")
     public ResponseEntity<?> seeHighLightBurgers() {
         return ResponseEntity.ok(burgerService.getHighLightBurgers());
     }

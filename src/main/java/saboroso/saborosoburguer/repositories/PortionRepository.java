@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PortionRepository extends JpaRepository <Portion, Long> {
     List<Portion> findByDeletedFalseAndInStockTrue();
+    Portion findByIdentifier(String identifier);
 }

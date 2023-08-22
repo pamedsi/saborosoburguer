@@ -1,7 +1,5 @@
 package saboroso.saborosoburguer.entities;
 
-
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 

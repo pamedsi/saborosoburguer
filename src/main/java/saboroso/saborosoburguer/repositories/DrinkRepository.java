@@ -10,4 +10,5 @@ import java.util.List;
 public interface DrinkRepository extends JpaRepository <Drink, Long> {
     List<Drink> findByDeletedFalseAndInStockTrue();
     Boolean existsByTitleAndMl(String title, Integer mL);
+    Drink findByIdentifier(String identifier);
 }

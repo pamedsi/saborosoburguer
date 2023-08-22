@@ -4,11 +4,10 @@ import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerMapper;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 import saboroso.saborosoburguer.entities.Burger;
-import saboroso.saborosoburguer.entities.Ingredient;
+import saboroso.saborosoburguer.entities.ClientOrder;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
+import saboroso.saborosoburguer.repositories.ClientOrderRepository;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 
 import java.util.List;
@@ -18,10 +17,12 @@ public class BurgerService {
     private final BurgerRepository burgerRepository;
     private final IngredientRepository ingredientRepository;
     private final BurgerMapper burgerMapper;
-    private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper){
+    private final ClientOrderRepository clientOrderRepository;
+    private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper, ClientOrderRepository clientOrderRepository){
         this.burgerRepository = burgerRepository;
         this.ingredientRepository = ingredientRepository;
         this.burgerMapper = burgerMapper;
+        this.clientOrderRepository = clientOrderRepository;
     }
     public Boolean createBurger (InputBurgerDTO burgerDTO) {
         if (burgerRepository.existsBurgerByTitle(burgerDTO.title())) return false;
