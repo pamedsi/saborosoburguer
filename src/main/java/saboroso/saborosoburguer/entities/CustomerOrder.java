@@ -24,7 +24,7 @@ public class CustomerOrder {
     @Setter (AccessLevel.NONE)
     private String identifier = UUID.randomUUID().toString();
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "customer_id")
     private UserEntity clientWhoOrdered;
     @Column
     @Setter (AccessLevel.NONE)
