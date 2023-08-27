@@ -15,7 +15,7 @@ import java.util.UUID;
 @Table
 @NoArgsConstructor
 @Data
-public class ClientOrder {
+public class CustomerOrder {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -33,7 +33,7 @@ public class ClientOrder {
     @Setter (AccessLevel.NONE)
     private BigDecimal total;
 
-    public ClientOrder(UserEntity buyer, BigDecimal price) {
+    public CustomerOrder(UserEntity buyer, BigDecimal price) {
         clientWhoOrdered = buyer;
         total = price.setScale(2, RoundingMode.HALF_UP);
     }

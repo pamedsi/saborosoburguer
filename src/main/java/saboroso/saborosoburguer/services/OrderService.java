@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    private final ClientOrderRepository clientOrderRepository;
+    private final CostumerOrderRepository costumerOrderRepository;
     private final UserRepository userRepository;
     private final BurgerRepository burgerRepository;
     private final PortionRepository portionRepository;
@@ -21,8 +21,8 @@ public class OrderService {
     private final PortionSaleRepository portionSaleRepository;
     private final DrinkSaleRepository drinkSaleRepository;
 
-    public OrderService(ClientOrderRepository clientOrderRepository, UserRepository userRepository, BurgerRepository burgerRepository, PortionRepository portionRepository, DrinkRepository drinkRepository, BurgerSaleRepository burgerSaleRepository, PortionSaleRepository portionSaleRepository, DrinkSaleRepository drinkSaleRepository) {
-        this.clientOrderRepository = clientOrderRepository;
+    public OrderService(CostumerOrderRepository costumerOrderRepository, UserRepository userRepository, BurgerRepository burgerRepository, PortionRepository portionRepository, DrinkRepository drinkRepository, BurgerSaleRepository burgerSaleRepository, PortionSaleRepository portionSaleRepository, DrinkSaleRepository drinkSaleRepository) {
+        this.costumerOrderRepository = costumerOrderRepository;
         this.userRepository = userRepository;
         this.burgerRepository = burgerRepository;
         this.portionRepository = portionRepository;
@@ -33,8 +33,8 @@ public class OrderService {
     }
     public void makeOrder(String clientIdentifier, ClientOrderDTO orderDTO) {
         UserEntity buyer = userRepository.findByIdentifier(clientIdentifier);
-        ClientOrder newOrder = new ClientOrder(buyer, orderDTO.valueToPay());
-        clientOrderRepository.save(newOrder);
+        CustomerOrder newOrder = new CustomerOrder(buyer, orderDTO.valueToPay());
+        costumerOrderRepository.save(newOrder);
         orderDTO.burgers().forEach(burger -> {
             Burger burgerPersistence = burgerRepository.findBurgerByIdentifier(burger.identifier());
             burgerSaleRepository.save(new BurgerSale(newOrder, burgerPersistence, burger.quantity()));
@@ -48,7 +48,7 @@ public class OrderService {
             drinkSaleRepository.save(new DrinkSale(newOrder, drinkPersistence, drink.quantity()));
         });
     }
-    public List<ClientOrder> getAllOrders() {
-        return clientOrderRepository.findAll();
+    public List<CustomerOrder> getAllOrders() {
+        return costumerOrderRepository.findAll();
     }
 }

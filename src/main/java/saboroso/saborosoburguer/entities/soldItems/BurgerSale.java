@@ -1,14 +1,14 @@
 package saboroso.saborosoburguer.entities.soldItems;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import saboroso.saborosoburguer.entities.Burger;
-import saboroso.saborosoburguer.entities.ClientOrder;
+import saboroso.saborosoburguer.entities.CustomerOrder;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table
@@ -21,15 +21,18 @@ public class BurgerSale {
     private Long id;
     @ManyToOne (fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "client_order_id")
-    private ClientOrder orderThatSold;
+    private CustomerOrder orderThatSold;
     @ManyToOne
     @JoinColumn(name = "burger_id")
     private Burger soldburger;
     @Column
-    private Long amount;
-    public BurgerSale(ClientOrder orderThatSold, Burger soldburger, Long amount) {
+    private Long quantity;
+    @Column (updatable = false)
+    private BigDecimal singleUnitySoldFor;
+    public BurgerSale(CustomerOrder orderThatSold, Burger soldburger, Long quantity) {
         this.orderThatSold = orderThatSold;
         this.soldburger = soldburger;
-        this.amount = amount;
+        this.quantity = quantity;
+        this.singleUnitySoldFor = soldburger.getPrice();
     }
 }
