@@ -1,7 +1,7 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.order.ClientOrderDTO;
+import saboroso.saborosoburguer.DTOs.order.OrderDTO;
 import saboroso.saborosoburguer.entities.*;
 import saboroso.saborosoburguer.entities.soldItems.BurgerSale;
 import saboroso.saborosoburguer.entities.soldItems.DrinkSale;
@@ -31,9 +31,9 @@ public class OrderService {
         this.portionSaleRepository = portionSaleRepository;
         this.drinkSaleRepository = drinkSaleRepository;
     }
-    public void makeOrder(String clientIdentifier, ClientOrderDTO orderDTO) {
+    public void makeOrder(String clientIdentifier, OrderDTO orderDTO) {
         UserEntity buyer = userRepository.findByIdentifier(clientIdentifier);
-        CustomerOrder newOrder = new CustomerOrder(buyer, orderDTO.valueToPay());
+        CustomerOrder newOrder = new CustomerOrder(buyer, orderDTO.valueToPay(), orderDTO.Address());
         costumerOrderRepository.save(newOrder);
         orderDTO.burgers().forEach(burger -> {
             Burger burgerPersistence = burgerRepository.findBurgerByIdentifier(burger.identifier());

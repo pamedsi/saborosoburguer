@@ -21,5 +21,9 @@ public class UserController extends BaseController {
         userService.addUser(userDTO);
         return ResponseEntity.ok(new Message(userDTO.name() + " cadastrado."));
     }
+    @GetMapping
+    public ResponseEntity<?> getUserAddresses (@PathVariable String userIdentifier) {
+        return ResponseEntity.ok(userService.getUserAddresses(userIdentifier));
+    }
 
 }
