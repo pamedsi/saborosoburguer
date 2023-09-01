@@ -7,4 +7,6 @@ import saboroso.saborosoburguer.entities.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository <UserEntity, Long>{
     UserEntity findByIdentifier (String identifier) ;
+    UserEntity findByEmail(String email);
+    Boolean existsByPhoneNumber(String phoneNumber);
 }
