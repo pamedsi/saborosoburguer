@@ -1,6 +1,7 @@
 package saboroso.saborosoburguer.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saboroso.saborosoburguer.DTOs.user.InputUserDTO;
@@ -18,8 +19,8 @@ public class UserController extends BaseController {
 
     @PostMapping(value = "/create-user")
     public ResponseEntity<?> addNewUser(@RequestBody @Valid InputUserDTO userDTO) {
-        userService.addUser(userDTO);
-        return ResponseEntity.ok(new Message(userDTO.name() + " cadastrado."));
+        if (userService.addUser(userDTO)) return ResponseEntity.ok(new Message(userDTO.name() + " cadastrado."));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(userDTO.name() + "já cadastrado."));
     }
     @GetMapping
     public ResponseEntity<?> getUserAddresses (@PathVariable String userIdentifier) {
