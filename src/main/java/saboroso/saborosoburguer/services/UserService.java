@@ -23,9 +23,11 @@ public class UserService {
         this.addressRepository = addressRepository;
         this.addressMapper = addressMapper;
     }
-    public void addUser(InputUserDTO userDTO) {
+    public Boolean addUser(InputUserDTO userDTO) {
+        if (userRepository.existsByPhoneNumber(userDTO.phoneNumber())) return false;
         UserEntity newUser = new UserEntity(userDTO);
         userRepository.save(newUser);
+        return true;
     }
     public List<AddressDTO> getUserAddresses (String userIdentifier) {
         UserEntity user = userRepository.findByIdentifier(userIdentifier);
