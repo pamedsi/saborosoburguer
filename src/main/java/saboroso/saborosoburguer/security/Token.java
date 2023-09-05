@@ -20,7 +20,6 @@ public class Token {
     private final String issuer = "saboroso-burguer";
 
     public String generateToken(UserEntity user) {
-        System.out.println(secret);
         Algorithm algorithm = Algorithm.HMAC256(secret);
         try {
             return JWT.create()

@@ -1,7 +1,6 @@
 package saboroso.saborosoburguer.controllers;
 
 import jakarta.validation.Valid;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class BurgerController extends BaseController {
             return ResponseEntity.ok(new Message("Hambúrguer cadastrado!"));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Hambúrguer já cadastrado!"));
     }
-    @GetMapping(value = "/high-light-burgers")
+    @GetMapping(value = "/highlight-burgers")
     public ResponseEntity<?> seeHighLightBurgers() {
         return ResponseEntity.ok(burgerService.getHighLightBurgers());
     }

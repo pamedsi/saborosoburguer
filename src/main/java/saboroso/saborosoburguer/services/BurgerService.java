@@ -38,13 +38,18 @@ public class BurgerService {
         return burgerMapper.burgersForMenuMapper(burgers);
     }
     public MostSoldBurgersDTO getHighLightBurgers() {
-        BurgersIdsAndAmounts burgersIdsAndAmounts = new BurgersIdsAndAmounts(burgerSaleRepository.getMostSold());
-        Burger burger1Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.firstBurgerId);
-        Burger burger2Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.secondBurgerId);
-        List<BurgerForMenuDTO> burgersDTO = burgerMapper.burgersForMenuMapper(Arrays.asList(burger1Persistence, burger2Persistence));
-        SoldBurgerDTO burger1 = new SoldBurgerDTO(burgersDTO.get(0), burgersIdsAndAmounts.firstBurgerAmount);
-        SoldBurgerDTO burger2 = new SoldBurgerDTO(burgersDTO.get(1), burgersIdsAndAmounts.secondBurgerAmount);
-        return new MostSoldBurgersDTO(burger1, burger2);
+        try {
+            BurgersIdsAndAmounts burgersIdsAndAmounts = new BurgersIdsAndAmounts(burgerSaleRepository.getMostSold());
+            Burger burger1Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.firstBurgerId);
+            Burger burger2Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.secondBurgerId);
+            List<BurgerForMenuDTO> burgersDTO = burgerMapper.burgersForMenuMapper(Arrays.asList(burger1Persistence, burger2Persistence));
+            SoldBurgerDTO burger1 = new SoldBurgerDTO(burgersDTO.get(0), burgersIdsAndAmounts.firstBurgerAmount);
+            SoldBurgerDTO burger2 = new SoldBurgerDTO(burgersDTO.get(1), burgersIdsAndAmounts.secondBurgerAmount);
+            return new MostSoldBurgersDTO(burger1, burger2);
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
     public Boolean addIngredientToBurger (String burgerIdentifier, String ingredientIdentifier) {
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
