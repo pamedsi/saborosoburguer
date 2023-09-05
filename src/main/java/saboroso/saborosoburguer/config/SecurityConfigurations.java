@@ -41,6 +41,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/token").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/get-menu").permitAll()
+                        .requestMatchers("/api/menu-ingredients-management").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -56,7 +57,7 @@ public class SecurityConfigurations {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200", "https://saboroso-burguer-ng.vercel.app/"));
+        configuration.setAllowedOrigins(List.of("https://saboroso-burguer-ng.vercel.app", "http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
