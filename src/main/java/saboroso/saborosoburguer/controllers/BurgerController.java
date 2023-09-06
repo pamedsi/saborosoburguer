@@ -26,6 +26,10 @@ public class BurgerController extends BaseController {
     public ResponseEntity<?> seeHighLightBurgers() {
         return ResponseEntity.ok(burgerService.getHighLightBurgers());
     }
+    @GetMapping(value = "/burgers-management")
+    public ResponseEntity<?> getBurgersForManagement() {
+        return ResponseEntity.ok(burgerService.getBurgersForMenuManagement());
+    }
     @PutMapping (value = "/add-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> addIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier,
             @RequestBody IngredientIdentifierDTO ingredientIdentifierDTO) {
@@ -50,5 +54,4 @@ public class BurgerController extends BaseController {
         }
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(new Message("Ingrediente já removido!"));
     }
-
 }

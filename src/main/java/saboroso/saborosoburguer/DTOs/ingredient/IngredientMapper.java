@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class IngredientMapper {
     public List<IngredientForMenuDTO> ingredientsForMenuMapper (List<Ingredient> ingredients) {
         return ingredients.stream()
-                .map(ingredient -> new IngredientForMenuDTO(ingredient.getTitle(), ingredient.getGrams()))
+                .map(ingredient -> new IngredientForMenuDTO(ingredient.getIdentifier(), ingredient.getTitle(), ingredient.getGrams()))
                 .collect(Collectors.toList());
     }
 

@@ -5,7 +5,6 @@ import saboroso.saborosoburguer.DTOs.burger.*;
 import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
 import saboroso.saborosoburguer.repositories.BurgerSaleRepository;
-import saboroso.saborosoburguer.repositories.CostumerOrderRepository;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.utils.BurgersIdsAndAmounts;
 import saboroso.saborosoburguer.utils.SoldBurgerDTO;
@@ -18,13 +17,11 @@ public class BurgerService {
     private final BurgerRepository burgerRepository;
     private final IngredientRepository ingredientRepository;
     private final BurgerMapper burgerMapper;
-    private final CostumerOrderRepository costumerOrderRepository;
     private final BurgerSaleRepository burgerSaleRepository;
-    private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper, CostumerOrderRepository costumerOrderRepository, BurgerSaleRepository burgerSaleRepository){
+    private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper, BurgerSaleRepository burgerSaleRepository){
         this.burgerRepository = burgerRepository;
         this.ingredientRepository = ingredientRepository;
         this.burgerMapper = burgerMapper;
-        this.costumerOrderRepository = costumerOrderRepository;
         this.burgerSaleRepository = burgerSaleRepository;
     }
     public Boolean createBurger (InputBurgerDTO burgerDTO) {
@@ -36,6 +33,10 @@ public class BurgerService {
     public List<BurgerForMenuDTO> getMenuBurgers () {
         List<Burger> burgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
         return burgerMapper.burgersForMenuMapper(burgers);
+    }
+    public List<BurgerManagementDTO> getBurgersForMenuManagement() {
+        List<Burger> burgers = burgerRepository.findAll();
+        return burgerMapper.burgersForManagementMapper(burgers);
     }
     public MostSoldBurgersDTO getHighLightBurgers() {
         try {
