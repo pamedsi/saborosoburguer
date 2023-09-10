@@ -3,7 +3,6 @@ package saboroso.saborosoburguer.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
-import saboroso.saborosoburguer.model.BurgerCategory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,13 +13,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table
 public class Burger{
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter (AccessLevel.NONE)
     @Id
     private Long id;
     @Column
     @Setter(AccessLevel.NONE)
-    private String identifier = UUID.randomUUID().toString();
+    private String identifier;
     @Column
     private String title;
     @Column
@@ -29,8 +28,8 @@ public class Burger{
     private Boolean inStock;
     @Column
     private Boolean deleted;
-    @Column
-    private BurgerCategory category;
+    @ManyToOne
+    private BurgerCategory burgerCategory;
     @Column (length = 2000)
     private String pic;
     @ManyToMany
@@ -39,7 +38,7 @@ public class Burger{
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients;
     public Burger(InputBurgerDTO inputBurger) {
-        category = BurgerCategory.valueOf(inputBurger.category().toUpperCase().replace(" ", "_"));
+        identifier = UUID.randomUUID().toString();
         setTitle(inputBurger.title());
         setPrice(inputBurger.price().setScale(2, RoundingMode.HALF_UP));
         setPic(inputBurger.pic());

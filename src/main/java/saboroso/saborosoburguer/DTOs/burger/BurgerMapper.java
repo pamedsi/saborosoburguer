@@ -2,6 +2,7 @@ package saboroso.saborosoburguer.DTOs.burger;
 
 import org.springframework.stereotype.Component;
 
+import saboroso.saborosoburguer.DTOs.CategoryDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 import saboroso.saborosoburguer.entities.Burger;
 
@@ -17,7 +18,7 @@ public class BurgerMapper {
     public BurgerForMenuDTO singleBurgerForMenuDTO (Burger persistenceBurger) {
         return new BurgerForMenuDTO(
                 persistenceBurger.getIdentifier(),
-                persistenceBurger.getCategory(),
+                persistenceBurger.getBurgerCategory().getTitle(),
                 persistenceBurger.getTitle(),
                 persistenceBurger.getPrice(),
                 persistenceBurger.getPic(),
@@ -26,7 +27,7 @@ public class BurgerMapper {
     public BurgerManagementDTO singleBurgerForManagement (Burger persistenceBurger) {
                 return new BurgerManagementDTO(
                 persistenceBurger.getIdentifier(),
-                persistenceBurger.getCategory(),
+                new CategoryDTO(persistenceBurger.getBurgerCategory().getIdentifier(), persistenceBurger.getBurgerCategory().getTitle()),
                 persistenceBurger.getTitle(),
                 persistenceBurger.getPrice(),
                 persistenceBurger.getPic(),

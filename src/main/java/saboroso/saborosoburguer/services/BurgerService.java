@@ -3,8 +3,10 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.burger.*;
 import saboroso.saborosoburguer.entities.Burger;
+import saboroso.saborosoburguer.entities.BurgerCategory;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
 import saboroso.saborosoburguer.repositories.BurgerSaleRepository;
+import saboroso.saborosoburguer.repositories.CategoryRepository;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.utils.BurgersIdsAndAmounts;
 import saboroso.saborosoburguer.utils.SoldBurgerDTO;
@@ -18,15 +20,19 @@ public class BurgerService {
     private final IngredientRepository ingredientRepository;
     private final BurgerMapper burgerMapper;
     private final BurgerSaleRepository burgerSaleRepository;
-    private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper, BurgerSaleRepository burgerSaleRepository){
+    private final CategoryRepository categoryRepository;
+    private BurgerService(BurgerRepository burgerRepository, IngredientRepository ingredientRepository, BurgerMapper burgerMapper, BurgerSaleRepository burgerSaleRepository, CategoryRepository categoryRepository){
         this.burgerRepository = burgerRepository;
         this.ingredientRepository = ingredientRepository;
         this.burgerMapper = burgerMapper;
         this.burgerSaleRepository = burgerSaleRepository;
+        this.categoryRepository = categoryRepository;
     }
     public Boolean createBurger (InputBurgerDTO burgerDTO) {
         if (burgerRepository.existsBurgerByTitle(burgerDTO.title())) return false;
+        BurgerCategory category = categoryRepository.findByIdentifier(burgerDTO.categoryIdentifier());
         Burger newBurger = new Burger(burgerDTO);
+        newBurger.setBurgerCategory(category);
         burgerRepository.save(newBurger);
         return true;
     }
