@@ -39,10 +39,12 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/token").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/create-user").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/get-menu").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/menu-ingredients").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/insert-ingredients").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/get-all-categories").hasRole("ADMIN")
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

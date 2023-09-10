@@ -7,4 +7,6 @@ import saboroso.saborosoburguer.entities.BurgerCategory;
 @Repository
 public interface CategoryRepository extends JpaRepository<BurgerCategory, Long> {
     BurgerCategory findByIdentifier(String identifier);
+
+    Boolean existsByTitle(String title);
 }

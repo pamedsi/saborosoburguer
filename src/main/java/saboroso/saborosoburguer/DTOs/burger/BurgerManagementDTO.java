@@ -1,6 +1,6 @@
 package saboroso.saborosoburguer.DTOs.burger;
 
-import saboroso.saborosoburguer.DTOs.CategoryDTO;
+import saboroso.saborosoburguer.DTOs.category.CategoryDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
 
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.DTOs;
+package saboroso.saborosoburguer.DTOs.category;
 
 public record CategoryDTO(
         String identifier,
