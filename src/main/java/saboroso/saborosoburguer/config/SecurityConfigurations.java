@@ -45,6 +45,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/menu-ingredients").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/insert-ingredients").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/edit-category").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/get-all-categories").hasRole("ADMIN")
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .anyRequest().authenticated()

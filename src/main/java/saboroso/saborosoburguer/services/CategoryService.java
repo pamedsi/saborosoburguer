@@ -45,7 +45,7 @@ public class CategoryService {
     }
     public Boolean deleteCategory(String categoryIdentifier) {
         BurgerCategory categoryToDelete = categoryRepository.findByIdentifier(categoryIdentifier);
-        if (categoryToDelete == null || !categoryToDelete.getDeleted()) return false;
+        if (categoryToDelete == null || categoryToDelete.getDeleted()) return false;
         categoryToDelete.setDeleted(true);
         categoryRepository.save(categoryToDelete);
       return true;
