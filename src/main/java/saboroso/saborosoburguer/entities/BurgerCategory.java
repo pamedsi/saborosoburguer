@@ -22,7 +22,17 @@ public class BurgerCategory {
   @Getter
   @Setter
   private String title;
+  @Column
+  @Getter
+  @Setter
+  private Boolean deleted;
   public BurgerCategory(String categoryName) {
+    this.deleted = false;
+    identifier = UUID.randomUUID().toString();
+    title = categoryName;
+  }
+    public BurgerCategory(String categoryName, Boolean deleted) {
+    this.deleted = deleted;
     identifier = UUID.randomUUID().toString();
     title = categoryName;
   }

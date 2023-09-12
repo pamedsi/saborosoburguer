@@ -9,6 +9,6 @@ import java.util.List;
 public class CategoryMapper {
 
     public List<CategoryDTO> severalToDTO(List<BurgerCategory> categoriesPersistence) {
-        return categoriesPersistence.stream().map(category -> new CategoryDTO(category.getIdentifier(), category.getTitle())).toList();
+        return categoriesPersistence.stream().map(category -> new CategoryDTO(category.getIdentifier(), category.getTitle(), category.getDeleted())).toList();
     }
 }

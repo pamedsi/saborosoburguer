@@ -6,7 +6,6 @@ import saboroso.saborosoburguer.DTOs.category.CategoryMapper;
 import saboroso.saborosoburguer.entities.BurgerCategory;
 import saboroso.saborosoburguer.repositories.CategoryRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

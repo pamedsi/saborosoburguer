@@ -2,5 +2,6 @@ package saboroso.saborosoburguer.DTOs.category;
 
 public record CategoryDTO(
         String identifier,
-        String title
+        String title,
+        Boolean deleted
 ) {}
