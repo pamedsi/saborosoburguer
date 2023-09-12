@@ -27,7 +27,7 @@ public class BurgerMapper {
     public BurgerManagementDTO singleBurgerForManagement (Burger persistenceBurger) {
                 return new BurgerManagementDTO(
                 persistenceBurger.getIdentifier(),
-                new CategoryDTO(persistenceBurger.getBurgerCategory().getIdentifier(), persistenceBurger.getBurgerCategory().getTitle()),
+                new CategoryDTO(persistenceBurger.getBurgerCategory().getIdentifier(), persistenceBurger.getBurgerCategory().getTitle(), persistenceBurger.getDeleted()),
                 persistenceBurger.getTitle(),
                 persistenceBurger.getPrice(),
                 persistenceBurger.getPic(),

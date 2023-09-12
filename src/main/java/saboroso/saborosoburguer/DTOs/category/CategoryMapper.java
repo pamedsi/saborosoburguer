@@ -8,7 +8,12 @@ import java.util.List;
 @Component
 public class CategoryMapper {
 
+    public CategoryDTO singleToDTO(BurgerCategory burgerCategory) {
+        return new CategoryDTO(
+            burgerCategory.getIdentifier(), burgerCategory.getTitle(), burgerCategory.getDeleted());
+    }
+
     public List<CategoryDTO> severalToDTO(List<BurgerCategory> categoriesPersistence) {
-        return categoriesPersistence.stream().map(category -> new CategoryDTO(category.getIdentifier(), category.getTitle(), category.getDeleted())).toList();
+        return categoriesPersistence.stream().map(this::singleToDTO).toList();
     }
 }
