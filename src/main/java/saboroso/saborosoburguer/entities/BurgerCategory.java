@@ -1,39 +1,40 @@
 package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @Table
+@Data   // Colocar o access level none numa galera ae
 public class BurgerCategory {
   @Id
   @GeneratedValue (strategy = GenerationType.IDENTITY)
+  @Setter(AccessLevel.NONE)
   private Long id;
-  @Column
-  @Getter
+  @Column (unique = true)
+  @Setter(AccessLevel.NONE)
   private String identifier;
-  @Column
-  @Getter
-  @Setter
+  @Column (unique = true)
   private String title;
   @Column
-  @Getter
-  @Setter
   private Boolean deleted;
+  @Column
+  @Setter(AccessLevel.NONE)
+  private LocalDateTime createdAt;
+  @Column
+  private LocalDateTime lastEditedIn;
   public BurgerCategory(String categoryName) {
     this.deleted = false;
     identifier = UUID.randomUUID().toString();
     title = categoryName;
   }
-    public BurgerCategory(String categoryName, Boolean deleted) {
+  public BurgerCategory(String categoryName, Boolean deleted) {
     this.deleted = deleted;
     identifier = UUID.randomUUID().toString();
-    title = categoryName;
+    title = categoryName.trim().toUpperCase();
   }
 }

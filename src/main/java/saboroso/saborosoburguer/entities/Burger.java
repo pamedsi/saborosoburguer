@@ -6,6 +6,7 @@ import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -32,6 +33,10 @@ public class Burger{
     private BurgerCategory burgerCategory;
     @Column (length = 2000)
     private String pic;
+    @Column
+    private LocalDateTime createdAt;
+    @Column
+    private LocalDateTime lastEditedIn;
     @ManyToMany
     @JoinTable(name = "burger_ingredient",
             joinColumns = @JoinColumn(name = "burger_id"),
@@ -46,5 +51,6 @@ public class Burger{
         else setInStock(true);
         if (inputBurger.deleted() != null) setDeleted(inputBurger.deleted());
         else setDeleted(false);
+        createdAt = LocalDateTime.now();
     }
 }

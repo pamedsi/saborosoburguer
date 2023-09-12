@@ -2,9 +2,12 @@ package saboroso.saborosoburguer.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import saboroso.saborosoburguer.DTOs.category.CategoryDTO;
 import saboroso.saborosoburguer.model.BaseController;
@@ -33,4 +36,20 @@ public class CategoryController extends BaseController {
         );
         return ResponseEntity.ok(new Message(categoryDTO.title() + " cadastrado!"));
     }
+    @PutMapping(value = "/edit-category")
+    public ResponseEntity<?> editCategory(@RequestBody CategoryDTO categoryDTO) {
+        Boolean worked = categoryService.updateCategory(categoryDTO);
+        if (!worked) return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                new Message("Já existe uma categoria com esse título!")
+        );
+        return ResponseEntity.ok(new Message("Categoria atualizada! Agora se chama " + categoryDTO.title()));
+    }
+    @DeleteMapping(value = "/remove-category/{identifier}")
+    public ResponseEntity<?> editCategory(@RequestParam String identifier) {
+        Boolean worked = categoryService.deleteCategory(identifier);
+        if (!worked) return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                new Message("Esta categoria já foi deletada")
+        );
+        return ResponseEntity.ok(new Message("Categoria removida com sucesso."));
+    }    
 }
