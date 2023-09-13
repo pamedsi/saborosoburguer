@@ -23,16 +23,16 @@ public class CategoryService {
         return categoryMapper.severalToDTO(categoriesPersistence);
     }
     public Boolean createCategory(String categoryTitle) {
-        BurgerCategory category = categoryRepository.findByTitle(categoryTitle.toUpperCase());
+        String newCategoryTitle = categoryTitle.toUpperCase();
+        BurgerCategory category = categoryRepository.findByTitle(newCategoryTitle);
         if (category != null && category.getDeleted()) {
             category.setDeleted(false);
             categoryRepository.save(category);
             return true;
         }
         if (category != null) return false;
-        BurgerCategory newCategory = new BurgerCategory(categoryTitle);
+        BurgerCategory newCategory = new BurgerCategory(newCategoryTitle);
         categoryRepository.save(newCategory);
-        System.out.println(newCategory);
         return true;
     }
     public Boolean updateCategory(CategoryDTO categoryDTO) {
