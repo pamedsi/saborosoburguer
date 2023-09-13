@@ -9,19 +9,16 @@ import java.util.stream.Collectors;
 
 @Component
 public class IngredientMapper {
-    public List<IngredientForMenuDTO> ingredientsForMenuMapper (List<Ingredient> ingredients) {
-        return ingredients.stream()
-                .map(ingredient -> new IngredientForMenuDTO(ingredient.getIdentifier(), ingredient.getTitle(), ingredient.getGrams()))
-                .collect(Collectors.toList());
-    }
-
-    public List<IngredientForMenuManagementDTO> ingredientsForMenuManagementMapper (List<Ingredient> ingredients) {
-        return ingredients.stream()
-                .map(ingredient -> new IngredientForMenuManagementDTO(
+    public IngredientDTO singleIngredientMapper (Ingredient ingredient) {
+        return new IngredientDTO(
                         ingredient.getIdentifier(),
                         ingredient.getTitle(),
-                        ingredient.getGrams()
-                        ))
+                        ingredient.getGrams(),
+                        ingredient.getInStock());
+    }
+    public List<IngredientDTO> severalToDTO (List<Ingredient> ingredients) {
+        return ingredients.stream()
+                .map(this::singleIngredientMapper)
                 .collect(Collectors.toList());
     }
 }

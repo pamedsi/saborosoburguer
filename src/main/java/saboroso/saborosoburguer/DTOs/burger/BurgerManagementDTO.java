@@ -1,10 +1,11 @@
 package saboroso.saborosoburguer.DTOs.burger;
 
 import saboroso.saborosoburguer.DTOs.category.CategoryDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 public record BurgerManagementDTO(
         String identifier,
         CategoryDTO category,
@@ -12,5 +13,5 @@ public record BurgerManagementDTO(
         BigDecimal price,
         String pic,
         Boolean inStock,
-        List<IngredientForMenuDTO> ingredients
+        List<IngredientDTO> ingredients
 ) {}

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.model.BaseController;
 import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.IngredientService;
@@ -19,7 +19,7 @@ public class IngredientController extends BaseController {
         this.ingredientService = ingredientService;
     }
     @PostMapping(value = "/insert-ingredient")
-    public ResponseEntity<?> addIngredient(@Valid @RequestBody inputIngredientDTO ingredientDTO) {
+    public ResponseEntity<?> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
         if (ingredientService.insertIngredient(ingredientDTO)) return ResponseEntity.ok(new Message(ingredientDTO.title() + " adicionado!"));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(ingredientDTO.title() + " já adicionado."));
     }
@@ -27,9 +27,9 @@ public class IngredientController extends BaseController {
     public ResponseEntity<?> getIngredientsForMenuManagement() {
         return ResponseEntity.ok(ingredientService.getIngredientsForMenuManagement());
     }
-    @PostMapping(value = "/update-ingredient")
-    public ResponseEntity<?> updateIngredient(@Valid @RequestBody inputIngredientDTO changes, @PathVariable String identifier) {
-        if (ingredientService.editIngredient(changes, identifier)) return ResponseEntity.ok(new Message(changes.title() + " atualizado!"));
+    @PutMapping(value = "/update-ingredient")
+    public ResponseEntity<?> updateIngredient(@Valid @RequestBody IngredientDTO changes) {
+        if (ingredientService.editIngredient(changes)) return ResponseEntity.ok(new Message(changes.title() + " atualizado!"));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(changes.title() + " já tem esses dados."));
     }
     @GetMapping(value = "/menu-ingredients")

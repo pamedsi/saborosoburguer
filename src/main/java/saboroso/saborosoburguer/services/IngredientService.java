@@ -1,13 +1,12 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientForMenuManagementDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,22 +18,23 @@ public class IngredientService {
         this.ingredientRepository = ingredientRepository;
         this.ingredientMapper = ingredientMapper;
     }
-    public Boolean insertIngredient (inputIngredientDTO ingredientDTO) {
+    public Boolean insertIngredient (IngredientDTO ingredientDTO) {
         if (ingredientRepository.existsByTitleAndGrams(ingredientDTO.title(), ingredientDTO.grams())) return false;
         Ingredient newIngredient = new Ingredient(ingredientDTO);
         ingredientRepository.save(newIngredient);
         return true;
     }
-    public List<IngredientForMenuManagementDTO> getIngredientsForMenuManagement() {
+    public List<IngredientDTO> getIngredientsForMenuManagement() {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalse();
-        return ingredientMapper.ingredientsForMenuManagementMapper(persistenceData);
+        return ingredientMapper.severalToDTO(persistenceData);
     }
-    public Boolean editIngredient(inputIngredientDTO changes, String identifier) {
+    public Boolean editIngredient(IngredientDTO changes) {
         if (ingredientRepository.existsByTitleAndGrams(changes.title(), changes.grams())) return false;
-        Ingredient editedIngredient = ingredientRepository.findByIdentifier(identifier);
+        Ingredient editedIngredient = ingredientRepository.findByIdentifier(changes.identifier());
         if (changes.grams() != null) editedIngredient.setGrams(changes.grams());
-        if (changes.inStock() != null) editedIngredient.setGrams(changes.grams());
+        if (changes.inStock() != null) editedIngredient.setInStock(changes.inStock());
         if (changes.title() != null) editedIngredient.setTitle(changes.title());
+        editedIngredient.setLastEdited(LocalDateTime.now());
         ingredientRepository.save(editedIngredient);
         return true;
     }
@@ -50,8 +50,8 @@ public class IngredientService {
         deletedIngredient.setDeleted(false);
         return true;
     }
-    public List<IngredientForMenuDTO> getIngredientsForMenu () {
+    public List<IngredientDTO> getIngredientsForMenu () {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalseAndInStockTrue();
-        return ingredientMapper.ingredientsForMenuMapper(persistenceData);
+        return ingredientMapper.severalToDTO(persistenceData);
     }
 }

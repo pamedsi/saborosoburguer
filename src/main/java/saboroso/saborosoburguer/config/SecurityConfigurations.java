@@ -37,16 +37,30 @@ public class SecurityConfigurations {
                 .cors(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        // Autenticação:
                         .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/token").permitAll()
+
+                        // Usuários:
                         .requestMatchers(HttpMethod.POST, "/api/create-user").hasRole("ADMIN")
+
+                        // Hambúrgueres:
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()
+
+                        // Cardápio:
                         .requestMatchers(HttpMethod.GET, "/api/get-menu").permitAll()
+
+                        // Ingredientes:
                         .requestMatchers(HttpMethod.GET, "/api/menu-ingredients").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/update-ingredient").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/insert-ingredients").hasRole("ADMIN")
+
+                        // Categorias:
                         .requestMatchers(HttpMethod.PUT, "/api/edit-category").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/get-all-categories").hasRole("ADMIN")
+
+                        // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

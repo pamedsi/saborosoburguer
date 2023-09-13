@@ -2,7 +2,7 @@ package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import saboroso.saborosoburguer.DTOs.ingredient.inputIngredientDTO;
+import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -31,8 +31,10 @@ public class Ingredient {
     @Column
     @Setter(AccessLevel.NONE)
     private Boolean deleted;
+    @Column
+    private LocalDateTime lastEdited;
 
-    public Ingredient(inputIngredientDTO ingredientDTO) {
+    public Ingredient(IngredientDTO ingredientDTO) {
         identifier = UUID.randomUUID().toString();
         title = ingredientDTO.title();
         if (ingredientDTO.grams() != null) grams = ingredientDTO.grams();

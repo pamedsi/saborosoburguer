@@ -22,7 +22,7 @@ public class BurgerMapper {
                 persistenceBurger.getTitle(),
                 persistenceBurger.getPrice(),
                 persistenceBurger.getPic(),
-                ingredientMapper.ingredientsForMenuMapper(persistenceBurger.getIngredients()));
+                ingredientMapper.severalToDTO(persistenceBurger.getIngredients()));
     }
     public BurgerManagementDTO singleBurgerForManagement (Burger persistenceBurger) {
                 return new BurgerManagementDTO(
@@ -32,7 +32,7 @@ public class BurgerMapper {
                 persistenceBurger.getPrice(),
                 persistenceBurger.getPic(),
                 persistenceBurger.getInStock(),
-                ingredientMapper.ingredientsForMenuMapper(persistenceBurger.getIngredients()));
+                ingredientMapper.severalToDTO(persistenceBurger.getIngredients()));
     }
     public List<BurgerManagementDTO> burgersForManagementMapper (List<Burger> burgers) {
         return burgers.stream()
