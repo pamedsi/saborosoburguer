@@ -26,11 +26,13 @@ public class CategoryService {
         BurgerCategory category = categoryRepository.findByTitle(categoryTitle.toUpperCase());
         if (category != null && category.getDeleted()) {
             category.setDeleted(false);
+            categoryRepository.save(category);
             return true;
         }
         if (category != null) return false;
         BurgerCategory newCategory = new BurgerCategory(categoryTitle);
         categoryRepository.save(newCategory);
+        System.out.println(newCategory);
         return true;
     }
     public Boolean updateCategory(CategoryDTO categoryDTO) {
