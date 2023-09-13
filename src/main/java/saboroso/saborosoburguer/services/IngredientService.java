@@ -38,15 +38,21 @@ public class IngredientService {
     }
     public Boolean editIngredient(IngredientDTO changes) {
         List<Ingredient> ingredients = ingredientRepository.findAllByTitleAndGramsAndDeletedFalse(changes.title(), changes.grams());
+        Ingredient ingredientToEdit;
         if (ingredients.size() > 1) return false;
-        Ingredient editedIngredient = ingredients.get(0);
-        if(!Objects.equals(editedIngredient.getIdentifier(), changes.identifier())) return false;
+        if (ingredients.size() == 1 && !Objects.equals(ingredients.get(0).getIdentifier(), changes.identifier())) {
+            return false;
+        }
+        if (ingredients.size() == 1) ingredientToEdit = ingredients.get(0);
+        else ingredientToEdit = ingredientRepository.findByIdentifier(changes.identifier());
+        if(ingredientToEdit == null) return false;
 
-        if (changes.grams() != null) editedIngredient.setGrams(changes.grams());
-        if (changes.inStock() != null) editedIngredient.setInStock(changes.inStock());
-        if (changes.title() != null) editedIngredient.setTitle(changes.title());
-        ingredientRepository.save(editedIngredient);
+        if (changes.grams() != null) ingredientToEdit.setGrams(changes.grams());
+        if (changes.inStock() != null) ingredientToEdit.setInStock(changes.inStock());
+        if (changes.title() != null) ingredientToEdit.setTitle(changes.title());
+        ingredientRepository.save(ingredientToEdit);
         return true;
+
     }
     public Boolean removeIngredient(String identifier){
         Ingredient deletedIngredient = ingredientRepository.findByIdentifier(identifier);
