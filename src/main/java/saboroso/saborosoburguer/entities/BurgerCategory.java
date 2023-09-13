@@ -31,6 +31,7 @@ public class BurgerCategory {
     this.deleted = false;
     identifier = UUID.randomUUID().toString();
     title = categoryName;
+    createdAt = LocalDateTime.now();
   }
   public BurgerCategory(String categoryName, Boolean deleted) {
     this.deleted = deleted;
