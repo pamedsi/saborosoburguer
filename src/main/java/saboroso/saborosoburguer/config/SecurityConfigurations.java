@@ -54,15 +54,16 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/menu-ingredients").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/update-ingredient").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/insert-ingredients").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-ingredient/{identifier}").hasRole("ADMIN")
 
                         // Categorias:
                         .requestMatchers(HttpMethod.PUT, "/api/edit-category").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{identifier}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/get-all-categories").hasRole("ADMIN")
 
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().hasRole("ADMIN")
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

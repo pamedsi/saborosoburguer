@@ -46,7 +46,7 @@ public class BurgerController extends BaseController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Não foi possível adicionar a foto!"));
     }
-    @DeleteMapping (value = "/remove-ingredient/{burgerIdentifier}")
+    @DeleteMapping (value = "/remove-burger-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier,
             @RequestBody IngredientIdentifierDTO ingredientIdentifierDTO) {
         if (burgerService.removeIngredient(burgerIdentifier, ingredientIdentifierDTO.ingredientIdentifier())) {

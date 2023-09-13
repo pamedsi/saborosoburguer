@@ -6,10 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.model.BaseController;
 import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.IngredientService;
+
+import java.net.URI;
 
 @RestController
 public class IngredientController extends BaseController {
@@ -20,7 +23,11 @@ public class IngredientController extends BaseController {
     }
     @PostMapping(value = "/insert-ingredient")
     public ResponseEntity<?> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
-        if (ingredientService.insertIngredient(ingredientDTO)) return ResponseEntity.ok(new Message(ingredientDTO.title() + " adicionado!"));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/insert-ingredient")
+                .buildAndExpand(ingredientDTO)
+                .toUri();
+        if (ingredientService.insertIngredient(ingredientDTO)) return ResponseEntity.created(location).body((new Message(ingredientDTO.title() + " adicionado!")));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(ingredientDTO.title() + " já adicionado."));
     }
     @GetMapping(value = "/menu-ingredients-management")
@@ -36,4 +43,9 @@ public class IngredientController extends BaseController {
     public ResponseEntity<?> getMenuIngredients() {
         return ResponseEntity.ok(ingredientService.getIngredientsForMenu());
     }
+    @DeleteMapping(value = "/remove-ingredient/{identifier}")
+    public ResponseEntity<?> deleteIngredient(@PathVariable String identifier) {
+        if (ingredientService.removeIngredient(identifier)) return ResponseEntity.ok(new Message("Ingrediente deletado!"));
+        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body((new Message("Este ingrediente não existe ou já foi deletado!")));
+    }    
 }

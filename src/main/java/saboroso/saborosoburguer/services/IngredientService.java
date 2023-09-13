@@ -6,8 +6,8 @@ import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class IngredientService {
@@ -19,7 +19,15 @@ public class IngredientService {
         this.ingredientMapper = ingredientMapper;
     }
     public Boolean insertIngredient (IngredientDTO ingredientDTO) {
-        if (ingredientRepository.existsByTitleAndGrams(ingredientDTO.title(), ingredientDTO.grams())) return false;
+        List<Ingredient> ingredients = ingredientRepository.findAllByTitleAndGramsAndDeletedFalse(ingredientDTO.title(), ingredientDTO.grams());
+        if (ingredients.size() > 1) return false;
+
+        if (ingredients.get(0) != null && !ingredients.get(0).getDeleted()) return false;
+        if (ingredients.get(0) != null) {
+            ingredients.get(0).setDeleted(false);
+            ingredientRepository.save(ingredients.get(0));
+            return true;
+        }
         Ingredient newIngredient = new Ingredient(ingredientDTO);
         ingredientRepository.save(newIngredient);
         return true;
@@ -29,25 +37,30 @@ public class IngredientService {
         return ingredientMapper.severalToDTO(persistenceData);
     }
     public Boolean editIngredient(IngredientDTO changes) {
-        if (ingredientRepository.existsByTitleAndGrams(changes.title(), changes.grams())) return false;
-        Ingredient editedIngredient = ingredientRepository.findByIdentifier(changes.identifier());
+        List<Ingredient> ingredients = ingredientRepository.findAllByTitleAndGramsAndDeletedFalse(changes.title(), changes.grams());
+        if (ingredients.size() > 1) return false;
+        Ingredient editedIngredient = ingredients.get(0);
+        if(!Objects.equals(editedIngredient.getIdentifier(), changes.identifier())) return false;
+
         if (changes.grams() != null) editedIngredient.setGrams(changes.grams());
         if (changes.inStock() != null) editedIngredient.setInStock(changes.inStock());
         if (changes.title() != null) editedIngredient.setTitle(changes.title());
-        editedIngredient.setLastEdited(LocalDateTime.now());
         ingredientRepository.save(editedIngredient);
         return true;
     }
     public Boolean removeIngredient(String identifier){
         Ingredient deletedIngredient = ingredientRepository.findByIdentifier(identifier);
+        if (deletedIngredient == null) return false;
         if (deletedIngredient.getDeleted()) return false;
         deletedIngredient.setDeleted(true);
+        ingredientRepository.save(deletedIngredient);
         return true;
     }
     public Boolean undeleteIngredient(String identifier){
         Ingredient deletedIngredient = ingredientRepository.findByIdentifier(identifier);
         if (!deletedIngredient.getDeleted()) return false;
         deletedIngredient.setDeleted(false);
+        ingredientRepository.save(deletedIngredient);
         return true;
     }
     public List<IngredientDTO> getIngredientsForMenu () {

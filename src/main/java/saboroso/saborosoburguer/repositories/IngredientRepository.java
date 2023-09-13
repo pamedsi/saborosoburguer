@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     Ingredient findByIdentifier(String identifier);
-    Boolean existsByTitleAndGrams (String title, Integer grams);
+    Boolean existsByTitleAndGramsAndDeletedFalse (String title, Integer grams);
     List<Ingredient> getIngredientsByDeletedFalseAndInStockTrue();
     List<Ingredient> getIngredientsByDeletedFalse();
+    List<Ingredient> findAllByTitleAndGramsAndDeletedFalse(String title, Integer grams);
 }
