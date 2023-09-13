@@ -36,5 +36,6 @@ public class BurgerCategory {
     this.deleted = deleted;
     identifier = UUID.randomUUID().toString();
     title = categoryName.trim().toUpperCase();
+    createdAt = LocalDateTime.now();
   }
 }
