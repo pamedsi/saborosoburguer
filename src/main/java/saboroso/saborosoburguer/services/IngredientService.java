@@ -37,6 +37,13 @@ public class IngredientService {
         if (ingredients.size() == 1 && !Objects.equals(ingredients.get(0).getIdentifier(), changes.identifier())) {
             return false;
         }
+        if (ingredients.size() == 1  && 
+        ingredients.get(0).getTitle() == changes.title() &&
+        ingredients.get(0).getGrams() == changes.grams() &&
+        ingredients.get(0).getInStock() == changes.inStock()) {
+            System.out.println("ta akii");
+            return false;
+        }
         if (ingredients.size() == 1) ingredientToEdit = ingredients.get(0);
         else ingredientToEdit = ingredientRepository.findByIdentifier(changes.identifier());
         if(ingredientToEdit == null) return false;

@@ -6,13 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.model.BaseController;
 import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.IngredientService;
-
-import java.net.URI;
 
 @RestController
 public class IngredientController extends BaseController {
