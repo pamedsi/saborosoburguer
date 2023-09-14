@@ -20,14 +20,8 @@ public class IngredientService {
     }
     public Boolean insertIngredient (IngredientDTO ingredientDTO) {
         List<Ingredient> ingredients = ingredientRepository.findAllByTitleAndGramsAndDeletedFalse(ingredientDTO.title(), ingredientDTO.grams());
-        if (ingredients.size() > 1) return false;
+        if (!ingredients.isEmpty()) return false;
 
-        if (ingredients.get(0) != null && !ingredients.get(0).getDeleted()) return false;
-        if (ingredients.get(0) != null) {
-            ingredients.get(0).setDeleted(false);
-            ingredientRepository.save(ingredients.get(0));
-            return true;
-        }
         Ingredient newIngredient = new Ingredient(ingredientDTO);
         ingredientRepository.save(newIngredient);
         return true;
@@ -52,7 +46,6 @@ public class IngredientService {
         if (changes.title() != null) ingredientToEdit.setTitle(changes.title());
         ingredientRepository.save(ingredientToEdit);
         return true;
-
     }
     public Boolean removeIngredient(String identifier){
         Ingredient deletedIngredient = ingredientRepository.findByIdentifier(identifier);

@@ -23,11 +23,8 @@ public class IngredientController extends BaseController {
     }
     @PostMapping(value = "/insert-ingredient")
     public ResponseEntity<?> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/insert-ingredient")
-                .buildAndExpand(ingredientDTO)
-                .toUri();
-        if (ingredientService.insertIngredient(ingredientDTO)) return ResponseEntity.created(location).body((new Message(ingredientDTO.title() + " adicionado!")));
+//        ingredientService.insertIngredient(ingredientDTO);
+        if (ingredientService.insertIngredient(ingredientDTO)) return ResponseEntity.status(HttpStatus.CREATED).body((new Message(ingredientDTO.title() + " adicionado!")));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(ingredientDTO.title() + " já adicionado."));
     }
     @GetMapping(value = "/menu-ingredients-management")

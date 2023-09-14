@@ -53,7 +53,7 @@ public class SecurityConfigurations {
                         // Ingredientes:
                         .requestMatchers(HttpMethod.GET, "/api/menu-ingredients").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/update-ingredient").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/insert-ingredients").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/insert-ingredient").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-ingredient/{identifier}").hasRole("ADMIN")
 
                         // Categorias:

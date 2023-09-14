@@ -12,4 +12,5 @@ public class ExceptionHandler {
     public RuntimeException runtimeExceptionHandler() { return null; }
     public ApplicationContextException applicationContextExceptionHandler() { return null; }
     public NullPointerException nullPointerExceptionHandler() { return null; }
+    public IndexOutOfBoundsException indexOutOfBoundsException() { return null; }
 }
