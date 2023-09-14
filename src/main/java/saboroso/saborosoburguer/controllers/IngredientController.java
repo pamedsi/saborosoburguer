@@ -20,7 +20,6 @@ public class IngredientController extends BaseController {
     }
     @PostMapping(value = "/insert-ingredient")
     public ResponseEntity<?> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
-//        ingredientService.insertIngredient(ingredientDTO);
         if (ingredientService.insertIngredient(ingredientDTO)) return ResponseEntity.status(HttpStatus.CREATED).body((new Message(ingredientDTO.title() + " adicionado!")));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(ingredientDTO.title() + " já adicionado."));
     }
