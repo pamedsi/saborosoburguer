@@ -61,14 +61,14 @@ public class BurgerService {
     public Boolean addIngredientToBurger (String burgerIdentifier, String ingredientIdentifier) {
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
         if (burgerRepository.hasIngredient(burger, ingredientIdentifier)) return false;
-        burger.getIngredients().add(ingredientRepository.findByIdentifier(ingredientIdentifier));
+        burger.getIngredients().add(ingredientRepository.findByIdentifierAndDeletedFalse(ingredientIdentifier));
         burgerRepository.save(burger);
         return true;
     }
     public Boolean removeIngredient(String burgerIdentifier, String ingredientIdentifier) {
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
         if (!burgerRepository.hasIngredient(burger, ingredientIdentifier)) return false;
-        burger.getIngredients().remove(ingredientRepository.findByIdentifier(ingredientIdentifier));
+        burger.getIngredients().remove(ingredientRepository.findByIdentifierAndDeletedFalse(ingredientIdentifier));
         burgerRepository.save(burger);
         return true;
     }

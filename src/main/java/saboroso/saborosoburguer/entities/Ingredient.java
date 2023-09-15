@@ -52,7 +52,6 @@ public class Ingredient {
         else this.deleted = deleted;
     }
     public void setInStock(Boolean inStock) {
-        if (inStock == null) this.inStock = false;
-        else this.inStock = deleted;
+        this.inStock = inStock;
     }
 }

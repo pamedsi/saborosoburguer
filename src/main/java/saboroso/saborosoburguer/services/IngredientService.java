@@ -3,9 +3,11 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
+import saboroso.saborosoburguer.model.IngredientResponseMessage;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,32 +32,36 @@ public class IngredientService {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalse();
         return ingredientMapper.severalToDTO(persistenceData);
     }
-    public Boolean editIngredient(IngredientDTO changes) {
-        List<Ingredient> ingredients = ingredientRepository.findAllByTitleAndGramsAndDeletedFalse(changes.title(), changes.grams());
-        Ingredient ingredientToEdit;
-        if (ingredients.size() > 1) return false;
-        if (ingredients.size() == 1 && !Objects.equals(ingredients.get(0).getIdentifier(), changes.identifier())) {
-            return false;
-        }
-        if (ingredients.size() == 1  && 
-        ingredients.get(0).getTitle() == changes.title() &&
-        ingredients.get(0).getGrams() == changes.grams() &&
-        ingredients.get(0).getInStock() == changes.inStock()) {
-            System.out.println("ta akii");
-            return false;
-        }
-        if (ingredients.size() == 1) ingredientToEdit = ingredients.get(0);
-        else ingredientToEdit = ingredientRepository.findByIdentifier(changes.identifier());
-        if(ingredientToEdit == null) return false;
+    public IngredientResponseMessage editIngredient(IngredientDTO changes) {
+        Boolean alreadyExists = ingredientRepository.existsByTitleAndGramsAndIdentifierNotAndDeletedFalse(
+                changes.title(), changes.grams(), changes.identifier()
+        );
+        if (alreadyExists) return new IngredientResponseMessage(false, "Há outro ingrediente com esses dados!");
+        Ingredient ingredientToEdit = ingredientRepository.findByIdentifierAndDeletedFalse(changes.identifier());
+        if (ingredientToEdit == null) return new IngredientResponseMessage(false, "Ingrediente não encontrado!");
 
-        if (changes.grams() != null) ingredientToEdit.setGrams(changes.grams());
-        if (changes.inStock() != null) ingredientToEdit.setInStock(changes.inStock());
-        if (changes.title() != null) ingredientToEdit.setTitle(changes.title());
+        int numberOfChanges = 0;
+
+        if(!Objects.equals(ingredientToEdit.getTitle(), changes.title())) {
+            numberOfChanges++;
+            ingredientToEdit.setTitle(changes.title());
+        }
+        if(!Objects.equals(ingredientToEdit.getGrams(), changes.grams())) {
+            numberOfChanges++;
+            ingredientToEdit.setGrams(changes.grams());
+        }
+        if(ingredientToEdit.getInStock() != changes.inStock()) {
+            numberOfChanges++;
+            ingredientToEdit.setInStock(changes.inStock());
+        }
+        if (numberOfChanges == 0) return new IngredientResponseMessage(false, "Nenhuma mudança foi inserida!");
+
+        ingredientToEdit.setLastEdited(LocalDateTime.now());
         ingredientRepository.save(ingredientToEdit);
-        return true;
+        return new IngredientResponseMessage(true, null);
     }
     public Boolean removeIngredient(String identifier){
-        Ingredient deletedIngredient = ingredientRepository.findByIdentifier(identifier);
+        Ingredient deletedIngredient = ingredientRepository.findByIdentifierAndDeletedFalse(identifier);
         if (deletedIngredient == null) return false;
         if (deletedIngredient.getDeleted()) return false;
         deletedIngredient.setDeleted(true);
@@ -63,8 +69,8 @@ public class IngredientService {
         return true;
     }
     public Boolean undeleteIngredient(String identifier){
-        Ingredient deletedIngredient = ingredientRepository.findByIdentifier(identifier);
-        if (!deletedIngredient.getDeleted()) return false;
+        Ingredient deletedIngredient = ingredientRepository.findByIdentifierAndDeletedTrue(identifier);
+        if (deletedIngredient == null) return false;
         deletedIngredient.setDeleted(false);
         ingredientRepository.save(deletedIngredient);
         return true;

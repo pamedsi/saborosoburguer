@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.model.BaseController;
+import saboroso.saborosoburguer.model.IngredientResponseMessage;
 import saboroso.saborosoburguer.model.Message;
 import saboroso.saborosoburguer.services.IngredientService;
 
@@ -29,8 +30,9 @@ public class IngredientController extends BaseController {
     }
     @PutMapping(value = "/update-ingredient")
     public ResponseEntity<?> updateIngredient(@Valid @RequestBody IngredientDTO changes) {
-        if (ingredientService.editIngredient(changes)) return ResponseEntity.ok(new Message(changes.title() + " atualizado!"));
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(changes.title() + " já tem esses dados."));
+        IngredientResponseMessage ingredientStatus = ingredientService.editIngredient(changes);
+        if (ingredientStatus.worked()) return ResponseEntity.ok(new Message(changes.title() + " atualizado!"));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(ingredientStatus.reason()));
     }
     @GetMapping(value = "/menu-ingredients")
     public ResponseEntity<?> getMenuIngredients() {
