@@ -13,5 +13,7 @@ public record IngredientDTO(
         Integer grams,
         @BooleanFlag
         @NotNull
-        Boolean inStock
+        Boolean inStock,
+        @BooleanFlag
+        Boolean deleted
 ) {}

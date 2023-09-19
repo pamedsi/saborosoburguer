@@ -14,7 +14,9 @@ public class IngredientMapper {
                         ingredient.getIdentifier(),
                         ingredient.getTitle(),
                         ingredient.getGrams(),
-                        ingredient.getInStock());
+                        ingredient.getInStock(),
+                        ingredient.getDeleted()
+                        );
     }
     public List<IngredientDTO> severalToDTO (List<Ingredient> ingredients) {
         return ingredients.stream()
