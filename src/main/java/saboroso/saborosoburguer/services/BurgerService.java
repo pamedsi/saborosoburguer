@@ -16,10 +16,8 @@ import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.utils.BurgersIdsAndAmounts;
 import saboroso.saborosoburguer.utils.SoldBurgerDTO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 @Service
 public class BurgerService {
     private final BurgerRepository burgerRepository;
@@ -56,7 +54,7 @@ public class BurgerService {
         return burgerMapper.burgersForMenuMapper(burgers);
     }
     public List<BurgerManagementDTO> getBurgersForMenuManagement() {
-        List<Burger> burgers = burgerRepository.findAll();
+        List<Burger> burgers = burgerRepository.findByDeletedFalse();
         return burgerMapper.burgersForManagementMapper(burgers);
     }
     public BurgerResponseMessage updateBurger(BurgerManagementDTO changes) {
@@ -151,12 +149,14 @@ public class BurgerService {
         burgerRepository.save(burger);
         return true;
     }
-    public Boolean addPhotoToBurger(String burgerIdentifier, String pic) {
+    public BurgerResponseMessage deleteBurger(String burgerIdentifier) {
+        if (burgerIdentifier.length() != 36) return new BurgerResponseMessage(false, "Identificador inválido!", null);
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
-        if (pic.isBlank()) return false;
-        else if (burger.getPic() != null && burger.getPic().equals(pic)) return false;
-        burger.setPic(pic);
+        if (burger == null) return new BurgerResponseMessage(false, "Hambúrguer não encontrado!", null);
+        if (burger.getDeleted()) return new BurgerResponseMessage(false, "Hambúrguer já deletado!", null);
+
+        burger.setDeleted(true);
         burgerRepository.save(burger);
-        return true;
+        return new BurgerResponseMessage(true, null, List.of(burger.getTitle()  + "deletado!"));
     }
 }

@@ -19,4 +19,6 @@ public interface BurgerRepository extends JpaRepository <Burger, Long> {
     Boolean existsByTitleAndIdentifierNotAndDeletedFalse(String title, String identifier);
 
     Burger findByIdentifierAndDeletedFalse(String identifier);
+
+    List<Burger> findByDeletedFalse();
 }

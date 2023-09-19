@@ -55,4 +55,10 @@ public class BurgerController extends BaseController {
         }
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(new Message("Ingrediente já removido!", null));
     }
+    @DeleteMapping (value = "/delete-burger/{burgerIdentifier}")
+    public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier) {
+        BurgerResponseMessage burgerStatus = burgerService.deleteBurger(burgerIdentifier);
+        if (burgerStatus.worked()) return ResponseEntity.ok(burgerStatus);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(burgerStatus);
+    }
 }

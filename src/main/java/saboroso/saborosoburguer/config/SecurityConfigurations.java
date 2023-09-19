@@ -48,6 +48,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/save-burger").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/update-burger").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/delete-burger").hasRole("ADMIN")
 
                         // Cardápio:
                         .requestMatchers(HttpMethod.GET, "/api/get-menu").permitAll()
