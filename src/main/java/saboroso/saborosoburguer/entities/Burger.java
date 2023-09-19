@@ -7,6 +7,7 @@ import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -14,14 +15,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table
 public class Burger{
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter (AccessLevel.NONE)
     @Id
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @Setter (AccessLevel.NONE)
+    @Getter (AccessLevel.NONE)
     private Long id;
     @Column
     @Setter(AccessLevel.NONE)
     private String identifier;
-    @Column
+    @Column (unique = true)
     private String title;
     @Column
     private BigDecimal price;
@@ -30,6 +32,11 @@ public class Burger{
     @Column
     private Boolean deleted;
     @ManyToOne
+    @JoinTable (
+            name = "category_of_burger",
+            joinColumns = @JoinColumn(name = "burger_id"),
+            inverseJoinColumns = @JoinColumn(name = "burger_category_id")
+    )
     private BurgerCategory burgerCategory;
     @Column (length = 2000)
     private String pic;
@@ -47,10 +54,16 @@ public class Burger{
         setTitle(inputBurger.title());
         setPrice(inputBurger.price().setScale(2, RoundingMode.HALF_UP));
         setPic(inputBurger.pic());
-        if (inputBurger.inStock() != null) setInStock(inputBurger.inStock());
-        else setInStock(true);
-        if (inputBurger.deleted() != null) setDeleted(inputBurger.deleted());
-        else setDeleted(false);
+        setInStock(inputBurger.inStock());
         createdAt = LocalDateTime.now();
+        deleted = false;
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        if (this.ingredients == null) this.ingredients = new ArrayList<>();
+        this.ingredients.add(ingredient);
+    }
+    public void removeIngredient(Ingredient ingredient) {
+        if (this.ingredients != null) this.ingredients.remove(ingredient);
     }
 }

@@ -1,15 +1,17 @@
 package saboroso.saborosoburguer.DTOs.ingredient;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jdk.jfr.BooleanFlag;
-import org.springframework.format.annotation.NumberFormat;
 
 public record IngredientDTO(
         String identifier,
         @NotBlank
         String title,
-        @NumberFormat
+        @Min(0)
         Integer grams,
         @BooleanFlag
+        @NotNull
         Boolean inStock
 ) {}

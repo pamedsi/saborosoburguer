@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.model;
+package saboroso.saborosoburguer.models;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

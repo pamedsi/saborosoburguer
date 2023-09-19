@@ -10,9 +10,8 @@ public class CategoryMapper {
 
     public CategoryDTO singleToDTO(BurgerCategory burgerCategory) {
         return new CategoryDTO(
-            burgerCategory.getIdentifier(), burgerCategory.getTitle(), burgerCategory.getDeleted());
+            burgerCategory.getIdentifier(), burgerCategory.getTitle());
     }
-
     public List<CategoryDTO> severalToDTO(List<BurgerCategory> categoriesPersistence) {
         return categoriesPersistence.stream().map(this::singleToDTO).toList();
     }

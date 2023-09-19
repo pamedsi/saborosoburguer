@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import saboroso.saborosoburguer.DTOs.LoginDTO;
 import saboroso.saborosoburguer.DTOs.TokenDTO;
 import saboroso.saborosoburguer.entities.UserEntity;
-import saboroso.saborosoburguer.model.BaseController;
+import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.security.Token;
 
 @RestController

@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.model;
+package saboroso.saborosoburguer.models;
 
 import lombok.Getter;
 

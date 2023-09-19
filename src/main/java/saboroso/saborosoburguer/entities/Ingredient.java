@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Ingredient {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
+    @Setter (AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     private Long id;
     @Setter(AccessLevel.NONE)

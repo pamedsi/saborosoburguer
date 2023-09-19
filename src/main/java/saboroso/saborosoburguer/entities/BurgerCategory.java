@@ -9,11 +9,12 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table
-@Data   // Colocar o access level none numa galera ae
+@Data
 public class BurgerCategory {
   @Id
   @GeneratedValue (strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
+  @Getter(AccessLevel.NONE)
   private Long id;
   @Column (unique = true)
   @Setter(AccessLevel.NONE)

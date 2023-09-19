@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.model;
+package saboroso.saborosoburguer.models;
 
 public record IngredientResponseMessage(
         Boolean worked,

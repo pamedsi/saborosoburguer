@@ -42,10 +42,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/token").permitAll()
 
                         // Usuários:
-                        .requestMatchers(HttpMethod.POST, "/api/create-user").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/create-user").permitAll()
 
                         // Hambúrgueres:
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/save-burger").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/update-burger").hasRole("ADMIN")
 
                         // Cardápio:
                         .requestMatchers(HttpMethod.GET, "/api/get-menu").permitAll()

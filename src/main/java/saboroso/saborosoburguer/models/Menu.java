@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.model;
+package saboroso.saborosoburguer.models;
 
 import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
 import saboroso.saborosoburguer.DTOs.drink.DrinkForMenuDTO;

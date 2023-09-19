@@ -10,7 +10,7 @@ import saboroso.saborosoburguer.DTOs.portion.PortionMapper;
 import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.entities.Drink;
 import saboroso.saborosoburguer.entities.Portion;
-import saboroso.saborosoburguer.model.Menu;
+import saboroso.saborosoburguer.models.Menu;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
 import saboroso.saborosoburguer.repositories.DrinkRepository;
 import saboroso.saborosoburguer.repositories.PortionRepository;

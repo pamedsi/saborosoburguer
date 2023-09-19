@@ -3,7 +3,7 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
-import saboroso.saborosoburguer.model.IngredientResponseMessage;
+import saboroso.saborosoburguer.models.IngredientResponseMessage;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
 
