@@ -19,7 +19,6 @@ import saboroso.saborosoburguer.security.Token;
 public class AuthenticationController extends BaseController {
     private final AuthenticationManager authenticationManager;
     private final Token tokenService;
-
     public AuthenticationController(AuthenticationManager authenticationManager, Token token) {
         this.authenticationManager = authenticationManager;
         tokenService = token;

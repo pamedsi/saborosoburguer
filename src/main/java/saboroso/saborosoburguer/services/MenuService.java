@@ -5,7 +5,7 @@ import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerMapper;
 import saboroso.saborosoburguer.DTOs.drink.DrinkForMenuDTO;
 import saboroso.saborosoburguer.DTOs.drink.DrinkMapper;
-import saboroso.saborosoburguer.DTOs.portion.PortionForMenuDTO;
+import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
 import saboroso.saborosoburguer.DTOs.portion.PortionMapper;
 import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.entities.Drink;
@@ -39,7 +39,7 @@ public class MenuService {
         List<Drink> drinksPersistence = drinkRepository.findByDeletedFalseAndInStockTrue();
 
         List<BurgerForMenuDTO> burgers = burgerMapper.burgersForMenuMapper(burgersPersistence);
-        List<PortionForMenuDTO> portions = portionMapper.portionForMenuDTOMapper(portionsPersistence);
+        List<PortionDTO> portions = portionMapper.severalToDTO(portionsPersistence);
         List<DrinkForMenuDTO> drinks = drinkMapper.drinkForMenuMapper(drinksPersistence);
         return new Menu(burgers, portions, drinks);
     }

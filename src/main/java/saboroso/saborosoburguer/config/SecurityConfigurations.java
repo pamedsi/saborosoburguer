@@ -64,6 +64,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{identifier}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/get-all-categories").hasRole("ADMIN")
 
+                        // Porções:
+                        .requestMatchers(HttpMethod.GET, "/api/get-all-portions").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/add-category").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{identifier}").hasRole("ADMIN")
+
+
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .anyRequest().hasRole("ADMIN")

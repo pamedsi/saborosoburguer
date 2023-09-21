@@ -15,7 +15,5 @@ public record InputPortionDTO(
         @NotBlank
         String description,
         @BooleanFlag
-        Boolean inStock,
-        @BooleanFlag
-        Boolean delete
+        Boolean inStock
 ) {}

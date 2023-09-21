@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContextException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 public class ExceptionHandler {
 
@@ -18,4 +19,5 @@ public class ExceptionHandler {
     public DataAccessResourceFailureException dataAccessResourceFailureException() { return null; }
     public DataIntegrityViolationException dataIntegrityViolationException() {return null; }
     public UnsupportedOperationException unsupportedOperationException() { return null; }
+    public HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException () { return null; }
 }

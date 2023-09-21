@@ -2,9 +2,10 @@ package saboroso.saborosoburguer.DTOs.portion;
 
 import java.math.BigDecimal;
 
-public record PortionForMenuDTO (
+public record PortionDTO(
         String identifier,
         String title,
         BigDecimal price,
-        String description
+        String description,
+        Boolean inStock
 ) {}

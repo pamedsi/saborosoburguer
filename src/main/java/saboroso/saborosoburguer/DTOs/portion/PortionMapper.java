@@ -8,10 +8,17 @@ import java.util.stream.Collectors;
 
 @Component
 public class PortionMapper {
-    public PortionForMenuDTO singlePortionToMenuDTO(Portion portion) {
-        return new PortionForMenuDTO(portion.getIdentifier(), portion.getTitle(), portion.getPrice(), portion.getDescription());
+    public PortionDTO singlePortionToDTO(Portion portion) {
+        return new PortionDTO(
+                portion.getIdentifier(),
+                portion.getTitle(),
+                portion.getPrice(),
+                portion.getDescription(),
+                portion.getInStock()
+                );
     }
-    public List<PortionForMenuDTO> portionForMenuDTOMapper (List<Portion> portions){
-        return portions.stream().map(this::singlePortionToMenuDTO).collect(Collectors.toList());
+    public List<PortionDTO> severalToDTO (List<Portion> portions){
+        return portions.stream().map(this::singlePortionToDTO).collect(Collectors.toList());
     }
+
 }

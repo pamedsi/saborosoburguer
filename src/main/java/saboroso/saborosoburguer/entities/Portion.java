@@ -35,8 +35,7 @@ public class Portion {
         price = portionDTO.price();
         if (portionDTO.inStock() != null) inStock = portionDTO.inStock();
         else inStock = true;
-        if (portionDTO.delete() != null) deleted = portionDTO.delete();
-        else deleted = false;
+        deleted = false;
         description = portionDTO.description();
     }
 }
