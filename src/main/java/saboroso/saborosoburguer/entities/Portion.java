@@ -33,8 +33,7 @@ public class Portion {
     public Portion (InputPortionDTO portionDTO) {
         title = portionDTO.title();
         price = portionDTO.price();
-        if (portionDTO.inStock() != null) inStock = portionDTO.inStock();
-        else inStock = true;
+        inStock = portionDTO.inStock();
         deleted = false;
         description = portionDTO.description();
     }
