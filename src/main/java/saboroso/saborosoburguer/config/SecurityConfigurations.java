@@ -39,7 +39,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         // Autenticação:
                         .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/token").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/admin-token").permitAll()
 
                         // Usuários:
                         .requestMatchers(HttpMethod.POST, "/api/create-user").permitAll()
@@ -67,7 +67,7 @@ public class SecurityConfigurations {
                         // Porções:
                         .requestMatchers(HttpMethod.GET, "/api/get-all-portions").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/add-category").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{identifier}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-category/{identifier}").hasRole("ADMIN")
 
 
                         // Gestão:

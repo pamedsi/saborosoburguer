@@ -1,3 +1,8 @@
 package saboroso.saborosoburguer.DTOs;
 
-public record TokenDTO(String token) {}
+import saboroso.saborosoburguer.models.UserRole;
+
+public record TokenDTO(
+        String token,
+        UserRole role
+) {}
