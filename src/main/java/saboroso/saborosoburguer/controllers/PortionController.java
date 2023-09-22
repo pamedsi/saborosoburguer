@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import saboroso.saborosoburguer.DTOs.portion.InputPortionDTO;
 import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
 import saboroso.saborosoburguer.models.BaseController;
+import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.PortionService;
 
@@ -26,5 +27,12 @@ public class PortionController extends BaseController {
     public ResponseEntity<?> getAllPortions() {
         List<PortionDTO> allPortions = portionService.getAllPortions();
         return ResponseEntity.ok(allPortions);
+    }
+    @DeleteMapping (value = "/remove-portion/{identifier}")
+    public ResponseEntity<?> deletePortion(@PathVariable (value = "identifier") String portionIdentifier) {
+        CRUDResponseMessage portionStatus = portionService.removePortion(portionIdentifier);
+        if (portionStatus.worked()) return ResponseEntity.ok(new Message(portionStatus.changes().get(0), null));
+
+        return ResponseEntity.badRequest().body(new Message(portionStatus.reasonWhy(), null));
     }
 }

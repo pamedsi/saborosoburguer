@@ -8,7 +8,7 @@ import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.entities.BurgerCategory;
 import saboroso.saborosoburguer.entities.Ingredient;
-import saboroso.saborosoburguer.models.BurgerResponseMessage;
+import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
 import saboroso.saborosoburguer.repositories.BurgerSaleRepository;
 import saboroso.saborosoburguer.repositories.CategoryRepository;
@@ -32,12 +32,12 @@ public class BurgerService {
         this.burgerSaleRepository = burgerSaleRepository;
         this.categoryRepository = categoryRepository;
     }
-    public BurgerResponseMessage createBurger (InputBurgerDTO burgerDTO) {
+    public CRUDResponseMessage createBurger (InputBurgerDTO burgerDTO) {
         if (burgerRepository.existsBurgerByTitle(burgerDTO.title()))
-            return new BurgerResponseMessage(false, "Já existe um hambúrguer com esse nome!", null);
+            return new CRUDResponseMessage(false, "Já existe um hambúrguer com esse nome!", null);
         BurgerCategory category = categoryRepository.findByIdentifier(burgerDTO.categoryIdentifier());
         if (category == null)
-            return new BurgerResponseMessage(false, "Categoria não encontrada!", null);
+            return new CRUDResponseMessage(false, "Categoria não encontrada!", null);
         List<Ingredient> ingredients = burgerDTO.ingredients().stream().map(ingredient -> {
             Ingredient foundIngredient = ingredientRepository.findByIdentifierAndDeletedFalse(ingredient.identifier());
             if (foundIngredient == null) throw new NotFoundException(ingredient.title() + " não encontrado!");
@@ -47,7 +47,7 @@ public class BurgerService {
         newBurger.setBurgerCategory(category);
         newBurger.setIngredients(ingredients);
         burgerRepository.save(newBurger);
-        return new BurgerResponseMessage(true, null, null);
+        return new CRUDResponseMessage(true, null, null);
     }
     public List<BurgerForMenuDTO> getMenuBurgers () {
         List<Burger> burgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
@@ -57,13 +57,13 @@ public class BurgerService {
         List<Burger> burgers = burgerRepository.findByDeletedFalse();
         return burgerMapper.burgersForManagementMapper(burgers);
     }
-    public BurgerResponseMessage updateBurger(BurgerManagementDTO changes) {
-        if (changes == null) return new BurgerResponseMessage(false, "Nenhuma alteração fornecida!", null);
+    public CRUDResponseMessage updateBurger(BurgerManagementDTO changes) {
+        if (changes == null) return new CRUDResponseMessage(false, "Nenhuma alteração fornecida!", null);
 
         Boolean alreadyExists = burgerRepository.existsByTitleAndIdentifierNotAndDeletedFalse(changes.title(), changes.identifier());
-        if (alreadyExists) return new BurgerResponseMessage(false, "Já existe um hambúrguer com esse nome!", null);
+        if (alreadyExists) return new CRUDResponseMessage(false, "Já existe um hambúrguer com esse nome!", null);
         Burger burgerToEdit = burgerRepository.findByIdentifierAndDeletedFalse(changes.identifier());
-        if (burgerToEdit == null) return new BurgerResponseMessage(false, "Hambúrguer não encontrado!", null);
+        if (burgerToEdit == null) return new CRUDResponseMessage(false, "Hambúrguer não encontrado!", null);
 
         List<String> changesForResponse = new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class BurgerService {
         }
         if (!Objects.equals(burgerToEdit.getBurgerCategory().getIdentifier(), changes.category().identifier())) {
             BurgerCategory comingCategory = categoryRepository.findByIdentifier(changes.category().identifier());
-            if(comingCategory == null) return new BurgerResponseMessage(false, "Categoria não encontrada", null);
+            if(comingCategory == null) return new CRUDResponseMessage(false, "Categoria não encontrada", null);
             burgerToEdit.setBurgerCategory(comingCategory);
             changesForResponse.add("Categoria atualizada! Agora é: " + changes.category().title());
         }
@@ -97,7 +97,7 @@ public class BurgerService {
             if (!alreadyOnIt) {
                 Ingredient ingredientToAdd = ingredientRepository.findByIdentifierAndDeletedFalse(ingredientComing.identifier());
                 if (ingredientToAdd == null) {
-                    return new BurgerResponseMessage(false, "Ingrediente não encontrado!", null);
+                    return new CRUDResponseMessage(false, "Ingrediente não encontrado!", null);
                 }
                 burgerToEdit.addIngredient(ingredientToAdd);
                 changesForResponse.add(ingredientComing.title() + " inserido!");
@@ -115,10 +115,10 @@ public class BurgerService {
         });
         ingredientsToRemove.forEach(burgerToEdit::removeIngredient);
 
-        if (changesForResponse.isEmpty()) return new BurgerResponseMessage(false, "Nenhuma mudança solicitada é diferente dos dados já presentes!", null);
+        if (changesForResponse.isEmpty()) return new CRUDResponseMessage(false, "Nenhuma mudança solicitada é diferente dos dados já presentes!", null);
 
         burgerRepository.save(burgerToEdit);
-        return new BurgerResponseMessage(true, null, changesForResponse);
+        return new CRUDResponseMessage(true, null, changesForResponse);
     }
     
     public MostSoldBurgersDTO getHighLightBurgers() {
@@ -149,14 +149,14 @@ public class BurgerService {
         burgerRepository.save(burger);
         return true;
     }
-    public BurgerResponseMessage deleteBurger(String burgerIdentifier) {
-        if (burgerIdentifier.length() != 36) return new BurgerResponseMessage(false, "Identificador inválido!", null);
+    public CRUDResponseMessage deleteBurger(String burgerIdentifier) {
+        if (burgerIdentifier.length() != 36) return new CRUDResponseMessage(false, "Identificador inválido!", null);
         Burger burger = burgerRepository.findBurgerByIdentifier(burgerIdentifier);
-        if (burger == null) return new BurgerResponseMessage(false, "Hambúrguer não encontrado!", null);
-        if (burger.getDeleted()) return new BurgerResponseMessage(false, "Hambúrguer já deletado!", null);
+        if (burger == null) return new CRUDResponseMessage(false, "Hambúrguer não encontrado!", null);
+        if (burger.getDeleted()) return new CRUDResponseMessage(false, "Hambúrguer já deletado!", null);
 
         burger.setDeleted(true);
         burgerRepository.save(burger);
-        return new BurgerResponseMessage(true, null, List.of(burger.getTitle()  + "deletado!"));
+        return new CRUDResponseMessage(true, null, List.of(burger.getTitle()  + "deletado!"));
     }
 }

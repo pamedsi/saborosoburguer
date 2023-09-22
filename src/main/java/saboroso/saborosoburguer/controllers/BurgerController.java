@@ -9,7 +9,7 @@ import saboroso.saborosoburguer.DTOs.burger.BurgerManagementDTO;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientIdentifierDTO;
 import saboroso.saborosoburguer.models.BaseController;
-import saboroso.saborosoburguer.models.BurgerResponseMessage;
+import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.BurgerService;
 
@@ -21,7 +21,7 @@ public class BurgerController extends BaseController {
     }
     @PostMapping (value = "/save-burger")
     public ResponseEntity<?> insertBurger(@RequestBody @Valid InputBurgerDTO burgerDTO) {
-        BurgerResponseMessage burgerStatus = burgerService.createBurger(burgerDTO);
+        CRUDResponseMessage burgerStatus = burgerService.createBurger(burgerDTO);
         if (burgerStatus.worked()) return ResponseEntity.ok(new Message("Hambúrguer cadastrado!", null));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(burgerStatus.reasonWhy(), null));
     }
@@ -43,9 +43,9 @@ public class BurgerController extends BaseController {
     }
     @PutMapping (value = "/update-burger")
     public ResponseEntity<?> editBurger(@RequestBody BurgerManagementDTO burgerDTO) {
-        BurgerResponseMessage burgerStatus = burgerService.updateBurger(burgerDTO);
-        if(burgerStatus.worked()) return ResponseEntity.ok(new Message("Atualização feita com sucesso!", burgerStatus.changes()));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message(burgerStatus.reasonWhy(), burgerStatus.changes()));
+        CRUDResponseMessage burgerStatus = burgerService.updateBurger(burgerDTO);
+        if (burgerStatus.worked()) return ResponseEntity.ok(new Message("Atualização feita com sucesso!", burgerStatus.changes()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("Não foi possível continuar.", null));
     }
     @DeleteMapping (value = "/remove-burger-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier,
@@ -57,7 +57,7 @@ public class BurgerController extends BaseController {
     }
     @DeleteMapping (value = "/delete-burger/{burgerIdentifier}")
     public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier) {
-        BurgerResponseMessage burgerStatus = burgerService.deleteBurger(burgerIdentifier);
+        CRUDResponseMessage burgerStatus = burgerService.deleteBurger(burgerIdentifier);
         if (burgerStatus.worked()) return ResponseEntity.ok(burgerStatus);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(burgerStatus);
     }
