@@ -33,10 +33,9 @@ public class Drink {
     public Drink(InputDrinkDTO inputDrinkDTO) {
         title = inputDrinkDTO.title();
         price = inputDrinkDTO.price();
-        if (inputDrinkDTO.inStock() != null) setInStock(inputDrinkDTO.inStock());
-        else setInStock(true);
-        if (inputDrinkDTO.deleted() != null) setDeleted(inputDrinkDTO.deleted());
-        else setDeleted(false);
+        setInStock(inputDrinkDTO.inStock());
+        setDeleted(inputDrinkDTO.deleted());
         ml = inputDrinkDTO.ml();
     }
+
 }

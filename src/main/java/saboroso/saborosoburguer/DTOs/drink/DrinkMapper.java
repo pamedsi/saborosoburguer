@@ -8,10 +8,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class DrinkMapper {
-    public DrinkForMenuDTO singleDrinkForMenuMapperDTO (Drink drink){
-        return new DrinkForMenuDTO(drink.getIdentifier(), drink.getTitle(), drink.getMl(), drink.getPrice());
+    public DrinkDTO singleToDTO (Drink drink){
+        return new DrinkDTO(drink.getIdentifier(), drink.getTitle(), drink.getMl(), drink.getPrice(), drink.getInStock());
     }
-    public List<DrinkForMenuDTO> drinkForMenuMapper(List<Drink> drinks){
-        return drinks.stream().map(this::singleDrinkForMenuMapperDTO).collect(Collectors.toList());
+    public List<DrinkDTO> severalToDTO(List<Drink> drinks){
+        return drinks.stream().map(this::singleToDTO).collect(Collectors.toList());
     };
+
 }

@@ -70,6 +70,10 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-portion/{identifier}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/update-portion").hasRole("ADMIN")
 
+                        // Bebidas:
+                        .requestMatchers(HttpMethod.GET, "/api/get-drinks").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/get-drinks-for-menu").permitAll()
+
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .anyRequest().hasRole("ADMIN")

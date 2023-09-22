@@ -3,7 +3,7 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerMapper;
-import saboroso.saborosoburguer.DTOs.drink.DrinkForMenuDTO;
+import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
 import saboroso.saborosoburguer.DTOs.drink.DrinkMapper;
 import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
 import saboroso.saborosoburguer.DTOs.portion.PortionMapper;
@@ -40,7 +40,7 @@ public class MenuService {
 
         List<BurgerForMenuDTO> burgers = burgerMapper.burgersForMenuMapper(burgersPersistence);
         List<PortionDTO> portions = portionMapper.severalToDTO(portionsPersistence);
-        List<DrinkForMenuDTO> drinks = drinkMapper.drinkForMenuMapper(drinksPersistence);
+        List<DrinkDTO> drinks = drinkMapper.severalToDTO(drinksPersistence);
         return new Menu(burgers, portions, drinks);
     }
 }
