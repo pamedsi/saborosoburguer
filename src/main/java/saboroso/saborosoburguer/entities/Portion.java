@@ -29,6 +29,8 @@ public class Portion {
     private Boolean deleted;
     @Column (unique = true)
     private String description;
+    @Column (length = 2000)
+    private String pic;
 
     public Portion (InputPortionDTO portionDTO) {
         title = portionDTO.title();

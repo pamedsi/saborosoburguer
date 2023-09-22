@@ -14,11 +14,11 @@ public class PortionMapper {
                 portion.getTitle(),
                 portion.getPrice(),
                 portion.getDescription(),
+                portion.getPic(),
                 portion.getInStock()
                 );
     }
     public List<PortionDTO> severalToDTO (List<Portion> portions){
         return portions.stream().map(this::singlePortionToDTO).collect(Collectors.toList());
     }
-
 }

@@ -7,5 +7,6 @@ public record PortionDTO(
         String title,
         BigDecimal price,
         String description,
+        String pic,
         Boolean inStock
 ) {}

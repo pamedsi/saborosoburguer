@@ -35,4 +35,10 @@ public class PortionController extends BaseController {
 
         return ResponseEntity.badRequest().body(new Message(portionStatus.reasonWhy(), null));
     }
+    @PutMapping (value = "/update-portion")
+    public ResponseEntity<?> updatePortion(@RequestBody PortionDTO portionDTO) {
+        CRUDResponseMessage portionStatus = portionService.editPortion(portionDTO);
+        if (portionStatus.worked()) return ResponseEntity.ok().body(new Message("Porção atualizada!", portionStatus.changes()));
+        return ResponseEntity.badRequest().body(new Message(portionStatus.reasonWhy(), null));
+    }
 }
