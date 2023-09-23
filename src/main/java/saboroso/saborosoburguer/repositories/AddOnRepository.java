@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface AddOnRepository extends JpaRepository<AddOn, Long> {
     List<AddOn> findAllByDeletedFalse();
+
+    Boolean existsByTitleAndIdentifierNotAndDeletedFalse(String title, String identifier);
+
+    AddOn findByIdentifierAndDeletedFalse(String identifier);
 }

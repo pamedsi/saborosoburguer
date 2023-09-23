@@ -3,10 +3,7 @@ package saboroso.saborosoburguer.controllers;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import saboroso.saborosoburguer.DTOs.addOn.AddOnDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
@@ -31,5 +28,12 @@ public class AddOnController extends BaseController {
     public ResponseEntity<?> getAddOns() {
         List<AddOnDTO> addOns = addOnService.getAllAddOns();
         return ResponseEntity.ok().body(addOns);
+    }
+    @PutMapping(value = "/update-add-on")
+    public ResponseEntity<?> updateAddOn(@RequestBody @Valid AddOnDTO addOnDTO) {
+        CRUDResponseMessage addOnStatus = addOnService.editAddOn(addOnDTO);
+
+        if (addOnStatus.worked()) return ResponseEntity.ok(addOnStatus);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(addOnStatus);
     }
 }
