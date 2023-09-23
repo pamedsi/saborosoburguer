@@ -26,16 +26,16 @@ public class Drink {
     @Column
     private Boolean inStock;
     @Column
-    private Boolean deleted;
-    @Column
     private Integer ml;
+    @Column
+    private Boolean deleted;
 
     public Drink(InputDrinkDTO inputDrinkDTO) {
         title = inputDrinkDTO.title();
         price = inputDrinkDTO.price();
         setInStock(inputDrinkDTO.inStock());
-        setDeleted(inputDrinkDTO.deleted());
         ml = inputDrinkDTO.ml();
+        deleted = false;
     }
 
 }
