@@ -57,4 +57,13 @@ public class AddOnService {
         addOnRepository.save(addOnToEdit);
         return new CRUDResponseMessage(true, null, changesForResponse);
     }
+    public CRUDResponseMessage deleteAddOn(String addOnIdentifier) {
+        if (addOnIdentifier == null || addOnIdentifier.length() != 36) return new CRUDResponseMessage(false, "Identificador de adicional inválido!", null);
+        AddOn addOnToDelete = addOnRepository.findByIdentifierAndDeletedFalse(addOnIdentifier);
+        if (addOnToDelete == null) return new CRUDResponseMessage(false, "Adicional não encontrado!", null);
+
+        addOnToDelete.setDeleted(true);
+        addOnRepository.save(addOnToDelete);
+        return new CRUDResponseMessage(true, null, List.of(addOnToDelete.getTitle() + " deletado!"));
+    }
 }

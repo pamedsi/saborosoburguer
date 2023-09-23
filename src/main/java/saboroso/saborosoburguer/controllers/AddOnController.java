@@ -36,4 +36,11 @@ public class AddOnController extends BaseController {
         if (addOnStatus.worked()) return ResponseEntity.ok(addOnStatus);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(addOnStatus);
     }
+    @DeleteMapping(value = "/remove-add-on/{identifier}")
+    public ResponseEntity<?> updateAddOn(@PathVariable (value = "identifier") String addOnIdentifier) {
+        CRUDResponseMessage addOnStatus = addOnService.deleteAddOn(addOnIdentifier);
+
+        if (addOnStatus.worked()) return ResponseEntity.ok(addOnStatus);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(addOnStatus);
+    }
 }

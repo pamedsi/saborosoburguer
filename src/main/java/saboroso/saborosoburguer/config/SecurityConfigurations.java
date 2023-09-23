@@ -80,7 +80,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/get-add-ons").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/insert-add-ons").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/update-add-on").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/remove-add-on").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-add-on/{identifier}").hasRole("ADMIN")
 
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
