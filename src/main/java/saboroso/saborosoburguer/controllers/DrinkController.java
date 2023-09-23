@@ -33,4 +33,10 @@ public class DrinkController extends BaseController {
     public ResponseEntity<?> getDrinksForMenu(){
         return null;
     }
+    @DeleteMapping(value = "/remove-drink/{identifier}")
+    public ResponseEntity<?> removeDrink(@PathVariable (value = "identifier") String drinkIdentifier){
+        CRUDResponseMessage drinkStatus = this.drinkService.deleteDrink(drinkIdentifier);
+        if (drinkStatus.worked()) return ResponseEntity.ok(drinkStatus);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(drinkStatus);
+    }
 }
