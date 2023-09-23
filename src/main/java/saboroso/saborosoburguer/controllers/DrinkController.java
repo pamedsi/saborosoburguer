@@ -39,4 +39,10 @@ public class DrinkController extends BaseController {
         if (drinkStatus.worked()) return ResponseEntity.ok(drinkStatus);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(drinkStatus);
     }
+    @PutMapping(value = "/update-drink")
+    public ResponseEntity<?> updateDrink(@RequestBody DrinkDTO drinkDTO){
+        CRUDResponseMessage drinkStatus = this.drinkService.editDrink(drinkDTO);
+        if (drinkStatus.worked()) return ResponseEntity.ok(drinkStatus);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(drinkStatus);
+    }
 }

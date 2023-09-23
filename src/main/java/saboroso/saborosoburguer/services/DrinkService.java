@@ -6,10 +6,13 @@ import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
 import saboroso.saborosoburguer.DTOs.drink.DrinkMapper;
 import saboroso.saborosoburguer.DTOs.drink.InputDrinkDTO;
 import saboroso.saborosoburguer.entities.Drink;
+import saboroso.saborosoburguer.entities.Portion;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.DrinkRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DrinkService {
@@ -42,5 +45,36 @@ public class DrinkService {
         drink.setDeleted(true);
         drinkRepository.save(drink);
         return new CRUDResponseMessage(true, null, List.of("Bebida excluída com sucesso!"));
+    }
+    public CRUDResponseMessage editDrink(DrinkDTO changes) {
+        if (changes == null) return new CRUDResponseMessage(false, "Nenhuma alteração fornecida!", null);
+        Boolean alreadyExists = drinkRepository.existsByTitleAndMlAndIdentifierNotAndDeletedFalse(changes.title(), changes.ml(), changes.identifier());
+        if (alreadyExists) return new CRUDResponseMessage(false, "Já existe uma bebida com esse nome!", null);
+        Drink drinkToEdit = drinkRepository.findByIdentifierAndDeletedFalse(changes.identifier());
+        if (drinkToEdit == null) return new CRUDResponseMessage(false, "Bebida não encontrada!", null);
+        
+        List<String> changesForResponse = new ArrayList<>();
+
+        if (!Objects.equals(drinkToEdit.getTitle(), changes.title())) {
+            drinkToEdit.setTitle(changes.title());
+            changesForResponse.add("Título modificado! Agora se chama: " + changes.title());
+        }
+        if (drinkToEdit.getPrice().compareTo(changes.price()) != 0) {
+            drinkToEdit.setPrice(changes.price());
+            changesForResponse.add("Preço alterado! Agora custa: " + changes.price());
+        }
+        if (drinkToEdit.getMl().compareTo(changes.ml()) != 0) {
+            drinkToEdit.setMl(changes.ml());
+            changesForResponse.add("mL alterado! Agora é: " + changes.ml());
+        }
+        if (drinkToEdit.getInStock() != changes.inStock()) {
+            drinkToEdit.setInStock(changes.inStock());
+            if (changes.inStock()) changesForResponse.add(changes.title() + " disponibilizado!");
+            else changesForResponse.add(changes.title() + " indisponibilizado!");
+        }
+
+        if (changesForResponse.isEmpty()) return new CRUDResponseMessage(false, "Nenhuma mudança solicitada é diferente dos dados já presentes!", null);
+        drinkRepository.save(drinkToEdit);
+        return new CRUDResponseMessage(true, null, changesForResponse);
     }
 }

@@ -73,6 +73,8 @@ public class SecurityConfigurations {
                         // Bebidas:
                         .requestMatchers(HttpMethod.GET, "/api/get-drinks").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/get-drinks-for-menu").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-drink/{identifier}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/update-drink").hasRole("ADMIN")
 
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
