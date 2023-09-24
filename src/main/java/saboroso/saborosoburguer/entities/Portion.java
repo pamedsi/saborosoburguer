@@ -38,5 +38,6 @@ public class Portion {
         inStock = portionDTO.inStock();
         deleted = false;
         description = portionDTO.description();
+        pic = portionDTO.pic();
     }
 }

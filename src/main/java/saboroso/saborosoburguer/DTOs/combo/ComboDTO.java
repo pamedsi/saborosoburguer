@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.DTOs.portion;
+package saboroso.saborosoburguer.DTOs.combo;
 
 import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.BooleanFlag;
@@ -6,15 +6,15 @@ import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
 
-public record InputPortionDTO(
+public record ComboDTO(
+        @NotBlank
+        String identifier,
         @NotBlank
         String title,
         @NumberFormat
-        @NotBlank
         BigDecimal price,
-        @NotBlank
-        String description,
         @BooleanFlag
         Boolean inStock,
-        String pic
+        @NotBlank
+        String description
 ) {}

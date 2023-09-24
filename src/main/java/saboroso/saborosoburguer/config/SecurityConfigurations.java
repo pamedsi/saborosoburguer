@@ -82,6 +82,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/api/update-add-on").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-add-on/{identifier}").hasRole("ADMIN")
 
+                        // Combos
+                        .requestMatchers(HttpMethod.GET, "/api/get-all-combos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/add-combo").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/update-combo").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/remove-combo/{identifier}").hasRole("ADMIN")
+
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .anyRequest().hasRole("ADMIN")
