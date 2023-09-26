@@ -29,6 +29,10 @@ public class BurgerController extends BaseController {
     public ResponseEntity<?> seeHighLightBurgers() {
         return ResponseEntity.ok(burgerService.getHighLightBurgers());
     }
+    @GetMapping(value = "/get-burgers-for-menu")
+    public ResponseEntity<?> getBurgersForMenu() {
+        return ResponseEntity.ok(burgerService.getMenuBurgers());
+    }
     @GetMapping(value = "/burgers-management")
     public ResponseEntity<?> getBurgersForManagement() {
         return ResponseEntity.ok(burgerService.getBurgersForMenuManagement());
