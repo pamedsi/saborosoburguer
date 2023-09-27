@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.models;
+package saboroso.saborosoburguer.DTOs;
 
 import saboroso.saborosoburguer.DTOs.addOn.AddOnDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
@@ -9,7 +9,7 @@ import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
 import java.util.List;
 import java.util.Map;
 
-public record Menu(
+public record MenuDTO(
         Map<String, List<BurgerDTO>> burgers,
         List<PortionDTO> portions,
         List<ComboDTO> combos,

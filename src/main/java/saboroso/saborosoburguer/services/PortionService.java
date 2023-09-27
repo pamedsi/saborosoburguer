@@ -79,4 +79,8 @@ public class PortionService {
 
         return new CRUDResponseMessage(true, null, changesForResponse);
     }
+    public List<PortionDTO> getPortionsForMenu() {
+        List<Portion> portionsPersistence = portionRepository.findAllByDeletedFalseAndInStockTrue();
+        return portionMapper.severalToDTO(portionsPersistence);
+    }
 }

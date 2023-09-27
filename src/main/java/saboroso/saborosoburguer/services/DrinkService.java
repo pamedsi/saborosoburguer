@@ -76,4 +76,9 @@ public class DrinkService {
         drinkRepository.save(drinkToEdit);
         return new CRUDResponseMessage(true, null, changesForResponse);
     }
+
+    public List<DrinkDTO> getDrinksForMenu () {
+        List<Drink> drinksPersistence = drinkRepository.findAllByDeletedFalseAndInStockTrue();
+        return drinkMapper.severalToDTO(drinksPersistence);
+    }
 }

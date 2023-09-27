@@ -1,46 +1,39 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
+import saboroso.saborosoburguer.DTOs.addOn.AddOnDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
-import saboroso.saborosoburguer.DTOs.burger.BurgerMapper;
+import saboroso.saborosoburguer.DTOs.combo.ComboDTO;
 import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
-import saboroso.saborosoburguer.DTOs.drink.DrinkMapper;
 import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
-import saboroso.saborosoburguer.DTOs.portion.PortionMapper;
-import saboroso.saborosoburguer.entities.Burger;
-import saboroso.saborosoburguer.entities.Drink;
-import saboroso.saborosoburguer.entities.Portion;
-import saboroso.saborosoburguer.models.Menu;
-import saboroso.saborosoburguer.repositories.BurgerRepository;
-import saboroso.saborosoburguer.repositories.DrinkRepository;
-import saboroso.saborosoburguer.repositories.PortionRepository;
+import saboroso.saborosoburguer.DTOs.MenuDTO;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MenuService {
-    private final BurgerRepository burgerRepository;
-    private final DrinkRepository drinkRepository;
-    private final PortionRepository portionRepository;
-    private final BurgerMapper burgerMapper;
-    private final PortionMapper portionMapper;
-    private final DrinkMapper drinkMapper;
-    public MenuService(BurgerRepository burgerRepository, DrinkRepository drinkRepository, PortionRepository portionRepository, BurgerMapper burgerMapper, PortionMapper portionMapper, DrinkMapper drinkMapper) {
-        this.burgerMapper = burgerMapper;
-        this.burgerRepository = burgerRepository;
-        this.drinkRepository = drinkRepository;
-        this.portionRepository = portionRepository;
-        this.portionMapper = portionMapper;
-        this.drinkMapper = drinkMapper;
-    }
-    public Menu getMenuItems() {
-        List<Burger> burgersPersistence = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
-        List<Portion> portionsPersistence = portionRepository.findByDeletedFalseAndInStockTrue();
-        List<Drink> drinksPersistence = drinkRepository.findByDeletedFalseAndInStockTrue();
+    private final BurgerService burgerService;
+    private final PortionService portionService;
+    private final ComboService comboService;
+    private final AddOnService addOnService;
+    private final DrinkService drinkService;
 
-        List<BurgerDTO> burgers = burgerMapper.severalToDTO(burgersPersistence);
-        List<PortionDTO> portions = portionMapper.severalToDTO(portionsPersistence);
-        List<DrinkDTO> drinks = drinkMapper.severalToDTO(drinksPersistence);
-        return null;
+    public MenuService(BurgerService burgerService, PortionService portionService, ComboService comboService, AddOnService addOnService, DrinkService drinkService) {
+        this.burgerService = burgerService;
+        this.portionService = portionService;
+        this.comboService = comboService;
+        this.addOnService = addOnService;
+        this.drinkService = drinkService;
+    }
+
+    public MenuDTO getMenuItems() {
+        Map<String, List<BurgerDTO>> burgers = burgerService.getMenuBurgers();
+        List<PortionDTO> portions = portionService.getPortionsForMenu();
+        List<ComboDTO> combos = comboService.getCombosForMenu();
+        List<AddOnDTO> addOns = addOnService.getAddOnsForMenu();
+        List<DrinkDTO> drinks = drinkService.getDrinksForMenu();
+
+        return new MenuDTO(burgers, portions, combos, drinks, addOns);
     }
 }

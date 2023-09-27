@@ -13,7 +13,7 @@ public class MenuController extends BaseController {
         this.menuService = menuService;
     }
     @GetMapping(value = "/get-menu")
-    public ResponseEntity<?> seeBurgersForMenu() {
+    public ResponseEntity<?> getMenu() {
         return ResponseEntity.ok(menuService.getMenuItems());
     }
 }

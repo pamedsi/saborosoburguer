@@ -13,6 +13,6 @@ public interface DrinkRepository extends JpaRepository <Drink, Long> {
     List<Drink> findAllByDeletedFalse();
     Boolean existsByTitleAndMlAndIdentifierNotAndDeletedFalse(String title, Integer ml, String identifier);
     Drink findByIdentifierAndDeletedFalse(String identifier);
-
     Drink findByIdentifier(String drinkIdentifier);
+    List<Drink> findAllByDeletedFalseAndInStockTrue();
 }

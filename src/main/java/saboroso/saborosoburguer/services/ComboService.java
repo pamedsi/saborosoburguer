@@ -79,4 +79,9 @@ public class ComboService {
             return new CRUDResponseMessage(false, exception.toString(), null);
         }
     }
+
+    public List<ComboDTO> getCombosForMenu() {
+        List<Combo> combos = comboRepository.findAllByDeletedFalseAndInStockTrue();
+        return comboMapper.severalToDTO(combos);
+    }
 }
