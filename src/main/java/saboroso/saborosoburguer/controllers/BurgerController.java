@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 import saboroso.saborosoburguer.DTOs.burger.BurgerManagementDTO;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
+import saboroso.saborosoburguer.DTOs.burger.MostSoldBurgersDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientIdentifierDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.BurgerService;
+
+import java.util.List;
 
 @RestController
 public class BurgerController extends BaseController {
@@ -27,7 +30,9 @@ public class BurgerController extends BaseController {
     }
     @GetMapping(value = "/highlight-burgers")
     public ResponseEntity<?> seeHighLightBurgers() {
-        return ResponseEntity.ok(burgerService.getHighLightBurgers());
+        MostSoldBurgersDTO mostSoldBurgersDTO = burgerService.getHighLightBurgers();
+        if (mostSoldBurgersDTO == null) return ResponseEntity.ok(List.of());
+        return ResponseEntity.ok(mostSoldBurgersDTO);
     }
     @GetMapping(value = "/get-burgers-for-menu")
     public ResponseEntity<?> getBurgersForMenu() {

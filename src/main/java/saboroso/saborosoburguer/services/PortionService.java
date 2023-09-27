@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.portion.InputPortionDTO;
 import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
 import saboroso.saborosoburguer.DTOs.portion.PortionMapper;
-import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.entities.Portion;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.PortionRepository;
