@@ -43,4 +43,10 @@ public class AddOnController extends BaseController {
         if (addOnStatus.worked()) return ResponseEntity.ok(addOnStatus);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(addOnStatus);
     }
+
+    @GetMapping(value = "/get-add-ons-for-menu")
+    public ResponseEntity<?> getAddOnsForMenu() {
+        List<AddOnDTO> addOns = addOnService.getAllAddOns();
+        return ResponseEntity.ok().body(addOns);
+    }
 }

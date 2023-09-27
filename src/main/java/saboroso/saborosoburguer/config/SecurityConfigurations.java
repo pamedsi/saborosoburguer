@@ -81,6 +81,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/insert-add-ons").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/update-add-on").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-add-on/{identifier}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/get-add-ons-for-menu").permitAll()
 
                         // Combos
                         .requestMatchers(HttpMethod.GET, "/api/get-all-combos").hasRole("ADMIN")

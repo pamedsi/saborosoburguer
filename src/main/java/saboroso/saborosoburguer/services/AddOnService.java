@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTOs.addOn.AddOnDTO;
 import saboroso.saborosoburguer.DTOs.addOn.AddOnMapper;
 import saboroso.saborosoburguer.entities.AddOn;
-import saboroso.saborosoburguer.entities.Drink;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.AddOnRepository;
 
@@ -65,5 +64,9 @@ public class AddOnService {
         addOnToDelete.setDeleted(true);
         addOnRepository.save(addOnToDelete);
         return new CRUDResponseMessage(true, null, List.of(addOnToDelete.getTitle() + " deletado!"));
+    }
+    public List<AddOnDTO> getAddOnsForMenu() {
+        List<AddOn> addOns = addOnRepository.findAllByDeletedFalseAndInStockTrue();
+        return addOnMapper.severalToDTO(addOns);
     }
 }
