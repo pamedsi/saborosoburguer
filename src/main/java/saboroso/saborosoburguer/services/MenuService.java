@@ -41,6 +41,6 @@ public class MenuService {
         List<BurgerDTO> burgers = burgerMapper.severalToDTO(burgersPersistence);
         List<PortionDTO> portions = portionMapper.severalToDTO(portionsPersistence);
         List<DrinkDTO> drinks = drinkMapper.severalToDTO(drinksPersistence);
-        return new Menu(burgers, portions, drinks);
+        return null;
     }
 }

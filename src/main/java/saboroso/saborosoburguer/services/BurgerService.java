@@ -48,17 +48,16 @@ public class BurgerService {
         burgerRepository.save(newBurger);
         return new CRUDResponseMessage(true, null, null);
     }
-    public MenuBurgersDTO getMenuBurgers () {
+    public Map<String, List<BurgerDTO>> getMenuBurgers () {
         List<Burger> availableBurgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
         Map<String, List<BurgerDTO>> burgersSortedByCategories = new HashMap<>();
 
         for (Burger burger : availableBurgers) {
-            String category = burger.getBurgerCategory().toString();
+            String category = burger.getBurgerCategory().getTitle();
             if (!burgersSortedByCategories.containsKey(category)) burgersSortedByCategories.put(category, new ArrayList<BurgerDTO>());
             burgersSortedByCategories.get(category).add(burgerMapper.singleToDTO(burger));
         }
-
-        return new MenuBurgersDTO(burgersSortedByCategories);
+        return burgersSortedByCategories;
     }
     public List<BurgerDTO> getBurgersForMenuManagement() {
         List<Burger> burgers = burgerRepository.findByDeletedFalse();
