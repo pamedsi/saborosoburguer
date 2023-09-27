@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import saboroso.saborosoburguer.DTOs.burger.BurgerManagementDTO;
+import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
 import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
 import saboroso.saborosoburguer.DTOs.burger.MostSoldBurgersDTO;
 import saboroso.saborosoburguer.DTOs.ingredient.IngredientIdentifierDTO;
@@ -51,7 +51,7 @@ public class BurgerController extends BaseController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message("Ingrediente já adicionado!", null));
     }
     @PutMapping (value = "/update-burger")
-    public ResponseEntity<?> editBurger(@RequestBody BurgerManagementDTO burgerDTO) {
+    public ResponseEntity<?> editBurger(@RequestBody BurgerDTO burgerDTO) {
         CRUDResponseMessage burgerStatus = burgerService.updateBurger(burgerDTO);
         if (burgerStatus.worked()) return ResponseEntity.ok(new Message("Atualização feita com sucesso!", burgerStatus.changes()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("Não foi possível continuar.", null));

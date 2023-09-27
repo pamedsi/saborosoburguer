@@ -1,7 +1,7 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
+import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
 import saboroso.saborosoburguer.DTOs.burger.BurgerMapper;
 import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
 import saboroso.saborosoburguer.DTOs.drink.DrinkMapper;
@@ -38,7 +38,7 @@ public class MenuService {
         List<Portion> portionsPersistence = portionRepository.findByDeletedFalseAndInStockTrue();
         List<Drink> drinksPersistence = drinkRepository.findByDeletedFalseAndInStockTrue();
 
-        List<BurgerForMenuDTO> burgers = burgerMapper.burgersForMenuMapper(burgersPersistence);
+        List<BurgerDTO> burgers = burgerMapper.severalToDTO(burgersPersistence);
         List<PortionDTO> portions = portionMapper.severalToDTO(portionsPersistence);
         List<DrinkDTO> drinks = drinkMapper.severalToDTO(drinksPersistence);
         return new Menu(burgers, portions, drinks);

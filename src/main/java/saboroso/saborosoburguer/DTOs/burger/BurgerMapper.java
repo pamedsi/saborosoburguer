@@ -15,17 +15,9 @@ public class BurgerMapper {
     public BurgerMapper(IngredientMapper ingredientMapper) {
         this.ingredientMapper = ingredientMapper;
     }
-    public BurgerForMenuDTO singleBurgerForMenuDTO (Burger persistenceBurger) {
-        return new BurgerForMenuDTO(
-                persistenceBurger.getIdentifier(),
-                persistenceBurger.getBurgerCategory().getTitle(),
-                persistenceBurger.getTitle(),
-                persistenceBurger.getPrice(),
-                persistenceBurger.getPic(),
-                ingredientMapper.severalToDTO(persistenceBurger.getIngredients()));
-    }
-    public BurgerManagementDTO singleBurgerForManagement (Burger persistenceBurger) {
-                return new BurgerManagementDTO(
+
+    public BurgerDTO singleToDTO(Burger persistenceBurger) {
+                return new BurgerDTO(
                 persistenceBurger.getIdentifier(),
                 new CategoryDTO(
                     persistenceBurger.getBurgerCategory().getIdentifier(), 
@@ -36,14 +28,10 @@ public class BurgerMapper {
                 persistenceBurger.getInStock(),
                 ingredientMapper.severalToDTO(persistenceBurger.getIngredients()));
     }
-    public List<BurgerManagementDTO> burgersForManagementMapper (List<Burger> burgers) {
+    public List<BurgerDTO> severalToDTO(List<Burger> burgers) {
         return burgers.stream()
-                .map(this::singleBurgerForManagement)
+                .map(this::singleToDTO)
                 .collect(Collectors.toList());
     }
-    public List<BurgerForMenuDTO> burgersForMenuMapper (List<Burger> burgers) {
-        return burgers.stream()
-                .map(this::singleBurgerForMenuDTO)
-                .collect(Collectors.toList());
-    }
+
 }

@@ -10,7 +10,7 @@ import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record BurgerManagementDTO(
+public record BurgerDTO(
         @NotBlank(message = "Identifier is mandatory")
         String identifier,
         @NotNull(message = "Category is mandatory")

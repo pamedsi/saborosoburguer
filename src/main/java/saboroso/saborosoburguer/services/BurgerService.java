@@ -14,7 +14,6 @@ import saboroso.saborosoburguer.repositories.BurgerSaleRepository;
 import saboroso.saborosoburguer.repositories.CategoryRepository;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
 import saboroso.saborosoburguer.utils.BurgersIdsAndAmounts;
-import saboroso.saborosoburguer.utils.SoldBurgerDTO;
 
 import java.util.*;
 
@@ -49,15 +48,23 @@ public class BurgerService {
         burgerRepository.save(newBurger);
         return new CRUDResponseMessage(true, null, null);
     }
-    public List<BurgerForMenuDTO> getMenuBurgers () {
-        List<Burger> burgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
-        return burgerMapper.burgersForMenuMapper(burgers);
+    public MenuBurgersDTO getMenuBurgers () {
+        List<Burger> availableBurgers = burgerRepository.findBurgerByDeletedFalseAndInStockTrue();
+        Map<String, List<BurgerDTO>> burgersSortedByCategories = new HashMap<>();
+
+        for (Burger burger : availableBurgers) {
+            String category = burger.getBurgerCategory().toString();
+            if (!burgersSortedByCategories.containsKey(category)) burgersSortedByCategories.put(category, new ArrayList<BurgerDTO>());
+            burgersSortedByCategories.get(category).add(burgerMapper.singleToDTO(burger));
+        }
+
+        return new MenuBurgersDTO(burgersSortedByCategories);
     }
-    public List<BurgerManagementDTO> getBurgersForMenuManagement() {
+    public List<BurgerDTO> getBurgersForMenuManagement() {
         List<Burger> burgers = burgerRepository.findByDeletedFalse();
-        return burgerMapper.burgersForManagementMapper(burgers);
+        return burgerMapper.severalToDTO(burgers);
     }
-    public CRUDResponseMessage updateBurger(BurgerManagementDTO changes) {
+    public CRUDResponseMessage updateBurger(BurgerDTO changes) {
         if (changes == null) return new CRUDResponseMessage(false, "Nenhuma alteração fornecida!", null);
 
         Boolean alreadyExists = burgerRepository.existsByTitleAndIdentifierNotAndDeletedFalse(changes.title(), changes.identifier());
@@ -126,10 +133,11 @@ public class BurgerService {
             BurgersIdsAndAmounts burgersIdsAndAmounts = new BurgersIdsAndAmounts(burgerSaleRepository.getMostSold());
             Burger burger1Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.firstBurgerId);
             Burger burger2Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.secondBurgerId);
-            List<BurgerForMenuDTO> burgersDTO = burgerMapper.burgersForMenuMapper(Arrays.asList(burger1Persistence, burger2Persistence));
-            SoldBurgerDTO burger1 = new SoldBurgerDTO(burgersDTO.get(0), burgersIdsAndAmounts.firstBurgerAmount);
-            SoldBurgerDTO burger2 = new SoldBurgerDTO(burgersDTO.get(1), burgersIdsAndAmounts.secondBurgerAmount);
-            return new MostSoldBurgersDTO(burger1, burger2);
+            List<BurgerDTO> burgersDTO = burgerMapper.severalToDTO(Arrays.asList(burger1Persistence, burger2Persistence));
+//            SoldBurgerDTO burger1 = new SoldBurgerDTO(burgersDTO.get(0), burgersIdsAndAmounts.firstBurgerAmount);
+//            SoldBurgerDTO burger2 = new SoldBurgerDTO(burgersDTO.get(1), burgersIdsAndAmounts.secondBurgerAmount);
+//            return new MostSoldBurgersDTO(burger1, burger2);
+            return null;
         }
         catch (Exception e) {
             return null;

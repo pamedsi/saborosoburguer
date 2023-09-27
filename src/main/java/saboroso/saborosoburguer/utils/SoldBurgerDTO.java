@@ -1,8 +1,8 @@
 package saboroso.saborosoburguer.utils;
 
-import saboroso.saborosoburguer.DTOs.burger.BurgerForMenuDTO;
+import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
 
 public record SoldBurgerDTO(
-        BurgerForMenuDTO burger,
+        BurgerDTO burger,
         Long sales
 ) {}
