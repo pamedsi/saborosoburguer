@@ -1,6 +1,7 @@
 package saboroso.saborosoburguer.DTO;
 
 import saboroso.saborosoburguer.DTO.addOn.AddOnDTO;
+import saboroso.saborosoburguer.DTO.burger.BurgerBreadDTO;
 import saboroso.saborosoburguer.DTO.burger.BurgerDTO;
 import saboroso.saborosoburguer.DTO.combo.ComboDTO;
 import saboroso.saborosoburguer.DTO.drink.DrinkDTO;
@@ -14,5 +15,6 @@ public record MenuDTO(
         List<PortionDTO> portions,
         List<ComboDTO> combos,
         List<DrinkDTO> drinks,
-        List<AddOnDTO> addOns
+        List<AddOnDTO> addOns,
+        List<BurgerBreadDTO> breads
 ) {}
