@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import saboroso.saborosoburguer.entities.Burger;
+import saboroso.saborosoburguer.entities.burger.Burger;
 import saboroso.saborosoburguer.entities.CustomerOrder;
 
 import java.math.BigDecimal;

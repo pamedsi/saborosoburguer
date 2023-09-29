@@ -3,6 +3,7 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.order.OrderDTO;
 import saboroso.saborosoburguer.entities.*;
+import saboroso.saborosoburguer.entities.burger.Burger;
 import saboroso.saborosoburguer.entities.soldItems.BurgerSale;
 import saboroso.saborosoburguer.entities.soldItems.DrinkSale;
 import saboroso.saborosoburguer.entities.soldItems.PortionSale;

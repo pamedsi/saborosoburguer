@@ -5,15 +5,14 @@ import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.burger.*;
 import saboroso.saborosoburguer.DTO.ingredient.IngredientDTO;
-import saboroso.saborosoburguer.entities.Burger;
-import saboroso.saborosoburguer.entities.BurgerCategory;
-import saboroso.saborosoburguer.entities.Ingredient;
+import saboroso.saborosoburguer.entities.burger.Burger;
+import saboroso.saborosoburguer.entities.burger.BurgerCategory;
+import saboroso.saborosoburguer.entities.burger.Ingredient;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.BurgerRepository;
 import saboroso.saborosoburguer.repositories.BurgerSaleRepository;
 import saboroso.saborosoburguer.repositories.CategoryRepository;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
-import saboroso.saborosoburguer.utils.BurgersIdsAndAmounts;
 
 import java.util.*;
 
@@ -129,10 +128,10 @@ public class BurgerService {
     
     public MostSoldBurgersDTO getHighLightBurgers() {
         try {
-            BurgersIdsAndAmounts burgersIdsAndAmounts = new BurgersIdsAndAmounts(burgerSaleRepository.getMostSold());
-            Burger burger1Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.firstBurgerId);
-            Burger burger2Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.secondBurgerId);
-            List<BurgerDTO> burgersDTO = burgerMapper.severalToDTO(Arrays.asList(burger1Persistence, burger2Persistence));
+            // BurgersIdsAndAmounts burgersIdsAndAmounts = new BurgersIdsAndAmounts(burgerSaleRepository.getMostSold());
+            // Burger burger1Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.firstBurgerId);
+            // Burger burger2Persistence = burgerRepository.findSingleById(burgersIdsAndAmounts.secondBurgerId);
+            // List<BurgerDTO> burgersDTO = burgerMapper.severalToDTO(Arrays.asList(burger1Persistence, burger2Persistence));
 //            SoldBurgerDTO burger1 = new SoldBurgerDTO(burgersDTO.get(0), burgersIdsAndAmounts.firstBurgerAmount);
 //            SoldBurgerDTO burger2 = new SoldBurgerDTO(burgersDTO.get(1), burgersIdsAndAmounts.secondBurgerAmount);
 //            return new MostSoldBurgersDTO(burger1, burger2);

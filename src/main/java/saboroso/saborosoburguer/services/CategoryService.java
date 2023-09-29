@@ -3,7 +3,7 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.category.CategoryDTO;
 import saboroso.saborosoburguer.DTO.category.CategoryMapper;
-import saboroso.saborosoburguer.entities.BurgerCategory;
+import saboroso.saborosoburguer.entities.burger.BurgerCategory;
 import saboroso.saborosoburguer.repositories.CategoryRepository;
 
 import java.time.LocalDateTime;

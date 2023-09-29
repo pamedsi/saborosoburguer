@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.entities;
+package saboroso.saborosoburguer.entities.burger;
 
 import jakarta.persistence.*;
 import lombok.*;

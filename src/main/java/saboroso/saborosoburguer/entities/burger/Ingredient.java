@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.entities;
+package saboroso.saborosoburguer.entities.burger;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,16 +20,14 @@ public class Ingredient {
     private String identifier;
     @Column (nullable = false)
     private String title;
-    @Column (nullable = true)
+    @Column
     private Integer grams;
     @Column
-    @Setter(AccessLevel.NONE)
     private Boolean inStock;
     @Column
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
     @Column
-    @Setter(AccessLevel.NONE)
     private Boolean deleted;
     @Column
     private LocalDateTime lastEdited;
@@ -46,12 +44,5 @@ public class Ingredient {
     public Ingredient() {
         identifier = UUID.randomUUID().toString();
         createdAt = LocalDateTime.now();
-    }
-    public void setDeleted(Boolean deleted) {
-        if (deleted == null) this.deleted = false;
-        else this.deleted = deleted;
-    }
-    public void setInStock(Boolean inStock) {
-        this.inStock = inStock;
     }
 }

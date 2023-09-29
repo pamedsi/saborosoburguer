@@ -2,7 +2,7 @@ package saboroso.saborosoburguer.DTO.ingredient;
 
 
 import org.springframework.stereotype.Component;
-import saboroso.saborosoburguer.entities.Ingredient;
+import saboroso.saborosoburguer.entities.burger.Ingredient;
 
 import java.util.List;
 import java.util.stream.Collectors;

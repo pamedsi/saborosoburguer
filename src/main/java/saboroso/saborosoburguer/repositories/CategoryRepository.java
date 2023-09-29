@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import saboroso.saborosoburguer.entities.BurgerCategory;
+import saboroso.saborosoburguer.entities.burger.BurgerCategory;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<BurgerCategory, Long> {

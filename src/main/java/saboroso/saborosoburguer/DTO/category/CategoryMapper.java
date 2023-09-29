@@ -1,7 +1,7 @@
 package saboroso.saborosoburguer.DTO.category;
 
 import org.springframework.stereotype.Component;
-import saboroso.saborosoburguer.entities.BurgerCategory;
+import saboroso.saborosoburguer.entities.burger.BurgerCategory;
 
 import java.util.List;
 
