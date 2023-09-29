@@ -1,9 +1,9 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.address.AddressDTO;
-import saboroso.saborosoburguer.DTOs.address.AddressMapper;
-import saboroso.saborosoburguer.DTOs.user.InputUserDTO;
+import saboroso.saborosoburguer.DTO.address.AddressDTO;
+import saboroso.saborosoburguer.DTO.address.AddressMapper;
+import saboroso.saborosoburguer.DTO.user.InputUserDTO;
 import saboroso.saborosoburguer.entities.Address;
 import saboroso.saborosoburguer.entities.UserEntity;
 import saboroso.saborosoburguer.repositories.AddressRepository;

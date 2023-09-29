@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
-import saboroso.saborosoburguer.DTOs.burger.InputBurgerDTO;
-import saboroso.saborosoburguer.DTOs.burger.MostSoldBurgersDTO;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientIdentifierDTO;
+import saboroso.saborosoburguer.DTO.burger.BurgerDTO;
+import saboroso.saborosoburguer.DTO.burger.InputBurgerDTO;
+import saboroso.saborosoburguer.DTO.burger.MostSoldBurgersDTO;
+import saboroso.saborosoburguer.DTO.ingredient.IngredientIdentifierDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.models.Message;

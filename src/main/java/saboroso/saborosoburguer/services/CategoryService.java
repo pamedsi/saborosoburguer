@@ -1,8 +1,8 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.category.CategoryDTO;
-import saboroso.saborosoburguer.DTOs.category.CategoryMapper;
+import saboroso.saborosoburguer.DTO.category.CategoryDTO;
+import saboroso.saborosoburguer.DTO.category.CategoryMapper;
 import saboroso.saborosoburguer.entities.BurgerCategory;
 import saboroso.saborosoburguer.repositories.CategoryRepository;
 

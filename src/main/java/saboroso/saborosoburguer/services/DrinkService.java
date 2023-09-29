@@ -2,9 +2,9 @@ package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
 
-import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
-import saboroso.saborosoburguer.DTOs.drink.DrinkMapper;
-import saboroso.saborosoburguer.DTOs.drink.InputDrinkDTO;
+import saboroso.saborosoburguer.DTO.drink.DrinkDTO;
+import saboroso.saborosoburguer.DTO.drink.DrinkMapper;
+import saboroso.saborosoburguer.DTO.drink.InputDrinkDTO;
 import saboroso.saborosoburguer.entities.Drink;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.DrinkRepository;

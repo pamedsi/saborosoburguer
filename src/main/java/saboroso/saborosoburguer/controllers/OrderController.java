@@ -2,7 +2,7 @@ package saboroso.saborosoburguer.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saboroso.saborosoburguer.DTOs.order.OrderDTO;
+import saboroso.saborosoburguer.DTO.order.OrderDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.OrderService;

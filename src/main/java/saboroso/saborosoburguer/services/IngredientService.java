@@ -1,11 +1,11 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
+import saboroso.saborosoburguer.DTO.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.entities.Ingredient;
 import saboroso.saborosoburguer.models.IngredientResponseMessage;
 import saboroso.saborosoburguer.repositories.IngredientRepository;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientMapper;
+import saboroso.saborosoburguer.DTO.ingredient.IngredientMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;

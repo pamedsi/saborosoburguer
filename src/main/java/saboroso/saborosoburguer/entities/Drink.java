@@ -2,7 +2,7 @@ package saboroso.saborosoburguer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import saboroso.saborosoburguer.DTOs.drink.InputDrinkDTO;
+import saboroso.saborosoburguer.DTO.drink.InputDrinkDTO;
 
 import java.math.BigDecimal;
 import java.util.UUID;

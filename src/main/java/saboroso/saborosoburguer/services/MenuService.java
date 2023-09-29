@@ -1,12 +1,12 @@
 package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.addOn.AddOnDTO;
-import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
-import saboroso.saborosoburguer.DTOs.combo.ComboDTO;
-import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
-import saboroso.saborosoburguer.DTOs.portion.PortionDTO;
-import saboroso.saborosoburguer.DTOs.MenuDTO;
+import saboroso.saborosoburguer.DTO.addOn.AddOnDTO;
+import saboroso.saborosoburguer.DTO.burger.BurgerDTO;
+import saboroso.saborosoburguer.DTO.combo.ComboDTO;
+import saboroso.saborosoburguer.DTO.drink.DrinkDTO;
+import saboroso.saborosoburguer.DTO.portion.PortionDTO;
+import saboroso.saborosoburguer.DTO.MenuDTO;
 
 import java.util.List;
 import java.util.Map;

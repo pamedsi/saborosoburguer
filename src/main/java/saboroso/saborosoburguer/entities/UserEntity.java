@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import saboroso.saborosoburguer.DTOs.user.InputUserDTO;
+import saboroso.saborosoburguer.DTO.user.InputUserDTO;
 import saboroso.saborosoburguer.models.UserRole;
 
 import java.time.LocalDateTime;

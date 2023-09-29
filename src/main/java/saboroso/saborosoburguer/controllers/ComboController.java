@@ -3,7 +3,7 @@ package saboroso.saborosoburguer.controllers;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saboroso.saborosoburguer.DTOs.combo.ComboDTO;
+import saboroso.saborosoburguer.DTO.combo.ComboDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.services.ComboService;

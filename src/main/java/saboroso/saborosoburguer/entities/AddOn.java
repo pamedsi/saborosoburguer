@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import saboroso.saborosoburguer.DTOs.addOn.AddOnDTO;
+import saboroso.saborosoburguer.DTO.addOn.AddOnDTO;
 
 import java.math.BigDecimal;
 import java.util.UUID;

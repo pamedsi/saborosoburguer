@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
+import saboroso.saborosoburguer.DTO.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.IngredientResponseMessage;
 import saboroso.saborosoburguer.models.Message;

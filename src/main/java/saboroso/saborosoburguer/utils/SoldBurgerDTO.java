@@ -1,6 +1,6 @@
 package saboroso.saborosoburguer.utils;
 
-import saboroso.saborosoburguer.DTOs.burger.BurgerDTO;
+import saboroso.saborosoburguer.DTO.burger.BurgerDTO;
 
 public record SoldBurgerDTO(
         BurgerDTO burger,

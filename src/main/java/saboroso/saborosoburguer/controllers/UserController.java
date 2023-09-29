@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saboroso.saborosoburguer.DTOs.user.InputUserDTO;
+import saboroso.saborosoburguer.DTO.user.InputUserDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.UserService;

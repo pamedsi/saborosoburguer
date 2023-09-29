@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import saboroso.saborosoburguer.DTOs.category.CategoryDTO;
+import saboroso.saborosoburguer.DTO.category.CategoryDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.CategoryService;

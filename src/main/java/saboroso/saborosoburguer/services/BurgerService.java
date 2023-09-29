@@ -3,8 +3,8 @@ package saboroso.saborosoburguer.services;
 import jakarta.ws.rs.NotFoundException;
 
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTOs.burger.*;
-import saboroso.saborosoburguer.DTOs.ingredient.IngredientDTO;
+import saboroso.saborosoburguer.DTO.burger.*;
+import saboroso.saborosoburguer.DTO.ingredient.IngredientDTO;
 import saboroso.saborosoburguer.entities.Burger;
 import saboroso.saborosoburguer.entities.BurgerCategory;
 import saboroso.saborosoburguer.entities.Ingredient;

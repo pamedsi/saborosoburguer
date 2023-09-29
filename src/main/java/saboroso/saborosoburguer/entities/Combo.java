@@ -6,7 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import saboroso.saborosoburguer.DTOs.combo.ComboDTO;
+import saboroso.saborosoburguer.DTO.combo.ComboDTO;
 
 @Entity
 @Data

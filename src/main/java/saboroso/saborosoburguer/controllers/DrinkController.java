@@ -4,12 +4,12 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saboroso.saborosoburguer.DTOs.drink.DrinkDTO;
+import saboroso.saborosoburguer.DTO.drink.DrinkDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.DrinkService;
-import saboroso.saborosoburguer.DTOs.drink.InputDrinkDTO;
+import saboroso.saborosoburguer.DTO.drink.InputDrinkDTO;
 
 import java.util.List;
 
