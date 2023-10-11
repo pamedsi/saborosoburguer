@@ -43,6 +43,7 @@ public class SecurityConfigurations {
 
                         // Usuários:
                         .requestMatchers(HttpMethod.POST, "/api/create-user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/get-user-by-phone-number/{phone_number}").permitAll()
 
                         // Hambúrgueres:
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()

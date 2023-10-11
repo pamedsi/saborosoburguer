@@ -8,7 +8,8 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import saboroso.saborosoburguer.DTO.user.InputUserDTO;
+import saboroso.saborosoburguer.DTO.user.UserAdminDTO;
+import saboroso.saborosoburguer.DTO.user.UserClientDTO;
 import saboroso.saborosoburguer.models.UserRole;
 
 import java.time.LocalDateTime;
@@ -41,21 +42,23 @@ public class UserEntity implements UserDetails {
     @Column
     private String passwordHash;
     @Column
-    private String address;
-    @Column
     private LocalDateTime userSince = LocalDateTime.now();
-    public UserEntity(InputUserDTO userDTO) {
+    public UserEntity(UserAdminDTO userDTO) {
         name = userDTO.name();
         phoneNumber = userDTO.phoneNumber();
-        address = userDTO.address();
         passwordHash = hash(userDTO.password());
         email = userDTO.email();
+    }
+    public UserEntity(UserClientDTO userDTO) {
+        name = userDTO.name();
+        phoneNumber = userDTO.phoneNumber();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CUSTOMER"));
         return List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
     }
+
     @Override
     public String getPassword() {
         return passwordHash;
