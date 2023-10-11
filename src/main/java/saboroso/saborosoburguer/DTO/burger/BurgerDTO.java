@@ -14,7 +14,7 @@ public record BurgerDTO(
         @NotBlank(message = "Identifier is mandatory")
         String identifier,
         @NotNull(message = "Category is mandatory")
-        CategoryDTO category,
+        CategoryDTO categoryDTO,
         @NotBlank(message = "Title is mandatory")
         String title,
         @NotNull(message = "Price is mandatory")

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface BurgerRepository extends JpaRepository <Burger, Long> {
-    Boolean existsBurgerByTitle(String title);
+    Boolean existsBurgerByTitleAndDeletedFalse(String title);
     Burger findBurgerByIdentifier(String identifier);
     default Boolean hasIngredient(Burger burger, String ingredientIdentifier) {
         return burger.getIngredients().stream()

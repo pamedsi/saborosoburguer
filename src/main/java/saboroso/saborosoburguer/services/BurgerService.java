@@ -31,9 +31,10 @@ public class BurgerService {
         this.categoryRepository = categoryRepository;
     }
     public CRUDResponseMessage createBurger (InputBurgerDTO burgerDTO) {
-        if (burgerRepository.existsBurgerByTitle(burgerDTO.title()))
+        System.out.println(burgerDTO);
+        if (burgerRepository.existsBurgerByTitleAndDeletedFalse(burgerDTO.title()))
             return new CRUDResponseMessage(false, "Já existe um hambúrguer com esse nome!", null);
-        BurgerCategory category = categoryRepository.findByIdentifier(burgerDTO.categoryIdentifier());
+        BurgerCategory category = categoryRepository.findByIdentifier(burgerDTO.categoryDTO().identifier());
         if (category == null)
             return new CRUDResponseMessage(false, "Categoria não encontrada!", null);
         List<Ingredient> ingredients = burgerDTO.ingredients().stream().map(ingredient -> {
@@ -76,11 +77,11 @@ public class BurgerService {
             burgerToEdit.setTitle(changes.title());
             changesForResponse.add("Título modificado! Agora se chama: " + changes.title());
         }
-        if (!Objects.equals(burgerToEdit.getBurgerCategory().getIdentifier(), changes.category().identifier())) {
-            BurgerCategory comingCategory = categoryRepository.findByIdentifier(changes.category().identifier());
+        if (!Objects.equals(burgerToEdit.getBurgerCategory().getIdentifier(), changes.categoryDTO().identifier())) {
+            BurgerCategory comingCategory = categoryRepository.findByIdentifier(changes.categoryDTO().identifier());
             if(comingCategory == null) return new CRUDResponseMessage(false, "Categoria não encontrada", null);
             burgerToEdit.setBurgerCategory(comingCategory);
-            changesForResponse.add("Categoria atualizada! Agora é: " + changes.category().title());
+            changesForResponse.add("Categoria atualizada! Agora é: " + changes.categoryDTO().title());
         }
         if (burgerToEdit.getPrice().compareTo(changes.price()) != 0) {
             burgerToEdit.setPrice(changes.price());
