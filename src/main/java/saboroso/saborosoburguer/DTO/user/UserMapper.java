@@ -19,6 +19,7 @@ public class UserMapper {
         List<Address> addressesEntity = addressRepository.findByBelongsTo(user);
         List<String> addressesString = addressesEntity.stream().map(Address::getContent).toList();
         return new UserClientDTO(
+                user.getIdentifier(),
                 user.getName(),
                 user.getPhoneNumber(),
                 null,
