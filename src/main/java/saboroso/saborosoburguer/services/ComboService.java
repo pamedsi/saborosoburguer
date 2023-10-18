@@ -2,8 +2,8 @@ package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.combo.ComboDTO;
-import saboroso.saborosoburguer.DTO.combos.ComboMapper;
-import saboroso.saborosoburguer.entities.Combo;
+import saboroso.saborosoburguer.DTO.combo.ComboMapper;
+import saboroso.saborosoburguer.entities.menuItems.Combo;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.ComboRepository;
 

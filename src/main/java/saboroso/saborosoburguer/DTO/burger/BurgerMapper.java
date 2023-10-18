@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import saboroso.saborosoburguer.DTO.category.CategoryDTO;
 import saboroso.saborosoburguer.DTO.ingredient.IngredientMapper;
-import saboroso.saborosoburguer.entities.burger.Burger;
+import saboroso.saborosoburguer.entities.menuItems.burger.Burger;
 
 import java.util.List;
 import java.util.stream.Collectors;

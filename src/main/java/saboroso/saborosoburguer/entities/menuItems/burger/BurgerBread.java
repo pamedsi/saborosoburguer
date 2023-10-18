@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.entities.burger;
+package saboroso.saborosoburguer.entities.menuItems.burger;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

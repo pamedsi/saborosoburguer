@@ -32,13 +32,12 @@ public class CustomerOrder {
     @Column
     @Setter (AccessLevel.NONE)
     private BigDecimal total;
-    @Column
+    @OneToOne
     @Setter (AccessLevel.NONE)
-    private String deliveredAddress;
+    private Address deliveredAddress;
 
-    public CustomerOrder(UserEntity buyer, BigDecimal price, String address) {
+    public CustomerOrder(UserEntity buyer, BigDecimal price) {
         clientWhoOrdered = buyer;
         total = price.setScale(2, RoundingMode.HALF_UP);
-        deliveredAddress = address;
     }
 }

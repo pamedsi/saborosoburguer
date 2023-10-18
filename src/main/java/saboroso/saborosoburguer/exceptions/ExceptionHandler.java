@@ -1,5 +1,6 @@
 package saboroso.saborosoburguer.exceptions;
 
+import org.hibernate.sql.ast.tree.from.UnknownTableReferenceException;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,4 +21,5 @@ public class ExceptionHandler {
     public DataIntegrityViolationException dataIntegrityViolationException() {return null; }
     public UnsupportedOperationException unsupportedOperationException() { return null; }
     public HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException () { return null; }
+    public UnknownTableReferenceException unknownTableReferenceException() { return null; }
 }

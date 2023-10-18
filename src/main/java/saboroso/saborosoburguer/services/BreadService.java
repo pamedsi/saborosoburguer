@@ -3,7 +3,7 @@ package saboroso.saborosoburguer.services;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.burger.BreadMapper;
 import saboroso.saborosoburguer.DTO.burger.BurgerBreadDTO;
-import saboroso.saborosoburguer.entities.burger.BurgerBread;
+import saboroso.saborosoburguer.entities.menuItems.burger.BurgerBread;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.BreadRepository;
 

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import saboroso.saborosoburguer.entities.CustomerOrder;
-import saboroso.saborosoburguer.entities.burger.Burger;
+import saboroso.saborosoburguer.entities.menuItems.burger.Burger;
 
 @Entity
 @Table

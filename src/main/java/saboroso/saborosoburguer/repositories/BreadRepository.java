@@ -1,7 +1,7 @@
 package saboroso.saborosoburguer.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import saboroso.saborosoburguer.entities.burger.BurgerBread;
+import saboroso.saborosoburguer.entities.menuItems.burger.BurgerBread;
 
 import java.util.List;
 

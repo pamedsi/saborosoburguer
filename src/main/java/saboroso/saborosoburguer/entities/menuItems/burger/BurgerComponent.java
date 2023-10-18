@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.entities.burger;
+package saboroso.saborosoburguer.entities.menuItems.burger;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -26,7 +26,7 @@ public abstract class BurgerComponent {
     private Boolean inStock;
     @Column
     @Setter(AccessLevel.NONE)
-    private LocalDateTime createdAt = LocalDateTime.now();;
+    private LocalDateTime createdAt = LocalDateTime.now();
     @Column
     private Boolean deleted = false;
     @Column
