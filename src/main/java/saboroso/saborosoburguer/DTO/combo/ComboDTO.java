@@ -13,6 +13,7 @@ public record ComboDTO(
         String title,
         @NumberFormat
         BigDecimal price,
+        String pic,
         @BooleanFlag
         Boolean inStock,
         @NotBlank

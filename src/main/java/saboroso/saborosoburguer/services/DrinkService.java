@@ -4,8 +4,7 @@ import org.springframework.stereotype.Service;
 
 import saboroso.saborosoburguer.DTO.drink.DrinkDTO;
 import saboroso.saborosoburguer.DTO.drink.DrinkMapper;
-import saboroso.saborosoburguer.DTO.drink.InputDrinkDTO;
-import saboroso.saborosoburguer.entities.Drink;
+import saboroso.saborosoburguer.entities.menuItems.Drink;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.repositories.DrinkRepository;
 
@@ -23,7 +22,7 @@ public class DrinkService {
         this.drinkMapper = drinkMapper;
     }
 
-    public Boolean createDrink(InputDrinkDTO inputDrinkDTO) {
+    public Boolean createDrink(DrinkDTO inputDrinkDTO) {
         if (drinkRepository.existsByTitleAndMl(inputDrinkDTO.title(), inputDrinkDTO.ml())) return false;
         Drink newDrink = new Drink(inputDrinkDTO);
         drinkRepository.save(newDrink);

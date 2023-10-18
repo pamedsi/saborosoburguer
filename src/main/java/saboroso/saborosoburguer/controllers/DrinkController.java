@@ -9,7 +9,6 @@ import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.DrinkService;
-import saboroso.saborosoburguer.DTO.drink.InputDrinkDTO;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class DrinkController extends BaseController {
         this.drinkService = drinkService;
     }
     @PostMapping(value = "/save-drink")
-    public ResponseEntity<?> saveDrink(@RequestBody @Valid InputDrinkDTO drinkDTO){
+    public ResponseEntity<?> saveDrink(@RequestBody @Valid DrinkDTO drinkDTO){
         if (drinkService.createDrink(drinkDTO)) return ResponseEntity.ok(new Message(drinkDTO.title() + " cadastrado.", null));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new Message(drinkDTO.title() + " já cadastrado.", null));
     }

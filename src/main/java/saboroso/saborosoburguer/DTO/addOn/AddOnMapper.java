@@ -1,7 +1,7 @@
 package saboroso.saborosoburguer.DTO.addOn;
 
 import org.springframework.stereotype.Component;
-import saboroso.saborosoburguer.entities.AddOn;
+import saboroso.saborosoburguer.entities.menuItems.AddOn;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ public class AddOnMapper {
                 addOnPersistence.getIdentifier(),
                 addOnPersistence.getTitle(),
                 addOnPersistence.getPrice(),
+                addOnPersistence.getPic(),
                 addOnPersistence.getInStock()
         );
     }

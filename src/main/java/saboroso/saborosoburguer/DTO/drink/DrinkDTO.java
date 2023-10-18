@@ -7,5 +7,6 @@ public record DrinkDTO(
         String title,
         Integer ml,
         BigDecimal price,
+        String pic,
         Boolean inStock
 ){}
