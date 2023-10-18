@@ -1,37 +1,23 @@
 package saboroso.saborosoburguer.entities.soldItems;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import lombok.Setter;
 import saboroso.saborosoburguer.entities.CustomerOrder;
-import saboroso.saborosoburguer.entities.Portion;
-
-import java.math.BigDecimal;
+import saboroso.saborosoburguer.entities.menuItems.Portion;
 
 @Entity
 @Table
 @NoArgsConstructor
-public class PortionSale {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "client_order_id")
-    private CustomerOrder orderThatSold;
+public class PortionSale extends SoldItem {
     @ManyToOne
     @JoinColumn(name = "portion_id")
-    private Portion soltPortion;
-    @Column
-    private Long amount;
-    @Column (updatable = false)
-    private BigDecimal singleUnitySoldFor;
-    public PortionSale(CustomerOrder orderThatSold, Portion soltPortion, Long amount) {
-        this.orderThatSold = orderThatSold;
-        this.soltPortion = soltPortion;
-        this.amount = amount;
-        this.singleUnitySoldFor = soltPortion.getPrice();
+    private Portion soldPortion;
+
+    public PortionSale(CustomerOrder orderThatSold, Portion soldPortion, Long quantity) {
+        this.soldPortion = soldPortion;
+        setOrderThatSold(orderThatSold);
+        setQuantity(quantity);
+        setSingleUnitySoldFor(soldPortion.getPrice());
     }
 }
