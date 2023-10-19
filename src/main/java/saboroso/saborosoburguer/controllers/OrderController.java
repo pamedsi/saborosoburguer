@@ -13,9 +13,9 @@ public class OrderController extends BaseController {
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
-    @PostMapping(value = "/request-order/{client_id}")
-    public ResponseEntity<?> requestOrder(@RequestBody OrderDTO orderDTO, @PathVariable("client_id") String clientIdentifier) {
-        orderService.makeOrder(clientIdentifier, orderDTO);
+    @PostMapping(value = "/make-order")
+    public ResponseEntity<?> requestOrder(@RequestBody OrderDTO orderDTO) {
+        orderService.makeOrder(orderDTO);
         return ResponseEntity.ok(new Message("Pedido feito!", null));
     }
     @GetMapping(value = "/see-orders")
