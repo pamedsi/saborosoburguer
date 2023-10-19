@@ -15,4 +15,6 @@ public interface DrinkRepository extends JpaRepository <Drink, Long> {
     Drink findByIdentifierAndDeletedFalse(String identifier);
     Drink findByIdentifier(String drinkIdentifier);
     List<Drink> findAllByDeletedFalseAndInStockTrue();
+
+    Drink findByIdentifierAndDeletedFalseAndInStockTrue(String identifier);
 }

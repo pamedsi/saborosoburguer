@@ -16,10 +16,9 @@ public class AddOnSale extends SoldItem{
     @JoinColumn(name = "addon_id")
     private AddOn soldAddOn;
 
-    public AddOnSale(CustomerOrder orderThatSold, AddOn soldAddOn, Long quantity) {
+    public AddOnSale(CustomerOrder orderThatSold, AddOn soldAddOn) {
         this.soldAddOn = soldAddOn;
         setOrderThatSold(orderThatSold);
-        setQuantity(quantity);
         setSingleUnitySoldFor(soldAddOn.getPrice());
     }
 }

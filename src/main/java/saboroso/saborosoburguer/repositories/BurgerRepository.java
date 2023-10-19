@@ -21,4 +21,6 @@ public interface BurgerRepository extends JpaRepository <Burger, Long> {
     Burger findByIdentifierAndDeletedFalse(String identifier);
 
     List<Burger> findByDeletedFalse();
+
+    Burger findBurgerByIdentifierAndDeletedFalseAndInStockTrue(String identifier);
 }

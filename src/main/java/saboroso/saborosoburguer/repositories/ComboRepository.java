@@ -21,4 +21,6 @@ public interface ComboRepository extends JpaRepository<Combo, Long> {
     Combo findByIdentifierAndDeletedFalse(String comboIdentifier);
 
     List<Combo> findAllByDeletedFalseAndInStockTrue();
+
+    Combo findByIdentifierAndDeletedFalseAndInStockTrue(String identifier);
 }

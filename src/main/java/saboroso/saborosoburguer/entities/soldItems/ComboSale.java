@@ -16,10 +16,9 @@ public class ComboSale extends SoldItem{
     @JoinColumn(name = "combo_id")
     private Combo soldCombo;
 
-    public ComboSale(CustomerOrder orderThatSold, Combo soldCombo, Long quantity) {
+    public ComboSale(CustomerOrder orderThatSold, Combo soldCombo) {
         this.soldCombo = soldCombo;
         setOrderThatSold(orderThatSold);
-        setQuantity(quantity);
         setSingleUnitySoldFor(soldCombo.getPrice());
     }
 }

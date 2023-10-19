@@ -10,4 +10,4 @@ public record BurgerFromOrder (
         String comboIdentifier,
         String obs,
         BigDecimal itemSoldBy
-) {}
+) implements ItemFromOrder {}

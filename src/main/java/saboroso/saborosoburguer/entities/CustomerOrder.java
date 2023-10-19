@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import saboroso.saborosoburguer.models.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -30,14 +31,21 @@ public class CustomerOrder {
     @Setter (AccessLevel.NONE)
     private LocalDateTime timeOfPurchase = LocalDateTime.now();
     @Column
+    private PaymentMethod paymentMethod;
+    @Column // Caso o método de pagamento escolhido tenha sido "hibrido"
+    private String howCustomerPaid;
+    @Column
     @Setter (AccessLevel.NONE)
     private BigDecimal total;
     @OneToOne
     @Setter (AccessLevel.NONE)
     private Address deliveredAddress;
 
-    public CustomerOrder(UserEntity buyer, BigDecimal price) {
+    public CustomerOrder(UserEntity buyer, Address deliveredAddress, BigDecimal totalPaid, PaymentMethod paymentMethod, String howCustomerPaid) {
         clientWhoOrdered = buyer;
-        total = price.setScale(2, RoundingMode.HALF_UP);
+        this.deliveredAddress = deliveredAddress;
+        total = totalPaid.setScale(2, RoundingMode.HALF_UP);
+        this.paymentMethod = paymentMethod;
+        this.howCustomerPaid = howCustomerPaid;
     }
 }

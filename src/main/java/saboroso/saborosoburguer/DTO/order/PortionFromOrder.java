@@ -8,5 +8,4 @@ public record PortionFromOrder(
         List<String> addOnsIdentifiers,
         String obs,
         BigDecimal itemSoldBy
-) {
-}
+)implements ItemFromOrder {}

@@ -17,4 +17,6 @@ public interface PortionRepository extends JpaRepository <Portion, Long> {
     Portion findByIdentifierAndDeletedFalse(String identifier);
 
     List<Portion> findAllByDeletedFalseAndInStockTrue();
+
+    Portion findByIdentifierAndDeletedFalseAndInStockTrue(String identifier);
 }

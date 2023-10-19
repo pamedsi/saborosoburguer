@@ -14,10 +14,9 @@ public class PortionSale extends SoldItem {
     @JoinColumn(name = "portion_id")
     private Portion soldPortion;
 
-    public PortionSale(CustomerOrder orderThatSold, Portion soldPortion, Long quantity) {
+    public PortionSale(CustomerOrder orderThatSold, Portion soldPortion) {
         this.soldPortion = soldPortion;
         setOrderThatSold(orderThatSold);
-        setQuantity(quantity);
         setSingleUnitySoldFor(soldPortion.getPrice());
     }
 }

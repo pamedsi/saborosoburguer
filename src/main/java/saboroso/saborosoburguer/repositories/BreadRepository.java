@@ -13,4 +13,6 @@ public interface BreadRepository extends JpaRepository <BurgerBread, Long> {
     BurgerBread findByIdentifierAndDeletedFalse(String identifier);
 
     List<BurgerBread> findAllByDeletedFalseAndInStockTrue();
+
+    BurgerBread findByIdentifierAndDeletedFalseAndInStockTrue(String s);
 }

@@ -15,4 +15,8 @@ public interface AddOnRepository extends JpaRepository<AddOn, Long> {
     AddOn findByIdentifierAndDeletedFalse(String identifier);
 
     List<AddOn> findAllByDeletedFalseAndInStockTrue();
+
+    AddOn findByIdentifier(String identifier);
+
+    AddOn findByIdentifierAndDeletedFalseAndInStockTrue(String identifier);
 }

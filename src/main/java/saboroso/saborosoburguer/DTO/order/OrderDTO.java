@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record OrderDTO(
+        String orderCode,
         String clientName,
         String clientPhoneNumber,
         String addressToDeliver,

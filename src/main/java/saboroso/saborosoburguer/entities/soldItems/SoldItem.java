@@ -30,7 +30,11 @@ public abstract class SoldItem {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt = LocalDateTime.now();;
     @Column (updatable = false)
-    private Long quantity;
+    private int quantity = 1;
     @Column (updatable = false)
     private BigDecimal singleUnitySoldFor;
+
+    public void incrementQuantity(){
+        quantity++;
+    }
 }
