@@ -2,7 +2,6 @@ package saboroso.saborosoburguer.services;
 
 import org.springframework.stereotype.Service;
 
-import saboroso.saborosoburguer.DTO.portion.InputPortionDTO;
 import saboroso.saborosoburguer.DTO.portion.PortionDTO;
 import saboroso.saborosoburguer.DTO.portion.PortionMapper;
 import saboroso.saborosoburguer.entities.menuItems.Portion;
@@ -22,7 +21,7 @@ public class PortionService {
         this.portionMapper = portionMapper;
         this.portionRepository = portionRepository;
     }
-    public void createPortion(InputPortionDTO portionDTO) {
+    public void createPortion(PortionDTO portionDTO) {
         Portion newPortion = new Portion(portionDTO);
         portionRepository.save(newPortion);
     }

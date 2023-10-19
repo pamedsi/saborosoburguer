@@ -3,7 +3,6 @@ package saboroso.saborosoburguer.controllers;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saboroso.saborosoburguer.DTO.portion.InputPortionDTO;
 import saboroso.saborosoburguer.DTO.portion.PortionDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.CRUDResponseMessage;
@@ -19,7 +18,7 @@ public class PortionController extends BaseController {
         this.portionService = portionService;
     }
     @PostMapping (value = "/save-portion")
-    public ResponseEntity<?> addPortion(@RequestBody @Valid InputPortionDTO portionDTO) {
+    public ResponseEntity<?> addPortion(@RequestBody @Valid PortionDTO portionDTO) {
         portionService.createPortion(portionDTO);
         return ResponseEntity.ok(new Message(portionDTO.title() + " cadastrado!", null));
     }

@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 public class Burger extends MenuItem {
     @ManyToOne
-    @JoinColumn (name = "category_of_burger")
+    @JoinColumn (name = "burger_category_id")
     private BurgerCategory burgerCategory;
     @ManyToMany
     @JoinTable(name = "burger_ingredient",

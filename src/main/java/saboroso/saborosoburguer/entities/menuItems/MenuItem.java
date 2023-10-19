@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+
 @Data
+@MappedSuperclass
 public abstract class MenuItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

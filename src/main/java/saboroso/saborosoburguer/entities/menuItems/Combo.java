@@ -11,10 +11,11 @@ import saboroso.saborosoburguer.DTO.combo.ComboDTO;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
-@Getter
 @Entity
-@Table
 @NoArgsConstructor
+@Table
+@Getter
+@Setter
 public class Combo extends MenuItem {
     @Column
     @Setter

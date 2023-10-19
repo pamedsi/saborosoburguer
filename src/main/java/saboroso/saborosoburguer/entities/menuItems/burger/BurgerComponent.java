@@ -9,8 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 @Data
 public abstract class BurgerComponent {
     @Id
@@ -30,5 +29,5 @@ public abstract class BurgerComponent {
     @Column
     private Boolean deleted = false;
     @Column
-    private LocalDateTime lastEdited;
+    private LocalDateTime lastEditedAt;
 }

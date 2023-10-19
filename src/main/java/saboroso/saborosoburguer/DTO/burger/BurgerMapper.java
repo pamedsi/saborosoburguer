@@ -19,14 +19,16 @@ public class BurgerMapper {
     public BurgerDTO singleToDTO(Burger persistenceBurger) {
                 return new BurgerDTO(
                 persistenceBurger.getIdentifier(),
-                new CategoryDTO(
-                    persistenceBurger.getBurgerCategory().getIdentifier(), 
-                    persistenceBurger.getBurgerCategory().getTitle()),
+                    new CategoryDTO(
+                        persistenceBurger.getBurgerCategory().getIdentifier(),
+                        persistenceBurger.getBurgerCategory().getTitle()
+                    ),
                     persistenceBurger.getTitle(),
                     persistenceBurger.getPrice(),
                     persistenceBurger.getPic(),
                     persistenceBurger.getInStock(),
-                    ingredientMapper.severalToDTO(persistenceBurger.getIngredients()));
+                    ingredientMapper.severalToDTO(persistenceBurger.getIngredients()
+                    ));
     }
     public List<BurgerDTO> severalToDTO(List<Burger> burgers) {
         return burgers.stream()

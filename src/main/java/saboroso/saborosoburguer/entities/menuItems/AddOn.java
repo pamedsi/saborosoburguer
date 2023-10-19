@@ -5,8 +5,10 @@ import lombok.*;
 import saboroso.saborosoburguer.DTO.addOn.AddOnDTO;
 
 @Entity
-@Table
 @NoArgsConstructor
+@Table
+@Getter
+@Setter
 public class AddOn extends MenuItem{
 
     public AddOn(AddOnDTO addOnDTO) {

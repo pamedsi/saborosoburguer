@@ -41,7 +41,7 @@ public class CategoryService {
         if (exists) return false;
         BurgerCategory categoryToEdit = categoryRepository.findByIdentifier(categoryDTO.identifier());
         categoryToEdit.setTitle(inputTitle);
-        categoryToEdit.setLastEditedIn(LocalDateTime.now());
+        categoryToEdit.setLastEditedAt(LocalDateTime.now());
         categoryRepository.save(categoryToEdit);
       return true;
     }

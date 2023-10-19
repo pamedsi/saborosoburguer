@@ -2,42 +2,23 @@ package saboroso.saborosoburguer.entities.menuItems;
 
 import jakarta.persistence.*;
 import lombok.*;
-import saboroso.saborosoburguer.DTO.portion.InputPortionDTO;
-
-import java.math.BigDecimal;
-import java.util.UUID;
+import saboroso.saborosoburguer.DTO.portion.PortionDTO;
 
 @Entity
-@Data
 @NoArgsConstructor
 @Table
-public class Portion {
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter (AccessLevel.NONE)
-    @Id
-    private Long id;
+@Getter
+@Setter
+public class Portion extends MenuItem {
     @Column
-    @Setter(AccessLevel.NONE)
-    private String identifier = UUID.randomUUID().toString();
-    @Column (unique = true)
-    private String title;
-    @Column
-    private BigDecimal price;
-    @Column
-    private Boolean inStock;
-    @Column
-    private Boolean deleted;
-    @Column (unique = true)
+    @Setter
     private String description;
-    @Column (length = 2000)
-    private String pic;
 
-    public Portion (InputPortionDTO portionDTO) {
-        title = portionDTO.title();
-        price = portionDTO.price();
-        inStock = portionDTO.inStock();
-        deleted = false;
-        description = portionDTO.description();
-        pic = portionDTO.pic();
+    public Portion(PortionDTO portionDTO) {
+        setTitle(portionDTO.title());
+        setPrice(portionDTO.price());
+        setInStock(portionDTO.inStock());
+        setPic(portionDTO.pic());
+        setDescription(portionDTO.description());
     }
 }

@@ -56,7 +56,7 @@ public class IngredientService {
         }
         if (numberOfChanges == 0) return new IngredientResponseMessage(false, "Nenhuma mudança foi inserida!");
 
-        ingredientToEdit.setLastEdited(LocalDateTime.now());
+        ingredientToEdit.setLastEditedAt(LocalDateTime.now());
         ingredientRepository.save(ingredientToEdit);
         return new IngredientResponseMessage(true, null);
     }
@@ -68,13 +68,13 @@ public class IngredientService {
         ingredientRepository.save(deletedIngredient);
         return true;
     }
-    public Boolean undeleteIngredient(String identifier){
-        Ingredient deletedIngredient = ingredientRepository.findByIdentifierAndDeletedTrue(identifier);
-        if (deletedIngredient == null) return false;
-        deletedIngredient.setDeleted(false);
-        ingredientRepository.save(deletedIngredient);
-        return true;
-    }
+//    public Boolean undeleteIngredient(String identifier){
+//        Ingredient deletedIngredient = ingredientRepository.findByIdentifierAndDeletedTrue(identifier);
+//        if (deletedIngredient == null) return false;
+//        deletedIngredient.setDeleted(false);
+//        ingredientRepository.save(deletedIngredient);
+//        return true;
+//    }
     public List<IngredientDTO> getIngredientsForMenu () {
         List<Ingredient> persistenceData = ingredientRepository.getIngredientsByDeletedFalseAndInStockTrue();
         return ingredientMapper.severalToDTO(persistenceData);
