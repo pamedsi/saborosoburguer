@@ -8,7 +8,7 @@ import saboroso.saborosoburguer.DTO.user.UserClientDTO;
 import saboroso.saborosoburguer.DTO.user.UserMapper;
 import saboroso.saborosoburguer.entities.Address;
 import saboroso.saborosoburguer.entities.UserEntity;
-import saboroso.saborosoburguer.models.CRUDResponseMessage;
+import saboroso.saborosoburguer.models.UserAndAddress;
 import saboroso.saborosoburguer.repositories.AddressRepository;
 import saboroso.saborosoburguer.repositories.UserRepository;
 
@@ -33,22 +33,21 @@ public class UserService {
         userRepository.save(newUser);
         return true;
     }
-    public Boolean addClientUser(UserClientDTO userDTO) {
-        if (userRepository.existsByPhoneNumber(userDTO.phoneNumber())) return false;
-        UserEntity newUser = new UserEntity(userDTO);
+    public UserAndAddress addClientUser(String name, String phoneNumber, String address) {
+        if (userRepository.existsByPhoneNumber(phoneNumber)) return null;
+        UserEntity newUser = new UserEntity(name, phoneNumber);
         userRepository.save(newUser);
 
-        Address address = new Address(newUser, userDTO.address());
-        address.setBelongsTo(newUser);
-        addressRepository.save(address);
-        return true;
+        Address newAddress = new Address(newUser, address);
+        newAddress.setBelongsTo(newUser);
+        addressRepository.save(newAddress);
+        return new UserAndAddress(newUser, newAddress);
     }
-    public Boolean addAddressToClient(UserClientDTO userDTO) {
-        UserEntity userClient = userRepository.findByPhoneNumber(userDTO.phoneNumber());
-        Address address = new Address(userClient, userDTO.address());
-        address.setBelongsTo(userClient);
-        addressRepository.save(address);
-        return true;
+    public Address addAddressToClient(UserEntity user, String address) {
+        Address newAddress = new Address(user, address);
+        newAddress.setBelongsTo(user);
+        addressRepository.save(newAddress);
+        return newAddress;
     }
     public List<AddressDTO> getUserAddresses (String userIdentifier) {
         UserEntity user = userRepository.findByIdentifier(userIdentifier);
