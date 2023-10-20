@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import saboroso.saborosoburguer.models.OrderStatus;
 import saboroso.saborosoburguer.models.PaymentMethod;
 
 import java.math.BigDecimal;
@@ -24,6 +25,9 @@ public class CustomerOrder {
     @Column
     @Setter (AccessLevel.NONE)
     private String identifier = UUID.randomUUID().toString();
+    @Column
+    @Setter (AccessLevel.NONE)
+    private String orderCode;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private UserEntity clientWhoOrdered;
@@ -31,17 +35,24 @@ public class CustomerOrder {
     @Setter (AccessLevel.NONE)
     private LocalDateTime timeOfPurchase = LocalDateTime.now();
     @Column
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
     @Column // Caso o método de pagamento escolhido tenha sido "hibrido"
     private String howCustomerPaid;
     @Column
     @Setter (AccessLevel.NONE)
     private BigDecimal total;
     @OneToOne
+    @JoinColumn(name = "delivered_address_id", unique = false)
     @Setter (AccessLevel.NONE)
     private Address deliveredAddress;
 
-    public CustomerOrder(UserEntity buyer, Address deliveredAddress, BigDecimal totalPaid, PaymentMethod paymentMethod, String howCustomerPaid) {
+    public CustomerOrder(String orderCode, OrderStatus status, UserEntity buyer, Address deliveredAddress, BigDecimal totalPaid, PaymentMethod paymentMethod, String howCustomerPaid) {
+        this.orderStatus = status;
+        this.orderCode = orderCode;
         clientWhoOrdered = buyer;
         this.deliveredAddress = deliveredAddress;
         total = totalPaid.setScale(2, RoundingMode.HALF_UP);
