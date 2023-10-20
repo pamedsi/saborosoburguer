@@ -10,32 +10,41 @@ import saboroso.saborosoburguer.entities.menuItems.*;
 import saboroso.saborosoburguer.entities.menuItems.burger.Burger;
 import saboroso.saborosoburguer.entities.menuItems.burger.BurgerBread;
 import saboroso.saborosoburguer.entities.soldItems.*;
+import saboroso.saborosoburguer.models.UserAndAddress;
 import saboroso.saborosoburguer.repositories.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderService {
+    // Repositório do pedido
     private final CostumerOrderRepository customerOrderRepository;
-    private final UserRepository userRepository;
+
+    // Comidas e bebidas do pedido
     private final BurgerRepository burgerRepository;
     private final PortionRepository portionRepository;
     private final AddOnRepository addOnRepository;
     private final ComboRepository comboRepository;
     private final BreadRepository breadRepository;
     private final DrinkRepository drinkRepository;
-    private final BurgerSaleRepository burgerSaleRepository;
-    private final PortionSaleRepository portionSaleRepository;
-    private final DrinkSaleRepository drinkSaleRepository;
-    private final AddressRepository addressRepository;
 
     // Vendas
 
     private final AddOnSaleRepository addOnSaleRepository;
+    private final BurgerSaleRepository burgerSaleRepository;
+    private final PortionSaleRepository portionSaleRepository;
+    private final DrinkSaleRepository drinkSaleRepository;
+    private final ComboSaleRepository comboSaleRepository;
 
-    public OrderService(CostumerOrderRepository costumerOrderRepository, UserRepository userRepository, BurgerRepository burgerRepository, PortionRepository portionRepository, DrinkRepository drinkRepository, BurgerSaleRepository burgerSaleRepository, PortionSaleRepository portionSaleRepository, DrinkSaleRepository drinkSaleRepository, AddressRepository addressRepository, AddOnRepository addOnRepository, AddOnSaleRepository addOnSaleRepository, ComboRepository comboRepository, BreadRepository breadRepository) {
+    // Cliente
+
+    private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final UserService userService;
+
+
+    public OrderService(CostumerOrderRepository costumerOrderRepository, UserRepository userRepository, BurgerRepository burgerRepository, PortionRepository portionRepository, DrinkRepository drinkRepository, BurgerSaleRepository burgerSaleRepository, PortionSaleRepository portionSaleRepository, DrinkSaleRepository drinkSaleRepository, AddressRepository addressRepository, AddOnRepository addOnRepository, AddOnSaleRepository addOnSaleRepository, ComboRepository comboRepository, BreadRepository breadRepository, UserService userService, ComboSaleRepository comboSaleRepository) {
         this.customerOrderRepository = costumerOrderRepository;
         this.userRepository = userRepository;
         this.burgerRepository = burgerRepository;
@@ -49,21 +58,31 @@ public class OrderService {
         this.addOnSaleRepository = addOnSaleRepository;
         this.comboRepository = comboRepository;
         this.breadRepository = breadRepository;
+        this.userService = userService;
+        this.comboSaleRepository = comboSaleRepository;
     }
     public void makeOrder(OrderDTO orderDTO) {
         UserEntity buyer = userRepository.findByPhoneNumber(orderDTO.clientPhoneNumber());
-        BigDecimal totalPaid = orderDTO.totalToPay();
-        Address addressToDeliver = addressRepository.findByContent(orderDTO.addressToDeliver());
-        if (addressToDeliver == null) addressToDeliver = new Address(buyer, orderDTO.addressToDeliver());
-        CustomerOrder newOrder = new CustomerOrder(buyer, addressToDeliver, totalPaid, orderDTO.paymentMethod(), orderDTO.howClientWillPay());
+        Address addressToDeliver = null;
+        if (buyer == null) {
+            UserAndAddress userAndAddress = userService.addClientUser(orderDTO.clientName(), orderDTO.clientPhoneNumber(), orderDTO.addressToDeliver());
+            buyer = userAndAddress.user();
+            addressToDeliver = userAndAddress.address();
+        }
+        if (addressToDeliver == null) {
+            addressToDeliver = addressRepository.findByContentAndBelongsTo(orderDTO.addressToDeliver(), buyer);
+        }
+        if (addressToDeliver == null) {
+            addressToDeliver = userService.addAddressToClient(buyer, orderDTO.addressToDeliver());
+        }
 
-//        List<AddOn> addOns = new ArrayList<>();
+        CustomerOrder newOrder = new CustomerOrder(orderDTO.orderCode(), orderDTO.status(), buyer, addressToDeliver, orderDTO.totalToPay(), orderDTO.paymentMethod(), orderDTO.howClientWillPay());
 
-        List<SoldItem> soldBurgers = new ArrayList<>();
-        List<SoldItem> soldPortions = new ArrayList<>();
-        List<SoldItem> soldDrinks = new ArrayList<>();
-        List<SoldItem> soldAddOns = new ArrayList<>();
-        List<SoldItem> soldCombos = new ArrayList<>();
+        List<BurgerSale> soldBurgers = new ArrayList<>();
+        List<PortionSale> soldPortions = new ArrayList<>();
+        List<DrinkSale> soldDrinks = new ArrayList<>();
+        List<AddOnSale> soldAddOns = new ArrayList<>();
+        List<ComboSale> soldCombos = new ArrayList<>();
 
         orderDTO.burgers().forEach(purchasedBurger -> {
             countBurgers(newOrder, soldBurgers, purchasedBurger, soldAddOns, soldCombos);
@@ -79,15 +98,18 @@ public class OrderService {
             soldDrinks.add(new DrinkSale(newOrder, soldDrink, purchasedDrink.quantity()));
         });
 
-// Iterar as listas "soldAlgumaCoisa" pra dar .save() nelas
-//        addressRepository.save(addressToDeliver);
-//        customerOrderRepository.save(newOrder);
+        if (!soldBurgers.isEmpty()) burgerSaleRepository.saveAll(soldBurgers);
+        if (!soldPortions.isEmpty()) portionSaleRepository.saveAll(soldPortions);
+        if (!soldDrinks.isEmpty()) drinkSaleRepository.saveAll(soldDrinks);
+        if (!soldAddOns.isEmpty()) addOnSaleRepository.saveAll(soldAddOns);
+        if (!soldCombos.isEmpty()) comboSaleRepository.saveAll(soldCombos);
+        customerOrderRepository.save(newOrder);
     }
     public List<CustomerOrder> getAllOrders() {
         return customerOrderRepository.findAll();
     }
 
-    private void countBurgers(CustomerOrder order, List<SoldItem> soldBurgers, BurgerFromOrder purchasedItem, List<SoldItem> addOns, List<SoldItem> combos) {
+    private void countBurgers(CustomerOrder order, List<BurgerSale> soldBurgers, BurgerFromOrder purchasedItem, List<AddOnSale> addOns, List<ComboSale> combos) {
         Burger burger = burgerRepository.findBurgerByIdentifierAndDeletedFalseAndInStockTrue(purchasedItem.identifier());
 
         if (burger == null) throw new NotFoundException("Hambúrguer em falta ou deletado.");
@@ -109,7 +131,7 @@ public class OrderService {
         countAddOns(order, addOns, purchasedItem.addOnsIdentifiers());
     }
 
-    private void countPortions(CustomerOrder order, List<SoldItem> soldPortions, PortionFromOrder purchasedItem, List<SoldItem> addOns) {
+    private void countPortions(CustomerOrder order, List<PortionSale> soldPortions, PortionFromOrder purchasedItem, List<AddOnSale> addOns) {
         Portion portion = portionRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedItem.identifier());
         if (portion == null) throw new NotFoundException("Porção em falta ou deletada.");
 
@@ -119,7 +141,7 @@ public class OrderService {
         countAddOns(order, addOns, purchasedItem.addOnsIdentifiers());
     }
 
-    private void countAddOns(CustomerOrder order, List<SoldItem> addOns, List<String> addOnsIdentifiers){
+    private void countAddOns(CustomerOrder order, List<AddOnSale> addOns, List<String> addOnsIdentifiers){
         addOnsIdentifiers.forEach(addOnIdentifier -> {
             AddOn addOn = addOnRepository.findByIdentifierAndDeletedFalseAndInStockTrue(addOnIdentifier);
             if (addOn == null) throw new NotFoundException("Adicional não encontrado ou deletado.");
@@ -130,7 +152,7 @@ public class OrderService {
         });
     }
 
-    private int findIndex(List<SoldItem> soldItems, String itemToCheck){
+    private <T extends SoldItem> int findIndex(List<T> soldItems, String itemToCheck){
         for (int i = 0; i < soldItems.size(); i++) {
             if (soldItems.get(i).getIdentifier().equals(itemToCheck)) {
                 return i;
