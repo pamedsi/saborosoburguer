@@ -11,5 +11,5 @@ import java.util.List;
 public interface AddressRepository extends JpaRepository <Address, Long> {
     List<Address> findByBelongsTo(UserEntity user);
 
-    Address findByContent(String content);
+    Address findByContentAndBelongsTo(String content, UserEntity belongsTo);
 }
