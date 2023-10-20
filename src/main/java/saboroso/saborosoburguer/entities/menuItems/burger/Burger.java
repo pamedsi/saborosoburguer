@@ -20,9 +20,11 @@ public class Burger extends MenuItem {
     @JoinColumn (name = "burger_category_id")
     private BurgerCategory burgerCategory;
     @ManyToMany
-    @JoinTable(name = "burger_ingredient",
+    @JoinTable (
+            name = "burger_ingredient",
             joinColumns = @JoinColumn(name = "burger_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
     private List<Ingredient> ingredients;
     public Burger(InputBurgerDTO inputBurger) {
         setTitle(inputBurger.title());
