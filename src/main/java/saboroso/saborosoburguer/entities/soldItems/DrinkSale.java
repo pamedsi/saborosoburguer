@@ -14,10 +14,10 @@ public class DrinkSale extends SoldItem{
     @JoinColumn(name = "drink_id")
     private Drink soldDrink;
 
-    public DrinkSale(CustomerOrder orderThatSold, Drink soldDrink, int quantitty) {
+    public DrinkSale(CustomerOrder orderThatSold, Drink soldDrink, int quantity) {
         this.soldDrink = soldDrink;
         setOrderThatSold(orderThatSold);
-        setQuantity(quantitty);
+        setQuantity(quantity);
         setSingleUnitySoldFor(soldDrink.getPrice());
     }
 }
