@@ -49,9 +49,9 @@ public class UserEntity implements UserDetails {
         passwordHash = hash(userDTO.password());
         email = userDTO.email();
     }
-    public UserEntity(UserClientDTO userDTO) {
-        name = userDTO.name();
-        phoneNumber = userDTO.phoneNumber();
+    public UserEntity(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
