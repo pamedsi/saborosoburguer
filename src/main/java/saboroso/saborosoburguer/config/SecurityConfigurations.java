@@ -45,6 +45,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/create-user").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/get-user-by-phone-number/{phone_number}").permitAll()
 
+                        // Pedidos:
+                        .requestMatchers(HttpMethod.POST, "/api/make-order").permitAll()
+
                         // Hambúrgueres:
                         .requestMatchers(HttpMethod.GET, "/api/highlight-burgers").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/get-burgers-for-menu").permitAll()
