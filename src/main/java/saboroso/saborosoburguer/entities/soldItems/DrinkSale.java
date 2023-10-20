@@ -9,15 +9,18 @@ import saboroso.saborosoburguer.entities.menuItems.Drink;
 @Entity
 @Table
 @NoArgsConstructor
-public class DrinkSale extends SoldItem{
+public class DrinkSale extends MenuItemSale {
     @ManyToOne
     @JoinColumn(name = "drink_id")
     private Drink soldDrink;
 
+    @Column
+    private int quantity;
+
     public DrinkSale(CustomerOrder orderThatSold, Drink soldDrink, int quantity) {
         this.soldDrink = soldDrink;
         setOrderThatSold(orderThatSold);
-        setQuantity(quantity);
-        setSingleUnitySoldFor(soldDrink.getPrice());
+        this.quantity = quantity;
+        setSoldFor(soldDrink.getPrice());
     }
 }
