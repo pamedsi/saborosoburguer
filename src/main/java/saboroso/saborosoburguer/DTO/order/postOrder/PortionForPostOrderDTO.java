@@ -1,11 +1,11 @@
-package saboroso.saborosoburguer.DTO.order;
+package saboroso.saborosoburguer.DTO.order.postOrder;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public record PortionFromOrder(
+public record PortionForPostOrderDTO(
         String identifier,
         List<String> addOnsIdentifiers,
         String obs,
         BigDecimal itemSoldBy
-)implements ItemFromOrder {}
+){}
