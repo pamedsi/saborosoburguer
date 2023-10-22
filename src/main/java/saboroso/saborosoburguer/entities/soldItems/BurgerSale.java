@@ -44,6 +44,6 @@ public class BurgerSale extends MenuItemSale {
         this.addOns = addOns;
         this.obs = obs;
         setOrderThatSold(orderThatSold);
-        setSingleUnitySoldFor(soldburger.getPrice());
+        setSoldFor(soldburger.getPrice());
     }
 }

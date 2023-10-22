@@ -33,7 +33,7 @@ public class PortionSale extends MenuItemSale {
         this.soldPortion = soldPortion;
         this.addOns = addOns;
         setOrderThatSold(orderThatSold);
-        setSingleUnitySoldFor(soldPortion.getPrice());
+        setSoldFor(soldPortion.getPrice());
         this.obs = obs;
     }
 }
