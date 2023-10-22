@@ -3,7 +3,14 @@ package saboroso.saborosoburguer.services;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
+import saboroso.saborosoburguer.DTO.burger.BurgerMapper;
+import saboroso.saborosoburguer.DTO.drink.DrinkMapper;
+import saboroso.saborosoburguer.DTO.order.getOrder.BurgerForGetOrderDTO;
+import saboroso.saborosoburguer.DTO.order.getOrder.DrinkAndQuantityForGetDTO;
+import saboroso.saborosoburguer.DTO.order.getOrder.OrderForGetDTO;
+import saboroso.saborosoburguer.DTO.order.getOrder.PortionForGetOrderDTO;
 import saboroso.saborosoburguer.DTO.order.postOrder.OrderForPostDTO;
+import saboroso.saborosoburguer.DTO.portion.PortionMapper;
 import saboroso.saborosoburguer.entities.*;
 import saboroso.saborosoburguer.entities.menuItems.*;
 import saboroso.saborosoburguer.entities.menuItems.accompaniment.AddOn;
@@ -46,8 +53,14 @@ public class OrderService {
     private final AddressRepository addressRepository;
     private final UserService userService;
 
+    // Mappers para DTO
 
-    public OrderService(CostumerOrderRepository costumerOrderRepository, UserRepository userRepository, BurgerRepository burgerRepository, PortionRepository portionRepository, DrinkRepository drinkRepository, BurgerSaleRepository burgerSaleRepository, PortionSaleRepository portionSaleRepository, DrinkSaleRepository drinkSaleRepository, AddressRepository addressRepository, AddOnRepository addOnRepository, AddOnSaleRepository addOnSaleRepository, ComboRepository comboRepository, BreadRepository breadRepository, UserService userService, ComboSaleRepository comboSaleRepository) {
+    private final BurgerMapper burgerMapper;
+    private final PortionMapper portionMapper;
+    private final DrinkMapper drinkMapper;
+
+
+    public OrderService(CostumerOrderRepository costumerOrderRepository, UserRepository userRepository, BurgerRepository burgerRepository, PortionRepository portionRepository, DrinkRepository drinkRepository, BurgerSaleRepository burgerSaleRepository, PortionSaleRepository portionSaleRepository, DrinkSaleRepository drinkSaleRepository, AddressRepository addressRepository, AddOnRepository addOnRepository, AddOnSaleRepository addOnSaleRepository, ComboRepository comboRepository, BreadRepository breadRepository, UserService userService, ComboSaleRepository comboSaleRepository, BurgerMapper burgerMapper, PortionMapper portionMapper, DrinkMapper drinkMapper) {
         this.customerOrderRepository = costumerOrderRepository;
         this.userRepository = userRepository;
         this.burgerRepository = burgerRepository;
@@ -63,6 +76,9 @@ public class OrderService {
         this.breadRepository = breadRepository;
         this.userService = userService;
         this.comboSaleRepository = comboSaleRepository;
+        this.burgerMapper = burgerMapper;
+        this.portionMapper = portionMapper;
+        this.drinkMapper = drinkMapper;
     }
     public void makeOrder(OrderForPostDTO orderForPostDTO) {
         UserEntity buyer = userRepository.findByPhoneNumber(orderForPostDTO.clientPhoneNumber());
@@ -152,8 +168,37 @@ public class OrderService {
         if (!addOns.isEmpty()) addOnSaleRepository.saveAll(addOns);
     }
 
-    public List<CustomerOrder> getAllOrders() {
-        return customerOrderRepository.findAll();
+    public List<OrderForGetDTO> getAllOrders() {
+        List<CustomerOrder> allOrders = customerOrderRepository.findAll() ;
+        return allOrders.stream().map(this::mapToDTO).toList();
+    }
+
+    public OrderForGetDTO mapToDTO(CustomerOrder order) {
+        List<BurgerSale> soldBurgers = burgerSaleRepository.findAllByOrderThatSold(order);
+        List<PortionSale> soldPortions = portionSaleRepository.findAllByOrderThatSold(order);
+        List<DrinkSale> soldDrinks = drinkSaleRepository.findAllByOrderThatSold(order);
+
+        List<BurgerForGetOrderDTO> burgers = new ArrayList<>();
+        List<PortionForGetOrderDTO> portions = new ArrayList<>();
+        List<DrinkAndQuantityForGetDTO> drinks = new ArrayList<>();
+
+        if (soldBurgers != null) burgers = burgerMapper.severalToGetOrderDTO(soldBurgers);
+        if (soldPortions != null) portions = portionMapper.severalToGetOrderDTO(soldPortions);
+        if (soldDrinks != null) drinks = drinkMapper.severalToGetOrderDTO(soldDrinks);
+
+        return new OrderForGetDTO(
+                order.getOrderCode(),
+                order.getOrderStatus(),
+                order.getClientWhoOrdered().getName(),
+                order.getClientWhoOrdered().getPhoneNumber(),
+                order.getDeliveredAddress().getContent(),
+                burgers,
+                portions,
+                drinks,
+                order.getPaymentMethod(),
+                order.getHowCustomerPaid(),
+                order.getTotal()
+        );
     }
 
 }
