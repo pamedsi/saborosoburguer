@@ -18,7 +18,7 @@ public class OrderController extends BaseController {
         orderService.makeOrder(orderForPostDTO);
         return ResponseEntity.ok(new Message("Pedido feito!", null));
     }
-    @GetMapping(value = "/see-orders")
+    @GetMapping(value = "/order-manager")
     public ResponseEntity<?> getOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
