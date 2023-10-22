@@ -11,7 +11,7 @@ public record OrderForGetDTO (
         OrderStatus status,
         String clientName,
         String clientPhoneNumber,
-        String addressToDeliver,
+        String address,
         List<BurgerForGetOrderDTO> burgers,
         List<PortionForGetOrderDTO> portions,
         List<DrinkAndQuantityForGetDTO> drinks,
