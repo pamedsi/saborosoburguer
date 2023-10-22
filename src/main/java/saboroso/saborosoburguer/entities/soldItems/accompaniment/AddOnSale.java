@@ -19,6 +19,6 @@ public class AddOnSale extends BaseAccompanimentSale {
 
     public AddOnSale(AddOn soldAddOn) {
         this.soldAddOn = soldAddOn;
-        setSingleUnitySoldFor(soldAddOn.getPrice());
+        setSoldFor(soldAddOn.getPrice());
     }
 }
