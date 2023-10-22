@@ -3,9 +3,7 @@ package saboroso.saborosoburguer.services;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTO.order.BurgerFromOrder;
-import saboroso.saborosoburguer.DTO.order.OrderDTO;
-import saboroso.saborosoburguer.DTO.order.PortionFromOrder;
+import saboroso.saborosoburguer.DTO.order.postOrder.OrderForPostDTO;
 import saboroso.saborosoburguer.entities.*;
 import saboroso.saborosoburguer.entities.menuItems.*;
 import saboroso.saborosoburguer.entities.menuItems.accompaniment.AddOn;
@@ -18,7 +16,6 @@ import saboroso.saborosoburguer.entities.soldItems.accompaniment.ComboSale;
 import saboroso.saborosoburguer.models.UserAndAddress;
 import saboroso.saborosoburguer.repositories.*;
 
-import javax.sound.sampled.Port;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,29 +64,29 @@ public class OrderService {
         this.userService = userService;
         this.comboSaleRepository = comboSaleRepository;
     }
-    public void makeOrder(OrderDTO orderDTO) {
-        UserEntity buyer = userRepository.findByPhoneNumber(orderDTO.clientPhoneNumber());
+    public void makeOrder(OrderForPostDTO orderForPostDTO) {
+        UserEntity buyer = userRepository.findByPhoneNumber(orderForPostDTO.clientPhoneNumber());
         Address addressToDeliver = null;
         if (buyer == null) {
-            UserAndAddress userAndAddress = userService.addClientUser(orderDTO.clientName(), orderDTO.clientPhoneNumber(), orderDTO.addressToDeliver());
+            UserAndAddress userAndAddress = userService.addClientUser(orderForPostDTO.clientName(), orderForPostDTO.clientPhoneNumber(), orderForPostDTO.addressToDeliver());
             buyer = userAndAddress.user();
             addressToDeliver = userAndAddress.address();
         }
         if (addressToDeliver == null) {
-            addressToDeliver = addressRepository.findByContentAndBelongsTo(orderDTO.addressToDeliver(), buyer);
+            addressToDeliver = addressRepository.findByContentAndBelongsTo(orderForPostDTO.addressToDeliver(), buyer);
         }
         if (addressToDeliver == null) {
-            addressToDeliver = userService.addAddressToClient(buyer, orderDTO.addressToDeliver());
+            addressToDeliver = userService.addAddressToClient(buyer, orderForPostDTO.addressToDeliver());
         }
 
-        CustomerOrder newOrder = new CustomerOrder(orderDTO.orderCode(), orderDTO.status(), buyer, addressToDeliver, orderDTO.totalToPay(), orderDTO.paymentMethod(), orderDTO.howClientWillPay());
+        CustomerOrder newOrder = new CustomerOrder(orderForPostDTO.orderCode(), orderForPostDTO.status(), buyer, addressToDeliver, orderForPostDTO.totalToPay(), orderForPostDTO.paymentMethod(), orderForPostDTO.howClientWillPay());
 
         List<BurgerSale> soldBurgers = new ArrayList<>();
         List<PortionSale> soldPortions = new ArrayList<>();
         List<DrinkSale> soldDrinks = new ArrayList<>();
         String notFoundOrDeleted = "não disponível ou excluído,";
 
-        orderDTO.burgers().forEach(purchasedBurger -> {
+        orderForPostDTO.burgers().forEach(purchasedBurger -> {
             Burger burger = burgerRepository.findBurgerByIdentifierAndDeletedFalseAndInStockTrue(purchasedBurger.identifier());
             if (burger == null) throw new NotFoundException("Hambúrguer " + notFoundOrDeleted);
 
@@ -110,7 +107,7 @@ public class OrderService {
             soldBurgers.add(new BurgerSale(newOrder, burger, bread, comboSale, addOns, purchasedBurger.obs()));
         });
 
-        orderDTO.portions().forEach(purchasedPortion -> {
+        orderForPostDTO.portions().forEach(purchasedPortion -> {
             Portion portion = portionRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedPortion.identifier());
             if (portion == null) throw new NotFoundException("Porção " + notFoundOrDeleted);
 
@@ -120,7 +117,7 @@ public class OrderService {
             soldPortions.add(new PortionSale(newOrder, portion, addOns, purchasedPortion.obs()));
         });
 
-        orderDTO.drinks().forEach(purchasedDrink -> {
+        orderForPostDTO.drinks().forEach(purchasedDrink -> {
             Drink soldDrink = drinkRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedDrink.drinkIdentifier());
             if (soldDrink == null) throw new NotFoundException("Bebida " + notFoundOrDeleted);
             soldDrinks.add(new DrinkSale(newOrder, soldDrink, purchasedDrink.quantity()));
