@@ -13,7 +13,4 @@ public abstract class MenuItemSale extends BaseAccompanimentSale {
     @ManyToOne (fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "client_order_id")
     private CustomerOrder orderThatSold;
-
-    @Column
-    private String obs;
 }

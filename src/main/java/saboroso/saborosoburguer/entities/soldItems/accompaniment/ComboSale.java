@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import saboroso.saborosoburguer.entities.menuItems.accompaniment.Combo;
@@ -11,6 +12,7 @@ import saboroso.saborosoburguer.entities.menuItems.accompaniment.Combo;
 @Entity
 @Table
 @NoArgsConstructor
+@Getter
 public class ComboSale extends BaseAccompanimentSale {
     @ManyToOne
     @JoinColumn(name = "combo_id")
@@ -18,6 +20,6 @@ public class ComboSale extends BaseAccompanimentSale {
 
     public ComboSale(Combo soldCombo) {
         this.soldCombo = soldCombo;
-        setSoldFor(soldCombo.getPrice());
+        setSingleUnitySoldFor(soldCombo.getPrice());
     }
 }

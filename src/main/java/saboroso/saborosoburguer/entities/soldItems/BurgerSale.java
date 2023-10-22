@@ -5,13 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import saboroso.saborosoburguer.entities.CustomerOrder;
-import saboroso.saborosoburguer.entities.menuItems.accompaniment.Combo;
 import saboroso.saborosoburguer.entities.menuItems.burger.Burger;
 import saboroso.saborosoburguer.entities.menuItems.burger.BurgerBread;
 import saboroso.saborosoburguer.entities.soldItems.accompaniment.AddOnSale;
 import saboroso.saborosoburguer.entities.soldItems.accompaniment.ComboSale;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,13 +34,16 @@ public class BurgerSale extends MenuItemSale {
     )
     private List<AddOnSale> addOns;
 
+    @Column
+    private String obs;
+
     public BurgerSale(CustomerOrder orderThatSold, Burger soldburger, BurgerBread bread, ComboSale combo, List<AddOnSale> addOns, String obs) {
         this.soldburger = soldburger;
         this.bread = bread;
         this.combo = combo;
         this.addOns = addOns;
-        setObs(obs);
+        this.obs = obs;
         setOrderThatSold(orderThatSold);
-        setSoldFor(soldburger.getPrice());
+        setSingleUnitySoldFor(soldburger.getPrice());
     }
 }

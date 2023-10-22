@@ -26,5 +26,5 @@ public abstract class BaseAccompanimentSale {
     @Setter(AccessLevel.NONE)
     private LocalDateTime soldAt = LocalDateTime.now();;
     @Column (updatable = false)
-    private BigDecimal soldFor;
+    private BigDecimal singleUnitySoldFor;
 }
