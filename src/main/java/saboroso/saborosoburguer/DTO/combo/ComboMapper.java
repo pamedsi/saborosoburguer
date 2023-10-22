@@ -1,7 +1,7 @@
 package saboroso.saborosoburguer.DTO.combo;
 
 import org.springframework.stereotype.Component;
-import saboroso.saborosoburguer.entities.menuItems.Combo;
+import saboroso.saborosoburguer.entities.menuItems.accompaniment.Combo;
 
 import java.util.List;
 

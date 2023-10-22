@@ -1,4 +1,4 @@
-package saboroso.saborosoburguer.entities.menuItems;
+package saboroso.saborosoburguer.entities.menuItems.accompaniment;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +10,7 @@ import saboroso.saborosoburguer.DTO.combo.ComboDTO;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import saboroso.saborosoburguer.entities.menuItems.MenuItem;
 
 @Entity
 @NoArgsConstructor

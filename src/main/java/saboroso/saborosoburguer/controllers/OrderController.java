@@ -2,7 +2,7 @@ package saboroso.saborosoburguer.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saboroso.saborosoburguer.DTO.order.OrderDTO;
+import saboroso.saborosoburguer.DTO.order.postOrder.OrderForPostDTO;
 import saboroso.saborosoburguer.models.BaseController;
 import saboroso.saborosoburguer.models.Message;
 import saboroso.saborosoburguer.services.OrderService;
@@ -14,8 +14,8 @@ public class OrderController extends BaseController {
         this.orderService = orderService;
     }
     @PostMapping(value = "/make-order")
-    public ResponseEntity<?> requestOrder(@RequestBody OrderDTO orderDTO) {
-        orderService.makeOrder(orderDTO);
+    public ResponseEntity<?> requestOrder(@RequestBody OrderForPostDTO orderForPostDTO) {
+        orderService.makeOrder(orderForPostDTO);
         return ResponseEntity.ok(new Message("Pedido feito!", null));
     }
     @GetMapping(value = "/see-orders")

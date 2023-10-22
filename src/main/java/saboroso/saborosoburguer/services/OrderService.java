@@ -1,15 +1,18 @@
 package saboroso.saborosoburguer.services;
 
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
-import saboroso.saborosoburguer.DTO.order.BurgerFromOrder;
-import saboroso.saborosoburguer.DTO.order.OrderDTO;
-import saboroso.saborosoburguer.DTO.order.PortionFromOrder;
+import saboroso.saborosoburguer.DTO.order.postOrder.OrderForPostDTO;
 import saboroso.saborosoburguer.entities.*;
 import saboroso.saborosoburguer.entities.menuItems.*;
+import saboroso.saborosoburguer.entities.menuItems.accompaniment.AddOn;
+import saboroso.saborosoburguer.entities.menuItems.accompaniment.Combo;
 import saboroso.saborosoburguer.entities.menuItems.burger.Burger;
 import saboroso.saborosoburguer.entities.menuItems.burger.BurgerBread;
 import saboroso.saborosoburguer.entities.soldItems.*;
+import saboroso.saborosoburguer.entities.soldItems.accompaniment.AddOnSale;
+import saboroso.saborosoburguer.entities.soldItems.accompaniment.ComboSale;
 import saboroso.saborosoburguer.models.UserAndAddress;
 import saboroso.saborosoburguer.repositories.*;
 
@@ -61,104 +64,96 @@ public class OrderService {
         this.userService = userService;
         this.comboSaleRepository = comboSaleRepository;
     }
-    public void makeOrder(OrderDTO orderDTO) {
-        UserEntity buyer = userRepository.findByPhoneNumber(orderDTO.clientPhoneNumber());
+    public void makeOrder(OrderForPostDTO orderForPostDTO) {
+        UserEntity buyer = userRepository.findByPhoneNumber(orderForPostDTO.clientPhoneNumber());
         Address addressToDeliver = null;
         if (buyer == null) {
-            UserAndAddress userAndAddress = userService.addClientUser(orderDTO.clientName(), orderDTO.clientPhoneNumber(), orderDTO.addressToDeliver());
+            UserAndAddress userAndAddress = userService.addClientUser(orderForPostDTO.clientName(), orderForPostDTO.clientPhoneNumber(), orderForPostDTO.addressToDeliver());
             buyer = userAndAddress.user();
             addressToDeliver = userAndAddress.address();
         }
         if (addressToDeliver == null) {
-            addressToDeliver = addressRepository.findByContentAndBelongsTo(orderDTO.addressToDeliver(), buyer);
+            addressToDeliver = addressRepository.findByContentAndBelongsTo(orderForPostDTO.addressToDeliver(), buyer);
         }
         if (addressToDeliver == null) {
-            addressToDeliver = userService.addAddressToClient(buyer, orderDTO.addressToDeliver());
+            addressToDeliver = userService.addAddressToClient(buyer, orderForPostDTO.addressToDeliver());
         }
 
-        CustomerOrder newOrder = new CustomerOrder(orderDTO.orderCode(), orderDTO.status(), buyer, addressToDeliver, orderDTO.totalToPay(), orderDTO.paymentMethod(), orderDTO.howClientWillPay());
+        CustomerOrder newOrder = new CustomerOrder(orderForPostDTO.orderCode(), orderForPostDTO.status(), buyer, addressToDeliver, orderForPostDTO.totalToPay(), orderForPostDTO.paymentMethod(), orderForPostDTO.howClientWillPay());
 
         List<BurgerSale> soldBurgers = new ArrayList<>();
         List<PortionSale> soldPortions = new ArrayList<>();
         List<DrinkSale> soldDrinks = new ArrayList<>();
-        List<AddOnSale> soldAddOns = new ArrayList<>();
-        List<ComboSale> soldCombos = new ArrayList<>();
+        String notFoundOrDeleted = "não disponível ou excluído,";
 
-        orderDTO.burgers().forEach(purchasedBurger -> {
-            countBurgers(newOrder, soldBurgers, purchasedBurger, soldAddOns, soldCombos);
+        orderForPostDTO.burgers().forEach(purchasedBurger -> {
+            Burger burger = burgerRepository.findBurgerByIdentifierAndDeletedFalseAndInStockTrue(purchasedBurger.identifier());
+            if (burger == null) throw new NotFoundException("Hambúrguer " + notFoundOrDeleted);
+
+            if (purchasedBurger.breadIdentifier() == null) throw new BadRequestException("Pão não informado, é necessário o pão!");
+            BurgerBread bread = breadRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedBurger.breadIdentifier());
+            if (bread == null) throw new NotFoundException("Pão " + notFoundOrDeleted);
+
+            ComboSale comboSale = null;
+            if (purchasedBurger.comboIdentifier() != null) {
+                Combo combo = comboRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedBurger.comboIdentifier());
+                if (combo == null) throw new NotFoundException("Combo"+ notFoundOrDeleted);
+                comboSale = new ComboSale(combo);
+            }
+
+            List<AddOnSale> addOns = new ArrayList<>();
+            feedAddOnSaleList(notFoundOrDeleted, addOns, purchasedBurger.addOnsIdentifiers());
+            if (comboSale != null) comboSaleRepository.save(comboSale);
+            soldBurgers.add(new BurgerSale(newOrder, burger, bread, comboSale, addOns, purchasedBurger.obs()));
         });
 
-        orderDTO.portions().forEach(purchasedPortion -> {
-            countPortions(newOrder, soldPortions, purchasedPortion, soldAddOns);
+        orderForPostDTO.portions().forEach(purchasedPortion -> {
+            Portion portion = portionRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedPortion.identifier());
+            if (portion == null) throw new NotFoundException("Porção " + notFoundOrDeleted);
+
+            List<AddOnSale> addOns = new ArrayList<>();
+            feedAddOnSaleList(notFoundOrDeleted, addOns, purchasedPortion.addOnsIdentifiers());
+
+            soldPortions.add(new PortionSale(newOrder, portion, addOns, purchasedPortion.obs()));
         });
 
-        orderDTO.drinks().forEach(purchasedDrink -> {
+        orderForPostDTO.drinks().forEach(purchasedDrink -> {
             Drink soldDrink = drinkRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedDrink.drinkIdentifier());
-            if (soldDrink == null) throw new NotFoundException("Bebida não disponível ou em deletada.");
+            if (soldDrink == null) throw new NotFoundException("Bebida " + notFoundOrDeleted);
             soldDrinks.add(new DrinkSale(newOrder, soldDrink, purchasedDrink.quantity()));
         });
 
-        if (!soldBurgers.isEmpty()) burgerSaleRepository.saveAll(soldBurgers);
-        if (!soldPortions.isEmpty()) portionSaleRepository.saveAll(soldPortions);
-        if (!soldDrinks.isEmpty()) drinkSaleRepository.saveAll(soldDrinks);
-        if (!soldAddOns.isEmpty()) addOnSaleRepository.saveAll(soldAddOns);
-        if (!soldCombos.isEmpty()) comboSaleRepository.saveAll(soldCombos);
+        int items = 0;
+
+        if (!soldBurgers.isEmpty()) {
+            burgerSaleRepository.saveAll(soldBurgers);
+            items++;
+        }
+        if (!soldPortions.isEmpty()) {
+            portionSaleRepository.saveAll(soldPortions);
+            items++;
+        }
+        if (!soldDrinks.isEmpty()) {
+            drinkSaleRepository.saveAll(soldDrinks);
+            items++;
+        }
+        if (items == 0) throw new BadRequestException("Pedido vazio.");
+
         customerOrderRepository.save(newOrder);
     }
-    public List<CustomerOrder> getAllOrders() {
-        return customerOrderRepository.findAll();
-    }
 
-    private void countBurgers(CustomerOrder order, List<BurgerSale> soldBurgers, BurgerFromOrder purchasedItem, List<AddOnSale> addOns, List<ComboSale> combos) {
-        Burger burger = burgerRepository.findBurgerByIdentifierAndDeletedFalseAndInStockTrue(purchasedItem.identifier());
-
-        if (burger == null) throw new NotFoundException("Hambúrguer em falta ou deletado.");
-
-        int index = findIndex(soldBurgers, purchasedItem.identifier());
-        if (index == -1) {
-            BurgerBread bread = breadRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedItem.breadIdentifier());
-            if (bread == null) throw new NotFoundException("Pão em falta ou deletado.");
-
-            soldBurgers.add(new BurgerSale(order, burger, bread));
-                if (purchasedItem.comboIdentifier() != null) {
-                    Combo combo = comboRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedItem.comboIdentifier());
-                    if (combo == null) throw new NotFoundException("Combo não encontrado ou deletado.");
-                    combos.add(new ComboSale(order, combo));
-                }
-        }
-        else soldBurgers.get(index).incrementQuantity();
-
-        countAddOns(order, addOns, purchasedItem.addOnsIdentifiers());
-    }
-
-    private void countPortions(CustomerOrder order, List<PortionSale> soldPortions, PortionFromOrder purchasedItem, List<AddOnSale> addOns) {
-        Portion portion = portionRepository.findByIdentifierAndDeletedFalseAndInStockTrue(purchasedItem.identifier());
-        if (portion == null) throw new NotFoundException("Porção em falta ou deletada.");
-
-        int index = findIndex(soldPortions, purchasedItem.identifier());
-        if (index == -1) soldPortions.add(new PortionSale(order, portion));
-        else soldPortions.get(index).incrementQuantity();
-        countAddOns(order, addOns, purchasedItem.addOnsIdentifiers());
-    }
-
-    private void countAddOns(CustomerOrder order, List<AddOnSale> addOns, List<String> addOnsIdentifiers){
+    private void feedAddOnSaleList(String notFoundOrDeleted, List<AddOnSale> addOns, List<String> addOnsIdentifiers ) {
         addOnsIdentifiers.forEach(addOnIdentifier -> {
             AddOn addOn = addOnRepository.findByIdentifierAndDeletedFalseAndInStockTrue(addOnIdentifier);
-            if (addOn == null) throw new NotFoundException("Adicional não encontrado ou deletado.");
-
-            int i = findIndex(addOns, addOnIdentifier);
-            if (i == -1) addOns.add(new AddOnSale(order, addOn));
-            else addOns.get(i).incrementQuantity();
+            if (addOn == null) throw new NotFoundException("Adicional" + notFoundOrDeleted);
+            addOns.add(new AddOnSale(addOn));
         });
+
+        if (!addOns.isEmpty()) addOnSaleRepository.saveAll(addOns);
     }
 
-    private <T extends SoldItem> int findIndex(List<T> soldItems, String itemToCheck){
-        for (int i = 0; i < soldItems.size(); i++) {
-            if (soldItems.get(i).getIdentifier().equals(itemToCheck)) {
-                return i;
-            }
-        }
-        return -1;
+    public List<CustomerOrder> getAllOrders() {
+        return customerOrderRepository.findAll();
     }
 
 }
