@@ -20,6 +20,6 @@ public class ComboSale extends BaseAccompanimentSale {
 
     public ComboSale(Combo soldCombo) {
         this.soldCombo = soldCombo;
-        setSingleUnitySoldFor(soldCombo.getPrice());
+        setSoldFor(soldCombo.getPrice());
     }
 }
