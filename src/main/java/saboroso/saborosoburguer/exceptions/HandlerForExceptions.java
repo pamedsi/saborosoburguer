@@ -1,6 +1,7 @@
 package saboroso.saborosoburguer.exceptions;
 
 import org.hibernate.sql.ast.tree.from.UnknownTableReferenceException;
+import org.hibernate.tool.schema.spi.CommandAcceptanceException;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.core.convert.ConverterNotFoundException;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -26,4 +27,5 @@ public class HandlerForExceptions {
     public HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException () { return null; }
     public UnknownTableReferenceException unknownTableReferenceException() { return null; }
     public ConverterNotFoundException converterNotFoundException() { return null; }
+    public CommandAcceptanceException commandAcceptanceException() {return null;}
 }
