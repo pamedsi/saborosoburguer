@@ -58,7 +58,7 @@ public class BurgerMapper {
         String obs = burgerSale.getObs();
         BigDecimal itemSoldBy = burgerSale.getSoldFor();
 
-        return new BurgerForGetOrderDTO(title, addOns, bread, combo, obs, itemSoldBy);
+        return new BurgerForGetOrderDTO(title, bread, combo, addOns, obs, itemSoldBy);
     }
 
     public List<BurgerForGetOrderDTO> severalToGetOrderDTO(List<BurgerSale> burgerSales) {

@@ -5,9 +5,9 @@ import java.util.List;
 
 public record BurgerForGetOrderDTO(
         String title,
-        List<AddOnForGetOrderDTO> addOns,
         BreadForGetOrderDTO bread,
         ComboForGetDTO combo,
+        List<AddOnForGetOrderDTO> addOns,
         String obs,
         BigDecimal burgerSoldBy
 ){}
