@@ -187,6 +187,7 @@ public class OrderService {
         if (soldDrinks != null) drinks = drinkMapper.severalToGetOrderDTO(soldDrinks);
 
         return new OrderForGetDTO(
+                order.getIdentifier(),
                 order.getOrderCode(),
                 order.getOrderStatus(),
                 order.getClientWhoOrdered().getName(),
