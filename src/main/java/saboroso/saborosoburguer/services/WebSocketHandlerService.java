@@ -25,7 +25,7 @@ public class WebSocketHandlerService implements WebSocketHandler {
 
     }
     public void alertNewOrder() {
-        messagingTemplate.convertAndSend("/topic/greetings", new Message("Novo pedido!", null));
+        messagingTemplate.convertAndSend("/topic/orders", new Message("Novo pedido!", null));
     }
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
