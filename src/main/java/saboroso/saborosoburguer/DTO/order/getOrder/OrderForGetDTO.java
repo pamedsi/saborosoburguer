@@ -16,6 +16,6 @@ public record OrderForGetDTO (
         List<PortionForGetOrderDTO> portions,
         List<DrinkAndQuantityForGetDTO> drinks,
         PaymentMethod paymentMethod,
-        String howClientWillPay,
-        BigDecimal totalToPay
+        String howClientPaid,
+        BigDecimal totalPaid
 ) {}

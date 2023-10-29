@@ -9,5 +9,5 @@ public record BurgerForGetOrderDTO(
         BreadForGetOrderDTO bread,
         ComboForGetDTO combo,
         String obs,
-        BigDecimal itemSoldBy
+        BigDecimal burgerSoldBy
 ){}
