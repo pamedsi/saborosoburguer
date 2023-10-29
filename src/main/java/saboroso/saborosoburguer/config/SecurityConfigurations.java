@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +34,7 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain setFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -103,11 +104,15 @@ public class SecurityConfigurations {
 
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
+                        .requestMatchers("/orders/**").permitAll()
                         .anyRequest().hasRole("ADMIN")
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+
+                return http.build();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
@@ -118,11 +123,22 @@ public class SecurityConfigurations {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://saboroso-burguer-ng.vercel.app", "http://localhost:4200"));
+        configuration.setAllowedOriginPatterns(List.of("https://saboroso-burguer-ng.vercel.app", "http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(List.of("https://saboroso-burguer-ng.vercel.app", "http://localhost:4200"));
+//        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }
