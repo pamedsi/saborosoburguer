@@ -29,7 +29,7 @@ public class BurgerSale extends MenuItemSale {
     @OneToMany
     @JoinTable (
             name = "burger_add_on_sale",
-            joinColumns = @JoinColumn(name = "burger_id"),
+            joinColumns = @JoinColumn(name = "burger_sale_id"),
             inverseJoinColumns = @JoinColumn(name = "add_on_sale_id")
     )
     private List<AddOnSale> addOns;

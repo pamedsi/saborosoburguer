@@ -21,7 +21,7 @@ public class PortionSale extends MenuItemSale {
     @OneToMany
     @JoinTable (
             name = "portion_add_on_sale",
-            joinColumns = @JoinColumn(name = "portion_id"),
+            joinColumns = @JoinColumn(name = "portion_sale_id"),
             inverseJoinColumns = @JoinColumn(name = "add_on_sale_id")
     )
     private List<AddOnSale> addOns;
