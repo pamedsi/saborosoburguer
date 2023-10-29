@@ -21,8 +21,7 @@ public class OrderController extends BaseController {
     @PostMapping("/make-order")
     public ResponseEntity<?> requestOrder(@RequestBody OrderForPostDTO orderForPostDTO) {
         orderService.makeOrder(orderForPostDTO);
-
-//        webSocketHandlerService.alertNewOrder();
+        webSocketHandlerService.alertNewOrder();
         return ResponseEntity.ok(new Message("Pedido feito!", null));
     }
 
