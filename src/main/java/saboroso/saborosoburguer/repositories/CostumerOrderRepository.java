@@ -7,4 +7,5 @@ import saboroso.saborosoburguer.entities.CustomerOrder;
 @Repository
 public interface CostumerOrderRepository extends JpaRepository<CustomerOrder, Long> {
 
+    CustomerOrder findByIdentifier(String s);
 }

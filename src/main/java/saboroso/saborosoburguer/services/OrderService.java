@@ -5,6 +5,7 @@ import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.burger.BurgerMapper;
 import saboroso.saborosoburguer.DTO.drink.DrinkMapper;
+import saboroso.saborosoburguer.DTO.order.UpdateOrderStatus;
 import saboroso.saborosoburguer.DTO.order.getOrder.BurgerForGetOrderDTO;
 import saboroso.saborosoburguer.DTO.order.getOrder.DrinkAndQuantityForGetDTO;
 import saboroso.saborosoburguer.DTO.order.getOrder.OrderForGetDTO;
@@ -119,7 +120,6 @@ public class OrderService {
 
             List<AddOnSale> addOns = new ArrayList<>();
             feedAddOnSaleList(notFoundOrDeleted, addOns, purchasedBurger.addOnsIdentifiers());
-            if (comboSale != null) comboSaleRepository.save(comboSale);
             soldBurgers.add(new BurgerSale(newOrder, burger, bread, comboSale, addOns, purchasedBurger.obs()));
         });
 
@@ -142,11 +142,18 @@ public class OrderService {
         int items = 0;
 
         if (!soldBurgers.isEmpty()) {
-            burgerSaleRepository.saveAll(soldBurgers);
+            for (BurgerSale burger : soldBurgers) {
+                burgerSaleRepository.save(burger);
+                if (burger.getCombo() != null) comboSaleRepository.save(burger.getCombo());
+                if (!burger.getAddOns().isEmpty()) addOnSaleRepository.saveAll(burger.getAddOns());
+            }
             items++;
         }
         if (!soldPortions.isEmpty()) {
-            portionSaleRepository.saveAll(soldPortions);
+            for (PortionSale portion : soldPortions) {
+                portionSaleRepository.save(portion);
+                if (!portion.getAddOns().isEmpty()) addOnSaleRepository.saveAll(portion.getAddOns());
+            }
             items++;
         }
         if (!soldDrinks.isEmpty()) {
@@ -200,5 +207,13 @@ public class OrderService {
                 order.getHowCustomerPaid(),
                 order.getTotal()
         );
+    }
+
+    public void changeOrderStatus(UpdateOrderStatus orderStatusUpdate) {
+       CustomerOrder order = customerOrderRepository.findByIdentifier(orderStatusUpdate.orderIdentifier());
+       if (order == null) throw new NotFoundException("Pedido não encontrado");
+
+       order.setOrderStatus(orderStatusUpdate.status());
+       customerOrderRepository.save(order);
     }
 }
