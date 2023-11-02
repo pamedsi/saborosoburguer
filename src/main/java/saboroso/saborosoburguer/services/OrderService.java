@@ -143,16 +143,17 @@ public class OrderService {
 
         if (!soldBurgers.isEmpty()) {
             for (BurgerSale burger : soldBurgers) {
-                burgerSaleRepository.save(burger);
+
                 if (burger.getCombo() != null) comboSaleRepository.save(burger.getCombo());
                 if (!burger.getAddOns().isEmpty()) addOnSaleRepository.saveAll(burger.getAddOns());
+                burgerSaleRepository.save(burger);
             }
             items++;
         }
         if (!soldPortions.isEmpty()) {
             for (PortionSale portion : soldPortions) {
-                portionSaleRepository.save(portion);
                 if (!portion.getAddOns().isEmpty()) addOnSaleRepository.saveAll(portion.getAddOns());
+                portionSaleRepository.save(portion);
             }
             items++;
         }

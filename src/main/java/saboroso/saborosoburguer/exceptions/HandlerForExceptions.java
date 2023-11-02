@@ -1,5 +1,6 @@
 package saboroso.saborosoburguer.exceptions;
 
+import org.hibernate.TransientPropertyValueException;
 import org.hibernate.sql.ast.tree.from.UnknownTableReferenceException;
 import org.hibernate.tool.schema.spi.CommandAcceptanceException;
 import org.springframework.context.ApplicationContextException;
@@ -28,4 +29,5 @@ public class HandlerForExceptions {
     public UnknownTableReferenceException unknownTableReferenceException() { return null; }
     public ConverterNotFoundException converterNotFoundException() { return null; }
     public CommandAcceptanceException commandAcceptanceException() {return null;}
+    public TransientPropertyValueException transientPropertyValueException() { return null; }
 }
