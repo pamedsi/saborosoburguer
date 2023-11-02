@@ -53,7 +53,7 @@ public class BurgerMapper {
         String title = burgerSale.getSoldburger().getTitle();
         List<AddOnForGetOrderDTO> addOns = new ArrayList<>();
         if (!burgerSale.getAddOns().isEmpty()) addOns = addOnMapper.severalFromAddOnSaleToAddOnForGetOrderDTO(burgerSale.getAddOns());
-        BreadForGetOrderDTO bread = new BreadForGetOrderDTO(burgerSale.getSoldburger().getTitle(), burgerSale.getBread().getPic());
+        BreadForGetOrderDTO bread = new BreadForGetOrderDTO(burgerSale.getBread().getTitle(), burgerSale.getBread().getPic());
         ComboForGetDTO combo = comboMapper.singleToComboForGetDTO(burgerSale.getCombo());
         String obs = burgerSale.getObs();
         BigDecimal itemSoldBy = burgerSale.getSoldFor();
