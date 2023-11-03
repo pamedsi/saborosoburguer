@@ -2,6 +2,7 @@ package saboroso.saborosoburguer.services;
 
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import saboroso.saborosoburguer.DTO.burger.BurgerMapper;
 import saboroso.saborosoburguer.DTO.drink.DrinkMapper;
@@ -221,5 +222,21 @@ public class OrderService {
 
        order.setOrderStatus(orderStatusUpdate.status());
        customerOrderRepository.save(order);
+    }
+
+    // Estou considerando que se algum dia houver mais de um pedido com o mesmo código, serão apenas 2
+    // As chances do código de pedido repetir são: 36 * 36 * 36 * 36
+    public OrderForGetDTO getOrderByCode(String orderCode) {
+        List<CustomerOrder> orders = customerOrderRepository.findAllByOrderCode(orderCode);
+        if (orders.size() > 1) return mapToDTO(orders.get(1));
+        return mapToDTO(orders.get(0));
+    }
+
+    public List<OrderForGetDTO> getOrderByPhoneNumber(String phoneNumber){
+        UserEntity userWhoOrdered = userRepository.findByPhoneNumber(phoneNumber);
+        if (userWhoOrdered == null) throw new NotFoundException("Usuário com número de celular não encontrado.");
+
+        List<CustomerOrder> order = customerOrderRepository.findByClientWhoOrdered(userWhoOrdered);
+        return order.stream().map(this::mapToDTO).toList();
     }
 }
