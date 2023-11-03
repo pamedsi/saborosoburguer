@@ -40,8 +40,8 @@ public class OrderController extends BaseController {
     public ResponseEntity<?> getOrderByOrderCode(@PathVariable("code") String orderCode) {
         return ResponseEntity.ok(orderService.getOrderByCode(orderCode));
     }
-    @GetMapping("/get-order-by-phone-number/{phoneNumber}")
-    public ResponseEntity<?> getOrderByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+    @GetMapping("/get-orders-by-phone-number/{phoneNumber}")
+    public ResponseEntity<?> getOrdersByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
         return ResponseEntity.ok(orderService.getOrderByPhoneNumber(phoneNumber));
     }
     @PutMapping("/update-order-status")
