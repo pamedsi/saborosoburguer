@@ -49,6 +49,7 @@ public class SecurityConfigurations {
                         // Pedidos:
                         .requestMatchers(HttpMethod.POST, "/api/make-order").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/order-manager").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/unfinished-orders").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/update-order-status").hasRole("ADMIN")
 
                         // Hambúrgueres:

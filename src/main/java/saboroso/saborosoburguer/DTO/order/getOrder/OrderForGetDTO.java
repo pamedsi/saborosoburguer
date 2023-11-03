@@ -4,10 +4,12 @@ import saboroso.saborosoburguer.models.OrderStatus;
 import saboroso.saborosoburguer.models.PaymentMethod;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record OrderForGetDTO (
         String identifier,
+        LocalDateTime timeOfPurchase,
         String orderCode,
         OrderStatus status,
         String clientName,

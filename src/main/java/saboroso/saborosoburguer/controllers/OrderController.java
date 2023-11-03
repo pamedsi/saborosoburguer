@@ -32,6 +32,10 @@ public class OrderController extends BaseController {
     public ResponseEntity<?> getOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
+    @GetMapping("/unfinished-orders")
+    public ResponseEntity<?> getUnfinishedOrdersOrders() {
+        return ResponseEntity.ok(orderService.getUnfinishedOrders());
+    }
 
     @PutMapping("/update-order-status")
     public ResponseEntity<?> updateOrder(@RequestBody UpdateOrderStatus orderStatusUpdate) {

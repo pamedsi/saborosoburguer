@@ -180,6 +180,10 @@ public class OrderService {
         List<CustomerOrder> allOrders = customerOrderRepository.findAll() ;
         return allOrders.stream().map(this::mapToDTO).toList();
     }
+    public List<OrderForGetDTO> getUnfinishedOrders() {
+        List<CustomerOrder> allOrders = customerOrderRepository.findUnfinishedOrders();
+        return allOrders.stream().map(this::mapToDTO).toList();
+    }
 
     public OrderForGetDTO mapToDTO(CustomerOrder order) {
         List<BurgerSale> soldBurgers = burgerSaleRepository.findAllByOrderThatSold(order);
@@ -196,6 +200,7 @@ public class OrderService {
 
         return new OrderForGetDTO(
                 order.getIdentifier(),
+                order.getTimeOfPurchase(),
                 order.getOrderCode(),
                 order.getOrderStatus(),
                 order.getClientWhoOrdered().getName(),
