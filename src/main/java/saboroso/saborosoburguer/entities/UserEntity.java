@@ -32,7 +32,7 @@ public class UserEntity implements UserDetails {
     @Setter (AccessLevel.NONE)
     private String identifier = UUID.randomUUID().toString();
     @Column
-    private UserRole role = UserRole.CUSTOMER;
+    private UserRole role;
     @Column (nullable = false)
     private String name;
     @Column
@@ -48,10 +48,12 @@ public class UserEntity implements UserDetails {
         phoneNumber = userDTO.phoneNumber();
         passwordHash = hash(userDTO.password());
         email = userDTO.email();
+        role = UserRole.ADMIN;
     }
     public UserEntity(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        role = UserRole.CUSTOMER;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
