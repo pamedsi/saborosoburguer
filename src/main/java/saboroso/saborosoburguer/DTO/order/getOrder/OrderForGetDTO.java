@@ -5,11 +5,12 @@ import saboroso.saborosoburguer.models.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public record OrderForGetDTO (
         String identifier,
-        LocalDateTime timeOfPurchase,
+        ZonedDateTime timeOfPurchase,
         String orderCode,
         OrderStatus status,
         String clientName,

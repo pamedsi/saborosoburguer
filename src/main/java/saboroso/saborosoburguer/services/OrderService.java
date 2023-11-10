@@ -231,7 +231,6 @@ public class OrderService {
         if (orders.size() > 1) return mapToDTO(orders.get(1));
         return mapToDTO(orders.get(0));
     }
-
     public List<OrderForGetDTO> getOrderByPhoneNumber(String phoneNumber){
         UserEntity userWhoOrdered = userRepository.findByPhoneNumber(phoneNumber);
         if (userWhoOrdered == null) throw new NotFoundException("Usuário com número de celular não encontrado.");

@@ -11,6 +11,8 @@ import saboroso.saborosoburguer.models.PaymentMethod;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
@@ -31,9 +33,9 @@ public class CustomerOrder {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private UserEntity clientWhoOrdered;
-    @Column
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @Setter (AccessLevel.NONE)
-    private LocalDateTime timeOfPurchase = LocalDateTime.now();
+    private ZonedDateTime timeOfPurchase = ZonedDateTime.now(ZoneId.of("GMT-3"));
     @Column
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
