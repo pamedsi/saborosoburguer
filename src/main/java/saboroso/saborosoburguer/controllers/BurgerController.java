@@ -54,7 +54,7 @@ public class BurgerController extends BaseController {
     public ResponseEntity<?> editBurger(@RequestBody BurgerDTO burgerDTO) {
         CRUDResponseMessage burgerStatus = burgerService.updateBurger(burgerDTO);
         if (burgerStatus.worked()) return ResponseEntity.ok(new Message("Atualização feita com sucesso!", burgerStatus.changes()));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("Não foi possível continuar.", null));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("Não foi possível continuar. " + burgerStatus.reasonWhy(), null));
     }
     @DeleteMapping (value = "/remove-burger-ingredient/{burgerIdentifier}")
     public ResponseEntity<?> removeIngredient(@PathVariable("burgerIdentifier") String burgerIdentifier,
