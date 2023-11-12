@@ -51,6 +51,10 @@ public class AddOnService {
             if (changes.inStock()) changesForResponse.add(changes.title() + " disponibilizado!");
             else changesForResponse.add(changes.title() + " indisponibilizado!");
         }
+        if (!Objects.equals(addOnToEdit.getPic(), changes.pic())) {
+            addOnToEdit.setPic(changes.pic());
+            changesForResponse.add("Foto atualizada! Agora a URL é: " + changes.pic());
+        }
 
         if (changesForResponse.isEmpty()) return new CRUDResponseMessage(false, "Nenhuma mudança solicitada é diferente dos dados já presentes!", null);
         addOnRepository.save(addOnToEdit);
