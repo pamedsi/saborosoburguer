@@ -32,9 +32,6 @@ public class ComboService {
         return comboMapper.severalToDTO(combos);
     }
     public CRUDResponseMessage editCombo(ComboDTO changes) {
-//        Não precisa da verificação por causa do "unique = true" do JPA na entidade
-//        Boolean alreadyExists = comboRepository.existsByTitleAndIdentifierNotAndDeletedFalse(changes.title(), changes.identifier());
-//        if (alreadyExists) return new CRUDResponseMessage(false, "Já existe um combo com esse nome", null);
 
         Combo comboToEdit = comboRepository.findByIdentifier(changes.identifier());
         if (comboToEdit == null) return new CRUDResponseMessage(false, "Combo não encontrada!", null);
@@ -52,6 +49,10 @@ public class ComboService {
         if (comboToEdit.getPrice().compareTo(changes.price()) != 0) {
             comboToEdit.setPrice(changes.price());
             changesForResponse.add("Preço alterado! Agora custa: " + changes.price());
+        }
+        if (!Objects.equals(comboToEdit.getPic(), changes.pic())) {
+            comboToEdit.setPic(changes.pic());
+            changesForResponse.add("Foto atualizada! Agora a URL é: " + changes.pic());
         }
         if (comboToEdit.getInStock() != changes.inStock()) {
             comboToEdit.setInStock(changes.inStock());

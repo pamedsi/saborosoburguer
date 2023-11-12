@@ -16,7 +16,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class MenuItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     private Long id;
