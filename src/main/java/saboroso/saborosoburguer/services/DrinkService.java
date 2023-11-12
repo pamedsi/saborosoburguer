@@ -57,6 +57,10 @@ public class DrinkService {
             drinkToEdit.setTitle(changes.title());
             changesForResponse.add("Título modificado! Agora se chama: " + changes.title());
         }
+        if (!Objects.equals(drinkToEdit.getPic(), changes.pic())) {
+            drinkToEdit.setPic(changes.pic());
+            changesForResponse.add("Foto modificada! Agora a URL é: " + changes.pic());
+        }
         if (drinkToEdit.getPrice().compareTo(changes.price()) != 0) {
             drinkToEdit.setPrice(changes.price());
             changesForResponse.add("Preço alterado! Agora custa: " + changes.price());
