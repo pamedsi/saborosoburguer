@@ -106,10 +106,16 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/api/update-combo").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/remove-combo/{identifier}").hasRole("ADMIN")
 
+//                        // Swagger
+                        .requestMatchers("/swagger**").permitAll()
+                        .requestMatchers("/v3**").permitAll()
+                        .requestMatchers("/api-docs").permitAll()
+
                         // Gestão:
                         .requestMatchers("/api/**-management").hasRole("ADMIN")
                         .requestMatchers("/orders/**").permitAll()
-                        .anyRequest().hasRole("ADMIN")
+//                        .anyRequest().hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
